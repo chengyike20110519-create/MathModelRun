@@ -1,0 +1,10 @@
+{
+  "id": "my-mathmodel-agent",
+  "name": "My MathModel Agent",
+  "description": "Evidence-driven mathematical modeling contest workflow for Codex. Select a problem, validate models, run Python/AMPL experiments, freeze results, produce LaTeX/Typst papers, and audit evidence.",
+  "version": "0.1.0",
+  "type": "skill",
+  "entrypoint": "my-mathmodel-agent/SKILL.md",
+  "authors": ["My MathModel Agent contributors"],
+  "tags": ["mathematical-modeling", "contest", "python", "ampl", "latex", "typst"]
+}

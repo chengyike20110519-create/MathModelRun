@@ -1,0 +1,16 @@
+{
+  "project_name": "",
+  "contest": "CUMCM/MCM/HiMCM/其他",
+  "language": "zh-CN",
+  "paper_format": "latex",
+  "problem_files": [],
+  "selected_topic": null,
+  "subproblems": [],
+  "current_stage": "PREFLIGHT",
+  "gates": {
+    "method_validated": false,
+    "results_frozen": false,
+    "evidence_passed": false,
+    "format_passed": false
+  }
+}

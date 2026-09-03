@@ -1,0 +1,2 @@
+# MyMathModelAgent development dependencies
+-r templates/shared/requirements.txt

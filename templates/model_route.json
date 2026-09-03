@@ -1,0 +1,18 @@
+{
+  "topic": "A/B/C",
+  "selection_score": 0,
+  "subproblems": [
+    {
+      "id": "Q1",
+      "role": "first/main/extend/final",
+      "task_type": "prediction/optimization/evaluation/statistics/simulation",
+      "baseline": "",
+      "primary_model": "",
+      "fallback_model": "",
+      "rejection_reason": "",
+      "validation": [],
+      "required_figures": [],
+      "paper_section": ""
+    }
+  ]
+}

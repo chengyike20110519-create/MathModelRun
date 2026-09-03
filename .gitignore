@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project outputs (keep templates, ignore generated)
+output/
+projects/*/results/
+projects/*/figures/
+projects/*/paper/*.pdf
+projects/*/paper/*.aux
+projects/*/paper/*.log
+projects/*/paper/*.out
+projects/*/paper/*.toc
+projects/*/paper/*.bbl
+projects/*/paper/*.blg
+projects/*/paper/*.synctex.gz
+projects/*/paper/*.fdb_latexmk
+projects/*/paper/*.fls
+projects/*/data_cleaned/*.csv
+projects/*/data_cleaned/*.xlsx
+!projects/*/data_cleaned/.gitkeep
+
+# Typst
+*.pdf
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Backup files created by scripts
+*.bak
+*.backup
+
+# Logs
+*.log
+logs/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Existing generated sample artifacts in repo root (keep local, do not commit)
+audit/final_report.md
