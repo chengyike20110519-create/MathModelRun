@@ -1,8 +1,8 @@
 """Smoke tests for MyMathModelAgent repository."""
-import json
-import os
 import subprocess
 import sys
+import json
+import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
@@ -72,6 +72,67 @@ def test_doctor_help():
     )
     assert result.returncode == 0, result.stderr
     assert "usage:" in result.stdout
+
+
+def test_freeze_requires_provenance():
+    """Freeze must reject result rows without provenance."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        source = root / "results.json"
+        output = root / "frozen_numbers.json"
+        source.write_text(json.dumps([{"name": "score", "value": 1}]))
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(REPO_ROOT / "my-mathmodel-agent/scripts/freeze_numbers.py"),
+                str(source),
+                "--output",
+                str(output),
+            ],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode != 0
+        assert not output.exists()
+
+
+def test_freeze_writes_auditable_payload():
+    """Freeze must include hash, timestamp, and provenance fields."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        source = root / "results.json"
+        output = root / "frozen_numbers.json"
+        source.write_text(
+            json.dumps(
+                [
+                    {
+                        "name": "score",
+                        "value": 1,
+                        "unit": "points",
+                        "source_file": "results/run.json",
+                        "source_run": "run-001",
+                        "subproblem": "Q1",
+                        "notes": "verified smoke result",
+                    }
+                ]
+            )
+        )
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(REPO_ROOT / "my-mathmodel-agent/scripts/freeze_numbers.py"),
+                str(source),
+                "--output",
+                str(output),
+            ],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0, result.stderr
+        payload = json.loads(output.read_text())
+        assert payload["source_sha256"]
+        assert payload["frozen_at"]
+        assert payload["values"][0]["source_run"] == "run-001"
 
 
 if __name__ == "__main__":
