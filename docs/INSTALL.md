@@ -15,34 +15,34 @@
 ### npx 一键安装（推荐）
 
 ```bash
-npx -y skills@latest add <your-github-username>/MyMathModelAgent --skill '*' --agent codex claude-code
+npx -y skills@latest add chengyike20110519-create/MathModelRun --skill '*' --agent codex claude-code
 ```
 
 ### Codex（macOS / Linux）
 
 ```bash
-git clone https://github.com/<your-github-username>/MyMathModelAgent.git \
+git clone https://github.com/chengyike20110519-create/MathModelRun.git \
   ~/.codex/skills/my-mathmodel-agent
 ```
 
 ### Codex（Windows PowerShell）
 
 ```powershell
-git clone https://github.com/<your-github-username>/MyMathModelAgent.git `
+git clone https://github.com/chengyike20110519-create/MathModelRun.git `
   "$HOME\.codex\skills\my-mathmodel-agent"
 ```
 
 ### Claude Code（macOS / Linux）
 
 ```bash
-git clone https://github.com/<your-github-username>/MyMathModelAgent.git \
+git clone https://github.com/chengyike20110519-create/MathModelRun.git \
   ~/.claude/skills/my-mathmodel-agent
 ```
 
 ### Claude Code（Windows PowerShell）
 
 ```powershell
-git clone https://github.com/<your-github-username>/MyMathModelAgent.git `
+git clone https://github.com/chengyike20110519-create/MathModelRun.git `
   "$HOME\.claude\skills\my-mathmodel-agent"
 ```
 
@@ -52,7 +52,7 @@ git clone https://github.com/<your-github-username>/MyMathModelAgent.git `
 
 ```bash
 mkdir -p my-contest/.claude/skills
-git clone https://github.com/<your-github-username>/MyMathModelAgent.git \
+git clone https://github.com/chengyike20110519-create/MathModelRun.git \
   my-contest/.claude/skills/my-mathmodel-agent
 ```
 
