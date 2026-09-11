@@ -8,7 +8,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-REQUIRED_PROVENANCE = ("source_file", "source_run", "subproblem", "notes")
+REQUIRED_FIELDS = (
+    "name",
+    "value",
+    "unit",
+    "source_file",
+    "source_run",
+    "subproblem",
+    "notes",
+)
 
 
 def sha256(path: Path) -> str:
@@ -17,7 +25,10 @@ def sha256(path: Path) -> str:
 
 def load_results(path: Path):
     if path.suffix.lower() == ".json":
-        return json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(data, dict) and isinstance(data.get("values"), list):
+            return data["values"]
+        return data
     if path.suffix.lower() == ".csv":
         with path.open(newline="", encoding="utf-8-sig") as handle:
             return list(csv.DictReader(handle))
@@ -26,14 +37,25 @@ def load_results(path: Path):
 
 def validate_values(values):
     if not isinstance(values, list):
-        return
+        raise ValueError("results must be a list or an object with a values list")
+    if not values:
+        raise ValueError("cannot freeze an empty result list")
     for index, value in enumerate(values):
         if not isinstance(value, dict):
             raise ValueError(f"values[{index}] must be an object")
-        missing = [key for key in REQUIRED_PROVENANCE if not value.get(key)]
+        missing = [key for key in REQUIRED_FIELDS if key not in value]
         if missing:
             raise ValueError(
-                f"values[{index}] missing provenance fields: {', '.join(missing)}"
+                f"values[{index}] missing fields: {', '.join(missing)}"
+            )
+        blank = [
+            key
+            for key in ("name", "unit", "source_file", "source_run", "subproblem", "notes")
+            if not str(value[key]).strip()
+        ]
+        if blank:
+            raise ValueError(
+                f"values[{index}] has blank required fields: {', '.join(blank)}"
             )
 
 
@@ -57,13 +79,16 @@ def main() -> int:
         parser.error(str(exc))
 
     payload = {
-        "schema_version": "1.0",
+        "schema_version": "2.0",
         "frozen_at": datetime.now(timezone.utc).isoformat(),
         "source_file": str(source),
         "source_sha256": sha256(source),
         "values": data,
     }
-    output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     print(f"Frozen {source} -> {output.resolve()}")
     return 0
 

@@ -1,10 +1,10 @@
 {
   "id": "my-mathmodel-agent",
-  "name": "My MathModel Agent",
-  "description": "Evidence-driven mathematical modeling contest workflow for Codex. Select a problem, validate models, run Python/AMPL experiments, freeze results, produce LaTeX/Typst papers, and audit evidence.",
-  "version": "0.1.0",
+  "name": "MathModel Run",
+  "description": "Evidence-driven mathematical modeling contest workflow for Codex. Decompose problems, choose baseline/primary/fallback model routes, validate PoCs, run reproducible Python/AMPL experiments, freeze results, write LaTeX/Typst papers, render, and audit every claim.",
+  "version": "0.2.0",
   "type": "skill",
   "entrypoint": "my-mathmodel-agent/SKILL.md",
-  "authors": ["My MathModel Agent contributors"],
-  "tags": ["mathematical-modeling", "contest", "python", "ampl", "latex", "typst"]
+  "authors": ["MathModel Run contributors"],
+  "tags": ["mathematical-modeling", "contest", "evidence", "python", "ampl", "latex", "typst"]
 }

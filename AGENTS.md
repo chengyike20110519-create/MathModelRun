@@ -1,6 +1,6 @@
-# MyMathModelAgent
+# MathModel Run / MyMathModelAgent
 
-This repository is a **Codex / Claude Code compatible skill** for mathematical modeling contests.
+This repository is a **Codex / Claude Code compatible skill** for mathematical modeling contests. It provides a stateful, evidence-backed path from problem files to an audited paper.
 
 ## File update policy
 
@@ -13,65 +13,69 @@ When the user asks to update, revise, or rewrite a file:
 5. Do not preserve old versions unless the user explicitly asks for version history, backups, or archival copies.
 6. Never overwrite unrelated user changes without first reading and incorporating them.
 
-This policy applies to documentation, prompts, workflows, templates, scripts, reports, and configuration files.
+This policy applies to documentation, prompts, workflows, templates, scripts, reports, pages, and configuration files.
 
-## Skill entry points
+## Entry points
 
-If your agent tool does not auto-discover skills, load the appropriate entry point:
-
-- **Codex**: `my-mathmodel-agent/SKILL.md`
-- **Claude Code**: `.claude/skills/my-mathmodel-agent/SKILL.md`
-- **Generic Agent**: read `README.md`, then follow the workflow in `docs/WORKFLOW.md`
+- **Start page**: `index.html`
+- **Codex skill**: `my-mathmodel-agent/SKILL.md`
+- **Claude Code skill**: `.claude/skills/my-mathmodel-agent/SKILL.md`
+- **Generic Agent**: read `README.md`, then follow `docs/WORKFLOW.md`
+- **Mind map**: `docs/assets/mathmodel-mindmap.svg`
 
 ## Core idea
 
-Evidence-driven math modeling: problem → model → code → evidence → paper → audit.
-Never skip method validation, result freezing, or final audit.
+Evidence-driven math modeling: problem → model → code → experiment → frozen result → paper → audit.
+
+Never skip method validation, result freezing, or final audit. Every project starts default-FAIL: all ten state gates are `false`, and a gate changes only after reproducible evidence exists.
 
 ## Quick start
 
 ```bash
-# 1. Scaffold a new contest project
-python3 my-mathmodel-agent/scripts/init_project.py my-contest
-
-# 2. Copy problem files into my-contest/problem_files/
-
-# 3. Let the agent run through the 10-stage workflow
-#    In Codex:  "$my-mathmodel-agent" or "@my-mathmodel-agent"
-#    In Claude: "/my-mathmodel-agent"
+python3 my-mathmodel-agent/scripts/init_project.py 2026-cumcm-a
+python3 my-mathmodel-agent/scripts/status.py 2026-cumcm-a
+python3 my-mathmodel-agent/scripts/doctor.py
 ```
 
 ## Repository layout
 
 ```text
-MyMathModelAgent/
-├── README.md                         # Project overview and install guide
-├── AGENTS.md                         # This file: fallback entry and update policy
-├── LICENSE                           # MIT
-├── my-mathmodel-agent/               # Codex skill
-│   ├── SKILL.md
-│   ├── agents/openai.yaml
-│   ├── references/workflow-contract.md
-│   └── scripts/                      # init_project.py, doctor.py, freeze_numbers.py, audit_workspace.py
-├── .claude/skills/my-mathmodel-agent/ # Claude Code skill mirror
-│   ├── SKILL.md
-│   └── agents/                       # Role-specific subagent prompts
-├── .claude/agents/                   # Claude role agents
-├── .claude/workflows/                # Reusable workflow definitions
-├── competitions/                     # Competition-specific extensions
-├── docs/                             # Detailed documentation
-├── scripts/                          # Repository maintenance tools
-├── templates/                        # Project templates and paper templates
-└── tests/                            # Regression tests
+MathModel Run/
+├── index.html                         # interactive start page and mind map
+├── README.md                          # overview, quick start, artifact map
+├── AGENTS.md                          # fallback entry and in-place update policy
+├── AGENT_PROMPT.md                    # reusable agent system prompt
+├── docs/
+│   ├── WORKFLOW.md                    # ten-stage workflow
+│   └── assets/mathmodel-mindmap.svg   # shareable mind map
+├── my-mathmodel-agent/                # Codex skill
+│   ├── SKILL.md                       # router and operating contract
+│   ├── references/
+│   │   ├── workflow-contract.md       # stage inputs, outputs, exit gates
+│   │   ├── artifact-contracts.md      # JSON field contracts
+│   │   └── evaluation-rubric.md       # independent 0-5 review rubric
+│   └── scripts/
+│       ├── init_project.py            # default-FAIL scaffold
+│       ├── status.py                  # current stage and first false gate
+│       ├── doctor.py                  # environment diagnostic
+│       ├── freeze_numbers.py          # provenance-backed result freeze
+│       └── audit_workspace.py         # mechanical contract audit
+├── templates/                         # generated project artifact templates
+├── .claude/                           # Claude Code skill, agents, workflow
+├── scripts/validate_repo.py           # release validator
+└── tests/test_smoke.py                # regression smoke tests
 ```
 
 ## Important rules
 
-1. Read `state.json` and `project_manifest.json` before acting.
-2. Paper numbers must come from `frozen_numbers.json` only.
-3. LaTeX and Typst cannot be mixed.
-4. Every frozen number needs `source_file`, `source_run`, `subproblem`, and `notes`.
-5. A `READY` state requires `audit/final_report.md` with zero hard errors.
-6. Every requested file update must replace the old version at its original path.
+1. Read `state.json`, `project_manifest.json`, and `PROGRESS.md` before acting.
+2. Find the first false gate before choosing work.
+3. Every subproblem needs baseline, primary, fallback, validation, and acceptance criteria.
+4. Paper numbers must come from `frozen_numbers.json` only.
+5. LaTeX and Typst cannot be mixed.
+6. Every frozen number needs `name`, `value`, `unit`, `source_file`, `source_run`, `subproblem`, and `notes`.
+7. Every true state gate needs matching evidence in `audit/gate_evidence.json`.
+8. `READY` requires ten true gates, `audit/acceptance.json` verdict `pass`, and `audit/final_report.md` with zero hard errors.
+9. Every requested file update must replace the old version at its original path.
 
 For the full stage machine and gate contracts, see `my-mathmodel-agent/references/workflow-contract.md`.

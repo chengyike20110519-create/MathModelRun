@@ -1,0 +1,12 @@
+{
+  "schema_version": "2.0",
+  "generated_at": null,
+  "files": [],
+  "external_sources": [],
+  "environment": {
+    "python": null,
+    "latex": null,
+    "typst": null,
+    "solvers": []
+  }
+}

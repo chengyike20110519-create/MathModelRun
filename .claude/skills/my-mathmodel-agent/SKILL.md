@@ -1,19 +1,22 @@
 ---
 name: my-mathmodel-agent
-description: "Evidence-driven mathematical modeling contest workflow for Claude Code: select a problem, route models, validate methods, run Python/AMPL experiments, freeze results, write LaTeX/Typst papers, and audit evidence and formatting."
+description: "Evidence-driven mathematical modeling contest workflow for Claude Code: decompose a problem, select baseline/primary/fallback model routes, validate PoCs, run reproducible Python/AMPL experiments, freeze results, write LaTeX or Typst papers, render, and audit every claim. Use for CUMCM, MCM/ICM, HiMCM, and similar contests; not for casual homework or one-off coding questions."
 ---
 
-# My MathModel Agent
+# MathModel Run
 
-Use this skill when working on Chinese or international mathematical modeling contest projects (CUMCM, MCM/ICM, HiMCM, Huawei Cup, etc.) that need a reproducible path from problem files to a defensible paper.
+Use this skill when working on Chinese or international mathematical modeling contest projects that need a reproducible path from problem files to a defensible paper.
 
-This is the Claude Code skill entry point. For Codex, use `my-mathmodel-agent/SKILL.md` in the same repository.
+This is the Claude Code skill entry point. For Codex, use `my-mathmodel-agent/SKILL.md` in the repository root.
 
-## Operating contract
+## Startup ritual
 
-Read `state.json` and `project_manifest.json` before acting. Follow `my-mathmodel-agent/references/workflow-contract.md` for the stage machine and artifact contracts. Never skip method validation, result freezing, or final audit.
+1. Read `state.json`, `project_manifest.json`, and `PROGRESS.md`.
+2. Find the first gate whose value is `false`.
+3. Read only the stage contract needed for that gate.
+4. Work on one gate at a time and update the durable handoff log.
 
-## Default stages
+## Stage machine
 
 ```text
 S0 PREFLIGHT  → S1 ANALYZE  → S2 ROUTE  → S3 DATA_PLAN
@@ -21,28 +24,62 @@ S0 PREFLIGHT  → S1 ANALYZE  → S2 ROUTE  → S3 DATA_PLAN
 → S7 WRITE  → S8 RENDER  → S9 AUDIT  → READY
 ```
 
-At S2, compare candidate topics and routes using feasibility, validation, team fit, paper narrative, innovation, and fallback completeness. For each subproblem record a baseline, primary model, rejected alternatives, fallback, validation plan, and required figures.
+The required state gates are:
 
-At S4-S5, make the smallest runnable proof of concept before full experiments. Save code, parameters, logs, metrics, tables, and figures under the project directory. For optimization, use AMPL (`.mod` + `.dat` + `amplpy`) or an appropriate Python solver; verify `solve_result` and constraint feasibility before reporting success.
+```text
+input_snapshot
+problem_decomposed
+model_route_selected
+data_plan_ready
+method_validated
+experiments_reproduced
+results_frozen
+paper_written
+pdf_verified
+audit_passed
+```
 
-At S6, write every final number and conclusion source to `frozen_numbers.json`. The paper may only consume frozen values. If a result changes, invalidate and regenerate the freeze file.
+Every gate starts `false`. A gate becomes `true` only after independent, reproducible evidence exists in `audit/gate_evidence.json`.
 
-At S7-S8, choose exactly one paper syntax: LaTeX (`.tex`, `\documentclass`, `\usepackage`, `\input`) or Typst (`.typ`, `#import`, `#set`, `#figure`). Do not mix syntaxes. Render and inspect the PDF for overflow, blank pages, missing figures, broken references, formulas, units, and encoding.
+## Core contracts
 
-At S9, run both evidence and format audits. Classify failures and return to the corresponding stage: model→S4, code/data→S5, numbers→S6, paper/figures→S7, compilation/layout→S8.
+- Each subproblem gets `planning/problem_analysis.json` with observable acceptance criteria.
+- Each model route records `baseline`, `primary_model`, `fallback_model`, rejected alternatives, and a validation plan.
+- Each experiment run records command, input hash, parameters, seed, environment, metrics, logs, and outputs.
+- Paper numbers may only come from `frozen_numbers.json`.
+- Each paper claim maps through `paper/evidence_map.json` to a frozen value, figure, or run.
+- Every PDF page is checked in `paper/render_log.json`.
+- Final readiness requires zero hard errors in `audit/final_report.md`.
 
-## Subagents
+## Role subagents
 
-Invoke the following role subagents when appropriate:
+Invoke the role agents under `.claude/agents/`:
 
-- `mathmodel-analyst`: problem decomposition and structured task cards.
-- `mathmodel-modeler`: assumptions, variables, objectives, constraints, validation plan.
-- `mathmodel-coder`: Python/AMPL implementation, logging, reproducibility.
-- `mathmodel-writer`: evidence-driven paper assembly from frozen numbers.
-- `mathmodel-reviewer`: critique, sensitivity checks, anti-hallucination audit.
+- `mathmodel-analyst`: decompose problem facts, assumptions, ambiguities, and acceptance criteria.
+- `mathmodel-modeler`: define symbols, assumptions, objectives, constraints, and model routes.
+- `mathmodel-coder`: implement reproducible experiments and logs.
+- `mathmodel-writer`: assemble the paper only from frozen evidence.
+- `mathmodel-reviewer`: independently reproduce evidence and audit the project.
 
-## Deliverable behavior
+## Recovery
 
-Communicate the current stage, artifacts created, evidence checked, risks, and next entry point. Do not claim completion because a model or solver ran; completion requires `audit/final_report.md` with zero hard errors.
+Return to the earliest invalid gate:
 
-For detailed schemas and examples, read `my-mathmodel-agent/references/workflow-contract.md` only when creating or validating a project.
+- question or data scope → S1
+- model route → S2
+- data leakage or units → S3
+- PoC → S4
+- experiment or solver status → S5
+- numbers → S6
+- claim or evidence mismatch → S7
+- compile or layout → S8
+
+Use the recorded fallback instead of silently changing the model. Append KEEP/CUT/DEFER/PIVOT/ACCEPT_RISK decisions to `planning/decision_log.jsonl`.
+
+## Completion behavior
+
+Do not claim completion because code ran, a solver returned success, or a PDF compiled. Report stage, artifacts, reproduced evidence, risks, and next entry point. Completion requires all gates true and a final independent audit with zero hard errors.
+
+For detailed stage instructions, read `my-mathmodel-agent/references/workflow-contract.md`. For machine-readable JSON shapes, read `my-mathmodel-agent/references/artifact-contracts.md`. For final review scoring, read `my-mathmodel-agent/references/evaluation-rubric.md`.
+
+When updating a user-requested file, replace the current version at its original path and remove obsolete content or duplicate old versions.

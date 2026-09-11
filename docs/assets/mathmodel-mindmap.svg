@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">MathModel Run 数模作战地图</title>
+  <desc id="desc">从输入预检到独立审计的十阶段证据闭环思维导图</desc>
+  <defs>
+    <style>
+      .bg { fill: #f4f6f8; }
+      .ink { fill: #182230; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+      .muted { fill: #526070; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+      .line { fill: none; stroke: #9aa7b4; stroke-width: 3; }
+      .node { stroke-width: 3; }
+      .white { fill: #ffffff; }
+      .blue { fill: #eaf1ff; stroke: #2f6fed; }
+      .teal { fill: #e8f8f4; stroke: #0f766e; }
+      .amber { fill: #fff5df; stroke: #b45309; }
+      .green { fill: #edf8e5; stroke: #4d7c0f; }
+      .cyan { fill: #e8f7fb; stroke: #0e7490; }
+      .red { fill: #fff0f2; stroke: #be123c; }
+      .slate { fill: #eef2f6; stroke: #475569; }
+      .dark { fill: #e9edf2; stroke: #111827; }
+      .purple { fill: #f1edff; stroke: #6d28d9; }
+      .title { font-size: 42px; font-weight: 750; }
+      .subtitle { font-size: 18px; }
+      .node-title { font-size: 20px; font-weight: 700; }
+      .node-sub { font-size: 13px; }
+      .badge { font-size: 12px; font-weight: 700; letter-spacing: 0; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="720"/>
+  <text x="60" y="72" class="ink title">MathModel Run</text>
+  <text x="60" y="104" class="muted subtitle">十阶段 · 十门禁 · 默认失败 · 证据闭环</text>
+
+  <path class="line" d="M600 370 C490 305 430 235 330 165"/>
+  <path class="line" d="M600 370 C470 360 380 350 285 300"/>
+  <path class="line" d="M600 370 C470 410 385 430 285 445"/>
+  <path class="line" d="M600 370 C505 475 450 525 350 585"/>
+  <path class="line" d="M600 370 C560 485 535 550 495 630"/>
+  <path class="line" d="M600 370 C705 305 760 235 870 165"/>
+  <path class="line" d="M600 370 C725 350 805 335 915 300"/>
+  <path class="line" d="M600 370 C725 405 805 430 915 445"/>
+  <path class="line" d="M600 370 C695 475 750 525 850 585"/>
+  <path class="line" d="M600 370 C635 485 665 550 705 630"/>
+
+  <g transform="translate(500 270)">
+    <rect width="200" height="190" rx="18" class="node white" stroke="#182230"/>
+    <text x="100" y="64" text-anchor="middle" class="ink node-title">可辩护论文</text>
+    <text x="100" y="96" text-anchor="middle" class="muted node-sub">READY</text>
+    <line x1="42" y1="122" x2="158" y2="122" stroke="#182230" stroke-width="2"/>
+    <text x="100" y="153" text-anchor="middle" class="muted badge">数字可追溯 · 结论可复现</text>
+  </g>
+
+  <g transform="translate(210 125)">
+    <rect width="240" height="86" rx="10" class="node blue"/>
+    <text x="22" y="36" class="ink node-title">S0 输入预检</text>
+    <text x="22" y="62" class="muted node-sub">input_snapshot</text>
+    <circle cx="210" cy="24" r="8" fill="#2f6fed"/>
+  </g>
+  <g transform="translate(165 260)">
+    <rect width="240" height="86" rx="10" class="node teal"/>
+    <text x="22" y="36" class="ink node-title">S1 题意拆解</text>
+    <text x="22" y="62" class="muted node-sub">problem_decomposed</text>
+    <circle cx="210" cy="24" r="8" fill="#0f766e"/>
+  </g>
+  <g transform="translate(165 405)">
+    <rect width="240" height="86" rx="10" class="node amber"/>
+    <text x="22" y="36" class="ink node-title">S2 模型选路</text>
+    <text x="22" y="62" class="muted node-sub">model_route_selected</text>
+    <circle cx="210" cy="24" r="8" fill="#b45309"/>
+  </g>
+  <g transform="translate(230 545)">
+    <rect width="240" height="86" rx="10" class="node green"/>
+    <text x="22" y="36" class="ink node-title">S3 数据图表</text>
+    <text x="22" y="62" class="muted node-sub">data_plan_ready</text>
+    <circle cx="210" cy="24" r="8" fill="#4d7c0f"/>
+  </g>
+  <g transform="translate(375 590)">
+    <rect width="240" height="86" rx="10" class="node cyan"/>
+    <text x="22" y="36" class="ink node-title">S4 方法 PoC</text>
+    <text x="22" y="62" class="muted node-sub">method_validated</text>
+    <circle cx="210" cy="24" r="8" fill="#0e7490"/>
+  </g>
+  <g transform="translate(750 125)">
+    <rect width="240" height="86" rx="10" class="node purple"/>
+    <text x="22" y="36" class="ink node-title">S5 正式实验</text>
+    <text x="22" y="62" class="muted node-sub">experiments_reproduced</text>
+    <circle cx="210" cy="24" r="8" fill="#6d28d9"/>
+  </g>
+  <g transform="translate(795 260)">
+    <rect width="240" height="86" rx="10" class="node red"/>
+    <text x="22" y="36" class="ink node-title">S6 结果冻结</text>
+    <text x="22" y="62" class="muted node-sub">results_frozen</text>
+    <circle cx="210" cy="24" r="8" fill="#be123c"/>
+  </g>
+  <g transform="translate(795 405)">
+    <rect width="240" height="86" rx="10" class="node slate"/>
+    <text x="22" y="36" class="ink node-title">S7 证据写作</text>
+    <text x="22" y="62" class="muted node-sub">paper_written</text>
+    <circle cx="210" cy="24" r="8" fill="#475569"/>
+  </g>
+  <g transform="translate(730 545)">
+    <rect width="240" height="86" rx="10" class="node dark"/>
+    <text x="22" y="36" class="ink node-title">S8 渲染检查</text>
+    <text x="22" y="62" class="muted node-sub">pdf_verified</text>
+    <circle cx="210" cy="24" r="8" fill="#111827"/>
+  </g>
+  <g transform="translate(585 590)">
+    <rect width="240" height="86" rx="10" class="node dark"/>
+    <text x="22" y="36" class="ink node-title">S9 独立审计</text>
+    <text x="22" y="62" class="muted node-sub">audit_passed</text>
+    <circle cx="210" cy="24" r="8" fill="#111827"/>
+  </g>
+
+  <g transform="translate(60 675)">
+    <circle cx="10" cy="-4" r="5" fill="#be123c"/>
+    <text x="24" y="0" class="muted badge">默认失败：证据未复现前，任何门禁不得翻为通过</text>
+  </g>
+</svg>

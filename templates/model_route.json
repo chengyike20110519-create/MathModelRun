@@ -1,4 +1,6 @@
 {
+  "schema_version": "2.0",
+  "generated_at": null,
   "topic": "A/B/C",
   "selection_score": 0,
   "subproblems": [
@@ -9,10 +11,19 @@
       "baseline": "",
       "primary_model": "",
       "fallback_model": "",
-      "rejection_reason": "",
-      "validation": [],
+      "rejected": [
+        {
+          "model": "",
+          "reason": ""
+        }
+      ],
+      "selection_evidence": [],
+      "validation_plan": [],
       "required_figures": [],
-      "paper_section": ""
+      "paper_section": "",
+      "acceptance_criteria": [],
+      "passes": false,
+      "evidence": []
     }
   ]
 }

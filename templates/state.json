@@ -2,18 +2,10 @@
   "schema_version": "2.0",
   "project_name": "",
   "contest": "CUMCM/MCM/HiMCM/其他",
-  "language": "zh-CN",
   "paper_format": "latex",
-  "problem_files": [],
-  "selected_topic": null,
-  "subproblems": [],
-  "current_stage": "PREFLIGHT",
-  "delivery_rules": {
-    "anonymous": null,
-    "page_limit": null,
-    "template": null,
-    "submission_files": []
-  },
+  "stage": "PREFLIGHT",
+  "status": "not_started",
+  "next_action": "inspect_problem_files_and_record_hashes",
   "gates": {
     "input_snapshot": false,
     "problem_decomposed": false,
@@ -25,5 +17,11 @@
     "paper_written": false,
     "pdf_verified": false,
     "audit_passed": false
-  }
+  },
+  "budget": {
+    "contest_minutes": null,
+    "elapsed_minutes": 0,
+    "delivery_buffer_minutes": 120
+  },
+  "updated_at": null
 }

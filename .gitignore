@@ -77,6 +77,3 @@ logs/
 # OS files
 Thumbs.db
 .DS_Store
-
-# Existing generated sample artifacts in repo root (keep local, do not commit)
-audit/final_report.md

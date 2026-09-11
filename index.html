@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#182230">
+  <title>MathModel Run | 数模作战地图</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f8;
+      --panel: #ffffff;
+      --ink: #182230;
+      --muted: #526070;
+      --line: #d6dde4;
+      --shadow: 0 18px 42px rgba(24, 34, 48, .10);
+      --blue: #2f6fed;
+      --teal: #0f766e;
+      --amber: #b45309;
+      --green: #4d7c0f;
+      --purple: #6d28d9;
+      --cyan: #0e7490;
+      --red: #be123c;
+      --slate: #475569;
+      --dark: #111827;
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button, a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 14px 28px;
+      background: var(--ink);
+      color: #ffffff;
+      border-bottom: 1px solid #0d1520;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 2px solid #ffffff;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .brand span:last-child {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill,
+    .top-link,
+    .tool-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, .24);
+      color: #ffffff;
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    .pill {
+      cursor: default;
+      color: #cbd5e1;
+    }
+
+    .top-link:hover,
+    .tool-button:hover {
+      background: rgba(255, 255, 255, .10);
+    }
+
+    .tool-button {
+      cursor: pointer;
+    }
+
+    .tool-button.primary {
+      background: #ffffff;
+      border-color: #ffffff;
+      color: var(--ink);
+    }
+
+    .tool-button.primary:hover {
+      background: #eef2f7;
+    }
+
+    svg.icon {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .shell {
+      width: min(1480px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0 46px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(420px, 1fr) minmax(280px, 350px);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .brand-panel,
+    .stage-rail,
+    .map-panel,
+    .detail-panel,
+    .proof-panel,
+    .evidence-band,
+    .command-band,
+    .docs-band {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .brand-panel {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      padding: 34px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(34px, 4vw, 64px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .lede {
+      margin: 14px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(92px, 1fr));
+      gap: 10px;
+      min-width: 320px;
+    }
+
+    .score {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .score strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .score span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stage-rail {
+      padding: 16px;
+      align-self: start;
+      position: sticky;
+      top: 76px;
+    }
+
+    .rail-title {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .stage-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .stage-item {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+      min-height: 48px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .stage-item:hover {
+      border-color: #aab6c2;
+    }
+
+    .stage-item.active {
+      border-color: var(--ink);
+      background: #edf2f7;
+    }
+
+    .stage-index {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .stage-copy {
+      min-width: 0;
+    }
+
+    .stage-copy strong,
+    .stage-copy span {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .stage-copy strong { font-size: 13px; }
+    .stage-copy span { margin-top: 2px; color: var(--muted); font-size: 11px; }
+
+    .stage-state {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .map-panel {
+      position: relative;
+      min-height: 720px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .map-head {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .map-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .map-hint {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .map-status {
+      align-self: start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      background: #ffffff;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .map-svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 720px;
+    }
+
+    .connector {
+      fill: none;
+      stroke: #a9b4bf;
+      stroke-width: 3;
+      transition: stroke .16s ease, stroke-width .16s ease;
+    }
+
+    .connector.active {
+      stroke: var(--ink);
+      stroke-width: 4;
+    }
+
+    .node-shape {
+      fill: #ffffff;
+      stroke-width: 3;
+      transition: transform .16s ease, filter .16s ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .stage-node {
+      cursor: pointer;
+      outline: none;
+    }
+
+    .stage-node:hover .node-shape,
+    .stage-node:focus .node-shape {
+      filter: drop-shadow(0 6px 10px rgba(24, 34, 48, .16));
+      transform: translateY(-2px);
+    }
+
+    .stage-node.active .node-shape {
+      filter: drop-shadow(0 8px 14px rgba(24, 34, 48, .20));
+      transform: translateY(-3px);
+    }
+
+    .node-title {
+      font-size: 16px;
+      font-weight: 800;
+      fill: var(--ink);
+    }
+
+    .node-gate {
+      font-size: 11px;
+      fill: var(--muted);
+    }
+
+    .node-dot {
+      stroke: #ffffff;
+      stroke-width: 2;
+    }
+
+    .root-title {
+      font-size: 24px;
+      font-weight: 850;
+      fill: var(--ink);
+    }
+
+    .root-sub {
+      font-size: 13px;
+      fill: var(--muted);
+    }
+
+    .detail-panel {
+      padding: 20px;
+      align-self: start;
+      position: sticky;
+      top: 76px;
+    }
+
+    .detail-kicker {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .detail-kicker span:first-child {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .gate-chip {
+      max-width: 100%;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--red);
+      background: #fff7f8;
+      font-size: 11px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-panel h2 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .detail-desc {
+      margin: 12px 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .detail-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-block {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .detail-block dt {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .detail-block dd {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .proof-panel {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 18px;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .proof-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .proof-subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .proof-steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .proof-step {
+      min-height: 118px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .proof-step strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .proof-step span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .band {
+      margin-top: 18px;
+      padding: 26px;
+    }
+
+    .band-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .band h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .band-note {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .artifact-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .artifact-table th,
+    .artifact-table td {
+      padding: 11px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .artifact-table th {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .artifact-table code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .mono-chip {
+      display: inline-block;
+      max-width: 100%;
+      padding: 3px 6px;
+      border-radius: 6px;
+      background: #edf2f7;
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .command-card {
+      display: grid;
+      gap: 12px;
+      min-height: 164px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .command-card h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .command-card code {
+      display: block;
+      min-height: 54px;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #182230;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .copy-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 0 10px;
+      border: 1px solid var(--slate);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #ffffff;
+      cursor: pointer;
+    }
+
+    .copy-button:hover {
+      background: #edf2f7;
+    }
+
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .doc-link {
+      display: grid;
+      gap: 8px;
+      min-height: 108px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .doc-link:hover {
+      border-color: #aab6c2;
+      background: #ffffff;
+    }
+
+    .doc-link strong {
+      font-size: 15px;
+    }
+
+    .doc-link span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 30;
+      max-width: 320px;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--ink);
+      color: #ffffff;
+      font-size: 13px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1180px) {
+      .workspace {
+        grid-template-columns: 250px 1fr;
+      }
+
+      .detail-panel {
+        grid-column: 1 / -1;
+        position: static;
+      }
+
+      .proof-steps,
+      .command-grid {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+      }
+    }
+
+    @media (max-width: 860px) {
+      .topbar {
+        position: static;
+        grid-template-columns: 1fr;
+      }
+
+      .top-actions {
+        justify-content: flex-start;
+      }
+
+      .shell {
+        width: min(100% - 24px, 720px);
+        padding-top: 18px;
+      }
+
+      .brand-panel {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+
+      .score-row {
+        min-width: 0;
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-rail {
+        position: static;
+      }
+
+      .stage-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .map-panel {
+        min-height: 540px;
+      }
+
+      .map-svg {
+        min-height: 540px;
+      }
+
+      .proof-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .proof-steps,
+      .command-grid,
+      .doc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .band-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .artifact-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .stage-list {
+        grid-template-columns: 1fr;
+      }
+
+      .score-row {
+        grid-template-columns: 1fr;
+      }
+
+      .map-head {
+        position: static;
+        padding: 16px 16px 0;
+      }
+
+      .map-status {
+        align-self: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="MathModel Run 首页">
+      <span class="brand-mark">Σ</span>
+      <span>MathModel Run</span>
+    </a>
+    <nav class="top-actions" aria-label="页面导航">
+      <span class="pill">默认失败 · 十门禁</span>
+      <a class="top-link" href="#evidence">证据链</a>
+      <a class="top-link" href="#commands">命令</a>
+      <a class="tool-button primary" href="docs/WORKFLOW.md">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        打开工作流
+      </a>
+    </nav>
+  </header>
+
+  <main id="top" class="shell">
+    <section class="brand-panel" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">证据驱动的数学建模竞赛入口</p>
+        <h1 id="page-title">把题面推进成有证据的论文</h1>
+        <p class="lede">S0 固定输入，S1 拆题，S2 选路，S3 定数据，S4 做最小验证，S5 跑完整实验，S6 冻结数字，S7 写作，S8 渲染，S9 独立审计。每一步都默认未通过，证据复现后才翻门。</p>
+      </div>
+      <div class="score-row" aria-label="核心指标">
+        <div class="score"><strong>10</strong><span>阶段</span></div>
+        <div class="score"><strong>10</strong><span>门禁</span></div>
+        <div class="score"><strong>0</strong><span>硬错误要求</span></div>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="数模作战地图">
+      <aside class="stage-rail" aria-label="阶段列表">
+        <p class="rail-title">阶段</p>
+        <div class="stage-list" id="stage-list">
+          <button class="stage-item active" type="button" data-stage="input">
+            <span class="stage-index" style="background:#2f6fed">S0</span>
+            <span class="stage-copy"><strong>输入预检</strong><span>input_manifest.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="analyze">
+            <span class="stage-index" style="background:#0f766e">S1</span>
+            <span class="stage-copy"><strong>题意拆解</strong><span>problem_analysis.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="route">
+            <span class="stage-index" style="background:#b45309">S2</span>
+            <span class="stage-copy"><strong>模型选路</strong><span>model_route.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="data">
+            <span class="stage-index" style="background:#4d7c0f">S3</span>
+            <span class="stage-copy"><strong>数据图表</strong><span>data_plan.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="method">
+            <span class="stage-index" style="background:#0e7490">S4</span>
+            <span class="stage-copy"><strong>方法 PoC</strong><span>method_validation.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="experiment">
+            <span class="stage-index" style="background:#6d28d9">S5</span>
+            <span class="stage-copy"><strong>正式实验</strong><span>run_manifest.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="freeze">
+            <span class="stage-index" style="background:#be123c">S6</span>
+            <span class="stage-copy"><strong>结果冻结</strong><span>frozen_numbers.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="write">
+            <span class="stage-index" style="background:#475569">S7</span>
+            <span class="stage-copy"><strong>证据写作</strong><span>evidence_map.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="render">
+            <span class="stage-index" style="background:#7c2d12">S8</span>
+            <span class="stage-copy"><strong>渲染检查</strong><span>render_log.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+          <button class="stage-item" type="button" data-stage="audit">
+            <span class="stage-index" style="background:#111827">S9</span>
+            <span class="stage-copy"><strong>独立审计</strong><span>acceptance.json</span></span>
+            <span class="stage-state">OPEN</span>
+          </button>
+        </div>
+      </aside>
+
+      <section class="map-panel" aria-label="交互式思维导图">
+        <div class="map-head">
+          <div>
+            <h2 class="map-title">数模作战地图</h2>
+            <p class="map-hint">选择任意阶段查看产物、出口标准和回退点</p>
+          </div>
+          <div class="map-status"><span>READY</span><span>证据硬错误 = 0</span></div>
+        </div>
+
+        <svg class="map-svg" viewBox="0 0 1000 720" role="img" aria-labelledby="svg-title svg-desc">
+          <title id="svg-title">MathModel Run 思维导图</title>
+          <desc id="svg-desc">十阶段从输入预检推进到独立审计</desc>
+          <path class="connector" data-for="input" d="M500 350 C410 300 360 245 285 190"/>
+          <path class="connector" data-for="analyze" d="M500 350 C400 350 340 340 260 300"/>
+          <path class="connector" data-for="route" d="M500 350 C400 390 335 415 260 445"/>
+          <path class="connector" data-for="data" d="M500 350 C430 460 375 505 315 570"/>
+          <path class="connector" data-for="method" d="M500 350 C475 460 460 520 440 620"/>
+          <path class="connector" data-for="experiment" d="M500 350 C595 300 645 245 715 190"/>
+          <path class="connector" data-for="freeze" d="M500 350 C600 350 660 340 740 300"/>
+          <path class="connector" data-for="write" d="M500 350 C600 390 665 415 740 445"/>
+          <path class="connector" data-for="render" d="M500 350 C570 460 625 505 685 570"/>
+          <path class="connector" data-for="audit" d="M500 350 C525 460 540 520 560 620"/>
+
+          <g class="stage-node active" data-stage="input" tabindex="0" role="button" aria-label="S0 输入预检">
+            <rect class="node-shape" x="120" y="148" width="205" height="74" rx="8" style="fill:#eaf1ff;stroke:#2f6fed"/>
+            <text class="node-title" x="140" y="180">S0 输入预检</text>
+            <text class="node-gate" x="140" y="203">input_snapshot</text>
+            <circle class="node-dot" cx="304" cy="166" r="7" fill="#2f6fed"/>
+          </g>
+          <g class="stage-node" data-stage="analyze" tabindex="0" role="button" aria-label="S1 题意拆解">
+            <rect class="node-shape" x="95" y="270" width="205" height="74" rx="8" style="fill:#e8f8f4;stroke:#0f766e"/>
+            <text class="node-title" x="115" y="302">S1 题意拆解</text>
+            <text class="node-gate" x="115" y="325">problem_decomposed</text>
+            <circle class="node-dot" cx="279" cy="288" r="7" fill="#0f766e"/>
+          </g>
+          <g class="stage-node" data-stage="route" tabindex="0" role="button" aria-label="S2 模型选路">
+            <rect class="node-shape" x="95" y="415" width="205" height="74" rx="8" style="fill:#fff5df;stroke:#b45309"/>
+            <text class="node-title" x="115" y="447">S2 模型选路</text>
+            <text class="node-gate" x="115" y="470">model_route_selected</text>
+            <circle class="node-dot" cx="279" cy="433" r="7" fill="#b45309"/>
+          </g>
+          <g class="stage-node" data-stage="data" tabindex="0" role="button" aria-label="S3 数据图表">
+            <rect class="node-shape" x="170" y="540" width="205" height="74" rx="8" style="fill:#edf8e5;stroke:#4d7c0f"/>
+            <text class="node-title" x="190" y="572">S3 数据图表</text>
+            <text class="node-gate" x="190" y="595">data_plan_ready</text>
+            <circle class="node-dot" cx="354" cy="558" r="7" fill="#4d7c0f"/>
+          </g>
+          <g class="stage-node" data-stage="method" tabindex="0" role="button" aria-label="S4 方法 PoC">
+            <rect class="node-shape" x="300" y="612" width="205" height="74" rx="8" style="fill:#e8f7fb;stroke:#0e7490"/>
+            <text class="node-title" x="320" y="644">S4 方法 PoC</text>
+            <text class="node-gate" x="320" y="667">method_validated</text>
+            <circle class="node-dot" cx="484" cy="630" r="7" fill="#0e7490"/>
+          </g>
+          <g class="stage-node" data-stage="experiment" tabindex="0" role="button" aria-label="S5 正式实验">
+            <rect class="node-shape" x="675" y="148" width="205" height="74" rx="8" style="fill:#f1edff;stroke:#6d28d9"/>
+            <text class="node-title" x="695" y="180">S5 正式实验</text>
+            <text class="node-gate" x="695" y="203">experiments_reproduced</text>
+            <circle class="node-dot" cx="859" cy="166" r="7" fill="#6d28d9"/>
+          </g>
+          <g class="stage-node" data-stage="freeze" tabindex="0" role="button" aria-label="S6 结果冻结">
+            <rect class="node-shape" x="700" y="270" width="205" height="74" rx="8" style="fill:#fff0f2;stroke:#be123c"/>
+            <text class="node-title" x="720" y="302">S6 结果冻结</text>
+            <text class="node-gate" x="720" y="325">results_frozen</text>
+            <circle class="node-dot" cx="884" cy="288" r="7" fill="#be123c"/>
+          </g>
+          <g class="stage-node" data-stage="write" tabindex="0" role="button" aria-label="S7 证据写作">
+            <rect class="node-shape" x="700" y="415" width="205" height="74" rx="8" style="fill:#eef2f6;stroke:#475569"/>
+            <text class="node-title" x="720" y="447">S7 证据写作</text>
+            <text class="node-gate" x="720" y="470">paper_written</text>
+            <circle class="node-dot" cx="884" cy="433" r="7" fill="#475569"/>
+          </g>
+          <g class="stage-node" data-stage="render" tabindex="0" role="button" aria-label="S8 渲染检查">
+            <rect class="node-shape" x="625" y="540" width="205" height="74" rx="8" style="fill:#f7efe8;stroke:#7c2d12"/>
+            <text class="node-title" x="645" y="572">S8 渲染检查</text>
+            <text class="node-gate" x="645" y="595">pdf_verified</text>
+            <circle class="node-dot" cx="809" cy="558" r="7" fill="#7c2d12"/>
+          </g>
+          <g class="stage-node" data-stage="audit" tabindex="0" role="button" aria-label="S9 独立审计">
+            <rect class="node-shape" x="495" y="612" width="205" height="74" rx="8" style="fill:#e9edf2;stroke:#111827"/>
+            <text class="node-title" x="515" y="644">S9 独立审计</text>
+            <text class="node-gate" x="515" y="667">audit_passed</text>
+            <circle class="node-dot" cx="679" cy="630" r="7" fill="#111827"/>
+          </g>
+
+          <g aria-label="中心目标">
+            <rect x="405" y="270" width="190" height="160" rx="10" fill="#ffffff" stroke="#182230" stroke-width="3"/>
+            <text class="root-title" x="500" y="330" text-anchor="middle">可辩护论文</text>
+            <text class="root-sub" x="500" y="360" text-anchor="middle">READY</text>
+            <line x1="445" y1="384" x2="555" y2="384" stroke="#182230" stroke-width="2"/>
+            <text class="node-gate" x="500" y="407" text-anchor="middle">数字可追溯 · 结论可复现</text>
+          </g>
+        </svg>
+      </section>
+
+      <aside class="detail-panel" aria-live="polite">
+        <div class="detail-kicker">
+          <span id="detail-kicker">S0 · PREFLIGHT</span>
+          <span class="gate-chip" id="detail-gate">input_snapshot</span>
+        </div>
+        <h2 id="detail-title">输入预检</h2>
+        <p class="detail-desc" id="detail-desc">固定题面、附件、模板和环境，先确保所有输入可读、可追溯、不会在后文悄悄漂移。</p>
+        <dl class="detail-grid">
+          <div class="detail-block">
+            <dt>核心产物</dt>
+            <dd id="detail-artifact"><span class="mono-chip">input_manifest.json</span></dd>
+          </div>
+          <div class="detail-block">
+            <dt>出口标准</dt>
+            <dd id="detail-exit">题面与附件可读，路径、SHA-256、访问日期和环境诊断完整。</dd>
+          </div>
+          <div class="detail-block">
+            <dt>失败回退</dt>
+            <dd id="detail-return">文件不可读、规则不清或来源冲突时，先补清单，不进入题意拆解。</dd>
+          </div>
+        </dl>
+      </aside>
+
+      <section class="proof-panel" aria-labelledby="proof-title">
+        <div>
+          <h2 class="proof-title" id="proof-title">五步入场</h2>
+          <p class="proof-subtitle">任何一步失败就停在这里，不把后续标成通过。</p>
+        </div>
+        <div class="proof-steps">
+          <div class="proof-step"><strong>01 输入可读</strong><span>题面、附件、哈希和访问日期齐全。</span></div>
+          <div class="proof-step"><strong>02 路线成立</strong><span>每问都有 baseline、primary、fallback。</span></div>
+          <div class="proof-step"><strong>03 PoC 可跑</strong><span>最小样例复现关键计算和对照。</span></div>
+          <div class="proof-step"><strong>04 结果可冻</strong><span>正式日志、参数、指标和来源完整。</span></div>
+          <div class="proof-step"><strong>05 论文可复</strong><span>冻结数字重建图表，PDF 逐页检查。</span></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="evidence-band band" id="evidence" aria-labelledby="evidence-title">
+      <div class="band-head">
+        <div>
+          <h2 id="evidence-title">证据链</h2>
+          <p class="band-note">每一个门禁都有固定落点，不依赖聊天记录。</p>
+        </div>
+        <a class="tool-button" style="color:var(--ink);border-color:var(--line)" href="my-mathmodel-agent/references/artifact-contracts.md">打开契约</a>
+      </div>
+      <table class="artifact-table">
+        <thead>
+          <tr><th>阶段</th><th>机器产物</th><th>默认状态</th><th>验收证据</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S0 输入预检</td><td><code>input_manifest.json</code></td><td>未完成</td><td>路径、类型、SHA-256、访问日期、可读状态</td></tr>
+          <tr><td>S1 题意拆解</td><td><code>planning/problem_analysis.json</code></td><td><code>passes: false</code></td><td>事实、假设、歧义、验收标准</td></tr>
+          <tr><td>S2 模型选路</td><td><code>methods/model_route.json</code></td><td><code>passes: false</code></td><td>baseline、primary、fallback、拒绝理由</td></tr>
+          <tr><td>S3 数据图表</td><td><code>data_cleaned/data_plan.json</code></td><td>未完成</td><td>字段、单位、清洗、泄漏检查、图表计划</td></tr>
+          <tr><td>S4 方法 PoC</td><td><code>methods/method_validation.json</code></td><td><code>pending</code></td><td>PoC 命令、日志、baseline 对照、求解状态</td></tr>
+          <tr><td>S5 正式实验</td><td><code>results/run_manifest.json</code></td><td><code>pending</code></td><td>run_id、参数、种子、输入哈希、日志、指标</td></tr>
+          <tr><td>S6 结果冻结</td><td><code>frozen_numbers.json</code></td><td>无冻结值</td><td>name、value、unit、source_file、source_run、subproblem、notes</td></tr>
+          <tr><td>S7 证据写作</td><td><code>paper/evidence_map.json</code></td><td>未完成</td><td>claim → frozen value / figure / run</td></tr>
+          <tr><td>S8 渲染检查</td><td><code>paper/render_log.json</code></td><td><code>pending</code></td><td>逐页 checked、硬错误为 0</td></tr>
+          <tr><td>S9 独立审计</td><td><code>audit/acceptance.json</code> + <code>final_report.md</code></td><td><code>fail</code></td><td>独立复现、硬错误 0、加权分 ≥ 4.0</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="command-band band" id="commands" aria-labelledby="commands-title">
+      <div class="band-head">
+        <div>
+          <h2 id="commands-title">命令台</h2>
+          <p class="band-note">替换项目名后可直接使用。</p>
+        </div>
+      </div>
+      <div class="command-grid">
+        <article class="command-card">
+          <h3>新建项目</h3>
+          <code id="cmd-init">python3 my-mathmodel-agent/scripts/init_project.py 2026-cumcm-a</code>
+          <button class="copy-button" type="button" data-copy="cmd-init"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button>
+        </article>
+        <article class="command-card">
+          <h3>查看状态</h3>
+          <code id="cmd-status">python3 my-mathmodel-agent/scripts/status.py 2026-cumcm-a</code>
+          <button class="copy-button" type="button" data-copy="cmd-status"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button>
+        </article>
+        <article class="command-card">
+          <h3>环境诊断</h3>
+          <code id="cmd-doctor">python3 my-mathmodel-agent/scripts/doctor.py</code>
+          <button class="copy-button" type="button" data-copy="cmd-doctor"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button>
+        </article>
+        <article class="command-card">
+          <h3>机械审计</h3>
+          <code id="cmd-audit">python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a</code>
+          <button class="copy-button" type="button" data-copy="cmd-audit"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="docs-band band" aria-labelledby="docs-title">
+      <div class="band-head">
+        <div>
+          <h2 id="docs-title">文档入口</h2>
+          <p class="band-note">从总入口进入，按当前任务读取对应契约。</p>
+        </div>
+      </div>
+      <div class="doc-grid">
+        <a class="doc-link" href="my-mathmodel-agent/SKILL.md"><strong>Skill 总入口</strong><span>模式、门禁、角色与恢复规则</span></a>
+        <a class="doc-link" href="my-mathmodel-agent/references/workflow-contract.md"><strong>十阶段契约</strong><span>输入、产物、出口标准和失败回退</span></a>
+        <a class="doc-link" href="my-mathmodel-agent/references/evaluation-rubric.md"><strong>独立评分表</strong><span>0-5 分维度、硬底线与 verdict 规则</span></a>
+        <a class="doc-link" href="docs/WORKFLOW.md"><strong>中文工作流</strong><span>从 S0 到 READY 的执行说明</span></a>
+        <a class="doc-link" href="docs/assets/mathmodel-mindmap.svg"><strong>思维导图 SVG</strong><span>可单独分享或嵌入文档</span></a>
+        <a class="doc-link" href="README.md"><strong>项目 README</strong><span>安装、快速开始和仓库结构</span></a>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const stages = {
+      input: {
+        kicker: "S0 · PREFLIGHT", gate: "input_snapshot", title: "输入预检",
+        desc: "固定题面、附件、模板和环境，先确保所有输入可读、可追溯、不会在后文悄悄漂移。",
+        artifact: "input_manifest.json",
+        exit: "题面与附件可读，路径、SHA-256、访问日期和环境诊断完整。",
+        back: "文件不可读、规则不清或来源冲突时，先补清单，不进入题意拆解。"
+      },
+      analyze: {
+        kicker: "S1 · ANALYZE", gate: "problem_decomposed", title: "题意拆解",
+        desc: "把题目拆成可独立验收的子问题卡，区分事实、假设、歧义和明确不做的范围。",
+        artifact: "planning/problem_analysis.json",
+        exit: "每一问都有输入、输出、约束、指标和可测验收标准。",
+        back: "题意理解错了就回 S1；不能用后续模型修补错误题意。"
+      },
+      route: {
+        kicker: "S2 · ROUTE", gate: "model_route_selected", title: "模型选路",
+        desc: "在写代码前确定 baseline、primary、fallback、拒绝路线和验证计划。",
+        artifact: "methods/model_route.json",
+        exit: "每问至少三条路线，复杂模型相对 baseline 有可测收益。",
+        back: "主模型无法辩护时回 S2，切换到已记录 fallback，并写决策日志。"
+      },
+      data: {
+        kicker: "S3 · DATA_PLAN", gate: "data_plan_ready", title: "数据图表",
+        desc: "先定义字段、单位、清洗、泄漏检查和图表目的，再执行清洗和绘图。",
+        artifact: "data_cleaned/data_plan.json + figures/visualization_plan.json",
+        exit: "字段来源可追溯，预测无未来泄漏，每张图有脚本和目标。",
+        back: "字段口径冲突、缺失机制不明或图表先画后补意义时回 S3。"
+      },
+      method: {
+        kicker: "S4 · METHOD_POC", gate: "method_validated", title: "方法 PoC",
+        desc: "用最小样例证明公式、约束、求解流程和 baseline 对照都能运行。",
+        artifact: "methods/method_validation.json + code/poc_*",
+        exit: "PoC 有命令和日志，优化检查可行性，预测检查切分和基线。",
+        back: "PoC 不运行或数学与代码不一致时回 S4。"
+      },
+      experiment: {
+        kicker: "S5 · EXPERIMENT", gate: "experiments_reproduced", title: "正式实验",
+        desc: "按 baseline、primary、消融、敏感性、稳健性、图表顺序保存完整运行证据。",
+        artifact: "results/run_manifest.json + runs/* + figures/*",
+        exit: "每次运行有 run_id、参数、种子、输入哈希、日志、指标和输出。",
+        back: "结果不可重跑、指标无来源或手工改图时回 S5。"
+      },
+      freeze: {
+        kicker: "S6 · FREEZE", gate: "results_frozen", title: "结果冻结",
+        desc: "把进入论文的数字变成带来源、运行标识和说明的证据快照。",
+        artifact: "frozen_numbers.json",
+        exit: "每个值都有 name、value、unit、source_file、source_run、subproblem、notes。",
+        back: "代码、参数、种子或数据变化后，旧冻结立即失效，必须重新运行。"
+      },
+      write: {
+        kicker: "S7 · WRITE", gate: "paper_written", title: "证据写作",
+        desc: "从冻结数字、模型契约和运行记录组织论文，不先写漂亮叙事再找证据。",
+        artifact: "paper/main.tex 或 paper/main.typ + paper/evidence_map.json",
+        exit: "每个数字、表、图、结论都能映射到冻结值或运行记录。",
+        back: "正文使用未冻结数字或证据不匹配时回 S6/S7。"
+      },
+      render: {
+        kicker: "S8 · RENDER", gate: "pdf_verified", title: "渲染检查",
+        desc: "编译 PDF 后逐页检查溢出、空白页、缺图、乱码、交叉引用和模板合规。",
+        artifact: "paper/main.pdf + paper/render_log.json",
+        exit: "无硬错误，所有页面 checked，图表编号和单位一致。",
+        back: "排版问题回 S7 修源文件，不直接编辑 PDF。"
+      },
+      audit: {
+        kicker: "S9 · AUDIT", gate: "audit_passed", title: "独立审计",
+        desc: "换一个视角复现关键命令、反查数字、核对门禁并写出最终审查报告。",
+        artifact: "audit/acceptance.json + audit/final_report.md",
+        exit: "硬错误为 0，加权分达到标准，未验证结论清零。",
+        back: "任何硬错误都回最早失效阶段，不用解释掩盖。"
+      }
+    };
+
+    const toast = document.getElementById("toast");
+    let toastTimer = null;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function setStage(id) {
+      const stage = stages[id];
+      if (!stage) return;
+      document.querySelectorAll("[data-stage]").forEach(el => {
+        el.classList.toggle("active", el.dataset.stage === id);
+      });
+      document.querySelectorAll(".connector").forEach(el => {
+        el.classList.toggle("active", el.dataset.for === id);
+      });
+      document.getElementById("detail-kicker").textContent = stage.kicker;
+      document.getElementById("detail-gate").textContent = stage.gate;
+      document.getElementById("detail-title").textContent = stage.title;
+      document.getElementById("detail-desc").textContent = stage.desc;
+      document.getElementById("detail-artifact").innerHTML = `<span class="mono-chip">${stage.artifact}</span>`;
+      document.getElementById("detail-exit").textContent = stage.exit;
+      document.getElementById("detail-return").textContent = stage.back;
+    }
+
+    document.querySelectorAll("[data-stage]").forEach(el => {
+      el.addEventListener("click", () => setStage(el.dataset.stage));
+      el.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setStage(el.dataset.stage);
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-copy]").forEach(button => {
+      button.addEventListener("click", async () => {
+        const target = document.getElementById(button.dataset.copy);
+        const text = target ? target.textContent.trim() : "";
+        try {
+          await navigator.clipboard.writeText(text);
+          showToast("命令已复制");
+        } catch {
+          showToast("复制失败，请手动选择命令");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

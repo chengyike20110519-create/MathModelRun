@@ -11,12 +11,21 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_FILES = [
     "README.md",
     "AGENTS.md",
+    "AGENT_PROMPT.md",
     "LICENSE",
     ".gitignore",
+    "index.html",
+    "docs/WORKFLOW.md",
+    "docs/INSTALL.md",
+    "docs/CONTRIBUTE.md",
+    "docs/assets/mathmodel-mindmap.svg",
     "my-mathmodel-agent/SKILL.md",
     "my-mathmodel-agent/agents/openai.yaml",
     "my-mathmodel-agent/references/workflow-contract.md",
+    "my-mathmodel-agent/references/artifact-contracts.md",
+    "my-mathmodel-agent/references/evaluation-rubric.md",
     "my-mathmodel-agent/scripts/init_project.py",
+    "my-mathmodel-agent/scripts/status.py",
     "my-mathmodel-agent/scripts/doctor.py",
     "my-mathmodel-agent/scripts/freeze_numbers.py",
     "my-mathmodel-agent/scripts/audit_workspace.py",
@@ -27,16 +36,55 @@ REQUIRED_FILES = [
     ".claude/agents/mathmodel-writer.md",
     ".claude/agents/mathmodel-reviewer.md",
     ".claude/workflows/mathmodel-workflow.md",
-    "docs/INSTALL.md",
-    "docs/WORKFLOW.md",
-    "docs/CONTRIBUTE.md",
+    "templates/project_manifest.json",
+    "templates/state.json",
+    "templates/input_manifest.json",
+    "templates/problem_analysis.json",
+    "templates/model_route.json",
+    "templates/data_plan.json",
+    "templates/visualization_plan.json",
+    "templates/method_validation.json",
+    "templates/run_manifest.json",
+    "templates/evidence_map.json",
+    "templates/render_log.json",
+    "templates/gate_evidence.json",
+    "templates/acceptance.json",
+    "templates/frozen_numbers.json",
+    "templates/PROGRESS.md",
+    "templates/decision_log.jsonl",
     "templates/shared/requirements.txt",
     "tests/test_smoke.py",
 ]
 
 REQUIRED_EXECUTABLES = [
-    "my-mathmodel-agent/scripts/doctor.py",
     "my-mathmodel-agent/scripts/init_project.py",
+    "my-mathmodel-agent/scripts/status.py",
+    "my-mathmodel-agent/scripts/doctor.py",
+    "my-mathmodel-agent/scripts/freeze_numbers.py",
+    "my-mathmodel-agent/scripts/audit_workspace.py",
+]
+
+JSON_FILES = [
+    ".codex-plugin/plugin.json",
+    *[
+        f"templates/{name}.json"
+        for name in [
+            "project_manifest",
+            "state",
+            "input_manifest",
+            "problem_analysis",
+            "model_route",
+            "data_plan",
+            "visualization_plan",
+            "method_validation",
+            "run_manifest",
+            "evidence_map",
+            "render_log",
+            "gate_evidence",
+            "acceptance",
+            "frozen_numbers",
+        ]
+    ],
 ]
 
 
@@ -69,13 +117,20 @@ def validate_executables():
 
 def validate_json_files():
     ok = True
-    for rel in ["my-mathmodel-agent/agents/openai.yaml", ".codex-plugin/plugin.json"]:
+    for rel in JSON_FILES:
         path = REPO_ROOT / rel
         if not path.exists():
+            ok = error(f"missing JSON file: {rel}")
             continue
         try:
-            text = path.read_text()
-            # YAML is a superset of JSON; try JSON first, fall back to yaml if installed.
+            json.loads(path.read_text(encoding="utf-8"))
+            print(f"OK json: {rel}")
+        except Exception as exc:
+            ok = error(f"cannot parse {rel}: {exc}")
+    for rel in ["my-mathmodel-agent/agents/openai.yaml"]:
+        path = REPO_ROOT / rel
+        try:
+            text = path.read_text(encoding="utf-8")
             try:
                 json.loads(text)
             except json.JSONDecodeError:
@@ -83,7 +138,7 @@ def validate_json_files():
                     import yaml
                     yaml.safe_load(text)
                 except ImportError:
-                    pass  # skip YAML validation if PyYAML is missing
+                    pass
             print(f"OK parse: {rel}")
         except Exception as exc:
             ok = error(f"cannot parse {rel}: {exc}")
@@ -92,11 +147,10 @@ def validate_json_files():
 
 def validate_smoke_tests():
     print("Running smoke tests...")
-    # Prefer pytest if available, otherwise run the script directly.
-    if subprocess.run([sys.executable, "-m", "pytest", "--version"], capture_output=True).returncode == 0:
-        cmd = [sys.executable, "-m", "pytest", "tests/test_smoke.py", "-v"]
-    else:
-        cmd = [sys.executable, "tests/test_smoke.py"]
+    # Prefer the direct smoke entrypoint. Some local Python distributions load
+    # pytest plugin modules that can fail before tests execute; the script
+    # entrypoint exercises the same regression tests without that extra layer.
+    cmd = [sys.executable, "tests/test_smoke.py"]
     result = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True)
     print(result.stdout)
     if result.returncode != 0:
@@ -115,9 +169,8 @@ def main():
     if ok:
         print("validate_repo: repository is release-ready")
         return 0
-    else:
-        print("validate_repo: repository has issues")
-        return 1
+    print("validate_repo: repository has issues")
+    return 1
 
 
 if __name__ == "__main__":

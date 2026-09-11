@@ -1,0 +1,9 @@
+{
+  "schema_version": "2.0",
+  "generated_at": null,
+  "fields": [],
+  "cleaning_rules": [],
+  "leakage_checks": [],
+  "split_plan": null,
+  "external_sources": []
+}

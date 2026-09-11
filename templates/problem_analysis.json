@@ -1,0 +1,26 @@
+{
+  "schema_version": "2.0",
+  "generated_at": null,
+  "subproblems": [
+    {
+      "id": "Q1",
+      "question": "",
+      "deliverable": "",
+      "role": "first/main/extend/final",
+      "task_type": "prediction/optimization/evaluation/statistics/simulation",
+      "inputs": [],
+      "outputs": [],
+      "hard_constraints": [],
+      "soft_objectives": [],
+      "metrics": [],
+      "attachment_dependencies": [],
+      "facts": [],
+      "assumptions": [],
+      "ambiguities": [],
+      "out_of_scope": [],
+      "acceptance_criteria": [],
+      "passes": false,
+      "evidence": []
+    }
+  ]
+}

@@ -1,65 +1,109 @@
-# MyMathModelAgent 专家级 Workflow
+# MathModel Run 工作流
 
-目标：建立“题面事实→模型→代码→证据→论文→审计”的可复现闭环，而不是只生成一篇看似完整的文章。
+目标：建立“题面事实 → 模型 → 代码 → 证据 → 论文 → 审计”的可复现闭环，而不是只生成一篇看似完整的文章。
+
+## 十阶段状态机
+
+```text
+S0 PREFLIGHT
+  input_manifest.json
+      |
+      v
+S1 ANALYZE
+  planning/problem_analysis.json
+      |
+      v
+S2 ROUTE
+  methods/model_route.json
+      |
+      v
+S3 DATA_PLAN
+  data_cleaned/data_plan.json + figures/visualization_plan.json
+      |
+      v
+S4 METHOD_POC
+  methods/method_validation.json + code/poc_*
+      |
+      v
+S5 EXPERIMENT
+  results/run_manifest.json + runs/* + figures/*
+      |
+      v
+S6 FREEZE
+  frozen_numbers.json
+      |
+      v
+S7 WRITE
+  paper/main.tex 或 paper/main.typ + paper/evidence_map.json
+      |
+      v
+S8 RENDER
+  paper/main.pdf + paper/render_log.json
+      |
+      v
+S9 AUDIT
+  audit/acceptance.json + audit/final_report.md
+      |
+      v
+READY
+```
+
+## 每轮固定动作
+
+1. 读取 `state.json`、`project_manifest.json`、`PROGRESS.md` 和当前阶段产物。
+2. 找到第一个为 `false` 的门禁，不跳步。
+3. 明确本轮产物、验收标准和失败回退点。
+4. 生成最小可验证结果。
+5. 切换到 Reviewer 视角复现命令、日志、图表或人工检查。
+6. 更新 `state.json`、`PROGRESS.md`、`audit/gate_evidence.json`。
+7. 写出阶段、产物、证据、风险和精确下一步。
 
 ## 阶段与门禁
 
-|阶段|动作|必须产物|通过标准|
-|---|---|---|---|
-|S0 预检|登记题面、附件、环境、哈希|`input_manifest.json`|文件可读、输入快照完整|
-|S1 解析|拆分子问题、识别输入/输出/约束/指标|`problem_analysis.json`|每问有结构化任务卡|
-|S2 路线|A/B/C 评分、模型竞赛、风险判断|`topic_scores.json`、`model_route.json`|每问有 baseline/primary/fallback|
-|S3 数据|数据字典、清洗规则、泄漏检查、图表计划|`data_plan.json`、`visualization_plan.json`|字段、单位、来源可追溯|
-|S4 验证|符号、假设、目标、约束、PoC|`method_validation.json`|最小样例可运行且可验证|
-|S5 实验|逐问运行 Python/AMPL、对照、敏感性、稳健性|`run_manifest.json`、指标、日志、图表|可重跑、约束满足、指标有来源|
-|S6 冻结|固化最终数字与结论来源|`frozen_numbers.json`|每个值含来源文件和 run_id|
-|S7 写作|按证据写章节、公式、图表和结论|`paper/`、索引文件|论文只读取冻结值|
-|S8 渲染|LaTeX 或 Typst 编译、逐页检查|PDF、渲染记录|无错误、溢出、乱码、空白页|
-|S9 审计|证据门禁+格式门禁|`audit/final_report.md`|硬错误为 0 才能 READY|
+| 阶段 | 必须完成 | 门禁 |
+|---|---|---|
+| S0 输入预检 | 题面/附件可读，路径、SHA-256、访问日期、环境完整 | `input_snapshot` |
+| S1 题意拆解 | 每问有输入、输出、约束、指标、事实/假设/歧义、验收标准 | `problem_decomposed` |
+| S2 模型选路 | 每问有 baseline、primary、fallback、拒绝路线和验证计划 | `model_route_selected` |
+| S3 数据图表 | 字段、单位、清洗、泄漏检查、图表目的和脚本明确 | `data_plan_ready` |
+| S4 方法 PoC | 符号、假设、目标、约束、算法和最小可运行样例一致 | `method_validated` |
+| S5 正式实验 | baseline、primary、消融、敏感性、稳健性、图表都可复现 | `experiments_reproduced` |
+| S6 结果冻结 | 论文数字有 name/value/unit/source_file/source_run/subproblem/notes | `results_frozen` |
+| S7 证据写作 | 每个 claim、数字、表和图映射到冻结值或运行记录 | `paper_written` |
+| S8 渲染检查 | PDF 编译成功并逐页检查，无硬错误 | `pdf_verified` |
+| S9 独立审计 | 独立复现证据，硬错误为 0，评分达到门槛 | `audit_passed` |
 
-## 状态机
+## 证据类型
 
-```text
-PREFLIGHT → ANALYZED → ROUTED → DATA_READY → METHOD_VALIDATED
-→ EXPERIMENTED → FROZEN → WRITTEN → RENDERED → AUDITED → READY
-```
+每个门禁都要落到可复现证据：
 
-禁止跳过 S4、S6、S9。每次运行先读取 `state.json` 和 `project_manifest.json`。
-
-## 角色
-
-- 总控：维护状态、门禁、任务拆分和回退。
-- 题意分析：只区分题面事实与推断，不擅自改题意。
-- 建模：为每问写 baseline、primary、rejected、fallback、validation。
-- 实验：保存代码、参数、日志、指标、表格和图表；禁止手工改数字。
-- 证据管理员：维护哈希、run_id、来源和冻结快照。
-- 写作：将证据组织成论证，不在冻结前填写最终数值。
-- 审稿人：寻找反例、敏感性风险、泄漏和不可复现步骤。
-
-## S0–S3：问题、选题和数据
-
-S0 区分题面、原始数据、模板和说明文件；记录 SHA-256、访问日期（当前日期为 2026-08-31 时使用绝对日期），检查 PDF/表格编码和工具环境。
-
-S1 为每问填写：研究对象、决策变量、输入字段、输出形式、硬约束、软目标、评价指标、附件依赖和不能做的事情。明确标注题面事实与 Agent 假设。
-
-S2 对候选题按题意确定性、数据可得性、模型可行性、验证难度、代码复杂度、图表能力、论文叙事、创新、队伍匹配、fallback 完整度 0–5 分评分。复杂模型必须证明相对 baseline 的可测量收益。
-
-S3 建立字段、类型、单位、缺失编码、异常范围、来源和泄漏风险的数据字典；先写清洗规则再执行；每张图登记目的、脚本、数据源、路径和正文引用位置。
-
-## S4–S6：模型、实验和证据
-
-每个模型必须写符号表、假设、变量、参数、目标函数、约束、求解流程、适用边界和验证策略。先做最小 PoC，再扩大实验。优化问题可用 AMPL（`.mod`+`.dat`+`amplpy`）或 Python；报告成功前必须检查 `solve_result`、目标值、变量界和约束违反量。
-
-正式实验顺序：基线→主模型→对照/消融→敏感性→稳健性→图表。每次运行记录唯一 `run_id`、输入哈希、参数、随机种子、环境、日志和警告。预测任务防止时间泄漏；优化任务报告可行性和约束余量。
-
-只有正式运行复核后才能冻结。每个冻结值包含 `name/value/unit/source_file/source_run/subproblem/notes`。模型、数据、参数或代码改变即使冻结失效，必须重跑。
-
-## S7–S9：论文与审计
-
-论文顺序：问题重述→符号与假设→模型→算法→实验→结果→敏感性/稳健性→结论与局限。LaTeX 与 Typst 二选一：LaTeX 使用 `.tex`、`\\documentclass`、`\\usepackage`；Typst 使用 `.typ`、`#import`、`#set`、`#figure`；严禁混写。每张图表正文先引用后出现，每个结论绑定结果来源。
-
-执行“编译→渲染→逐页检查→修复→重编译”。审计同时检查章节、公式、单位、交叉引用、数字一致性、图表路径、占位符、内部路径、虚构文献、溢出、乱码和空白页。
+- `command`：命令与退出结果；
+- `test`：自动测试通过/失败；
+- `data`：来源、字段、行数、哈希或 schema；
+- `figure`：生成脚本与输出图；
+- `log`：参数、种子、环境、输入哈希、指标；
+- `manual`：有路径的人工视觉检查。
 
 ## 回退规则
 
-题意/数据口径→S1/S3；模型假设或公式→S4；代码、求解、指标→S5；数字不一致→S6；图表/论证→S7；编译/排版→S8。主路线连续失败时切换已记录 fallback；证据不足时停止写作，不得用“看起来合理”替代验证。
+| 失败 | 回到 |
+|---|---|
+| 题意、范围、输出形式错了 | S1 |
+| 模型路线无法辩护 | S2 |
+| 字段、单位、清洗或泄漏有问题 | S3 |
+| 数学表达和代码不一致，PoC 不可运行 | S4 |
+| 运行不可复现、求解状态未验证、指标无来源 | S5 |
+| 数字来自旧结果、聊天或截图 | S6 |
+| 结论、图表、引用与证据不匹配 | S7 |
+| 编译、排版、缺图、乱码、模板不合规 | S8 |
+| 审计发现硬错误 | 最早失效阶段 |
+
+## 禁止事项
+
+- 禁止跳过 S4、S6、S9；
+- 禁止论文使用未冻结数字；
+- 禁止生成者单独批准自己的工作；
+- 禁止删除或修改验收标准来让门禁通过；
+- 禁止把旧结果文件留着作为隐藏第二答案。
+
+完整契约见 [../my-mathmodel-agent/references/workflow-contract.md](../my-mathmodel-agent/references/workflow-contract.md)。

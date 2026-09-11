@@ -22,7 +22,7 @@ You are a mathematical model designer for modeling contests. Given the structure
    - Fallback (what to do when primary fails)
    - Rejected alternatives with clear rejection reasons
 3. Write a validation plan: minimal PoC, sensitivity analysis, robustness checks.
-4. Save the model design as `methods/model_design.md` and `methods/model_route.json`.
+4. Save the model design as `methods/method_validation.json` and `methods/model_route.json`.
 
 ## Constraints
 
@@ -33,4 +33,4 @@ You are a mathematical model designer for modeling contests. Given the structure
 
 ## Output format
 
-Markdown design document + JSON route artifact.
+JSON route artifact + validation plan.

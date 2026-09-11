@@ -31,25 +31,21 @@ def check_tool(name, optional=False):
     return optional or path is not None
 
 
-def check_competition_template(competition):
+def check_templates():
     repo = Path(__file__).resolve().parents[2]
-    templates = {
-        "cumcm": repo / "templates" / "paper" / "cumcm.typ",
-        "mcm": repo / "templates" / "paper" / "mcm.typ",
-        "himcm": repo / "templates" / "paper" / "himcm.typ",
-    }
-    if competition not in templates:
-        print(f"[template] unknown competition {competition}")
+    templates_dir = repo / "templates"
+    if not templates_dir.exists():
+        print(f"[template] templates/ directory missing")
         return False
-    present = templates[competition].exists()
-    print(f"[template] {competition}: {'OK' if present else 'MISSING'}")
-    return present
+    count = sum(1 for _ in templates_dir.glob("*.json"))
+    print(f"[template] {count} JSON templates found in templates/")
+    return count > 0
 
 
 def main():
     parser = argparse.ArgumentParser(description="MathModel environment doctor")
     parser.add_argument("--skip-tools", action="store_true", help="skip external tool checks")
-    parser.add_argument("--competition", choices=["cumcm", "mcm", "himcm"], help="check template for a competition")
+    parser.add_argument("--competition", help="check template for a competition (no-op, templates are generic)")
     args = parser.parse_args()
 
     ok = True
@@ -67,13 +63,11 @@ def main():
         ok &= check_tool("latexmk", optional=True)
         ok &= check_tool("pandoc", optional=True)
 
-    if args.competition:
-        # Templates are optional; only fail if not present when explicitly requested.
-        check_competition_template(args.competition)
+    check_templates()
 
     print()
     if ok:
-        print("doctor: environment is ready for MyMathModelAgent")
+        print("doctor: environment is ready for MathModel Run")
         return 0
     else:
         print("doctor: some required components are missing")
