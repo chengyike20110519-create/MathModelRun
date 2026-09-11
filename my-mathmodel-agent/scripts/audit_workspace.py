@@ -73,6 +73,10 @@ FIELDS = (
     "notes",
 )
 
+EVIDENCE_KINDS = {"command", "test", "data", "figure", "log", "manual"}
+
+DECISION_CLASSES = {"KEEP", "CUT", "DEFER", "PIVOT", "ACCEPT_RISK"}
+
 
 def read_json(path: Path, issues: list[str], label: str):
     try:
@@ -80,6 +84,24 @@ def read_json(path: Path, issues: list[str], label: str):
     except (OSError, json.JSONDecodeError) as exc:
         issues.append(f"{label} 无法解析：{exc}")
         return None
+
+
+def _validate_evidence_item(entry, label, issues, root):
+    if not isinstance(entry, dict):
+        issues.append(f"{label} 不是证据对象")
+        return
+    kind = entry.get("kind")
+    if kind not in EVIDENCE_KINDS:
+        issues.append(f"{label} kind 无效：{kind!r}，允许 {sorted(EVIDENCE_KINDS)}")
+    value = entry.get("value")
+    if not isinstance(value, str) or not value.strip():
+        issues.append(f"{label} value 必须是非空字符串")
+    path = entry.get("path")
+    if path is not None:
+        if not isinstance(path, str) or not path.strip():
+            issues.append(f"{label} path 无效")
+        elif not (root / path).exists():
+            issues.append(f"{label} 引用的 path 不存在：{path}")
 
 
 def audit_gate_contract(root: Path, issues: list[str]) -> None:
@@ -105,7 +127,14 @@ def audit_gate_contract(root: Path, issues: list[str]) -> None:
         issues.append("audit/gate_evidence.json 缺少 gates 对象")
         return
     for gate in GATES:
-        if gates.get(gate) and not evidence_gates.get(gate):
+        entries = evidence_gates.get(gate, [])
+        if not isinstance(entries, list):
+            issues.append(f"audit/gate_evidence.json gates.{gate} 必须是数组")
+            continue
+        for index, entry in enumerate(entries):
+            label = f"audit/gate_evidence.json gates.{gate}[{index}]"
+            _validate_evidence_item(entry, label, issues, root)
+        if gates.get(gate) and not entries:
             issues.append(f"门禁 {gate} 已为 true，但 audit/gate_evidence.json 没有证据")
 
     stage = state.get("stage")
@@ -143,6 +172,13 @@ def audit_frozen_numbers(root: Path, issues: list[str], state: dict | None) -> N
     if not isinstance(values, list):
         issues.append("frozen_numbers.json values 必须是数组")
         return
+    run_manifest = read_json(root / "results" / "run_manifest.json", issues, "results/run_manifest.json")
+    run_ids = set()
+    if isinstance(run_manifest, dict) and isinstance(run_manifest.get("runs"), list):
+        for run in run_manifest["runs"]:
+            if isinstance(run, dict) and isinstance(run.get("run_id"), str):
+                run_ids.add(run["run_id"])
+
     for index, value in enumerate(values):
         if not isinstance(value, dict):
             issues.append(f"冻结值 values[{index}] 不是对象")
@@ -150,6 +186,52 @@ def audit_frozen_numbers(root: Path, issues: list[str], state: dict | None) -> N
         missing = [key for key in FIELDS if key not in value]
         if missing:
             issues.append(f"冻结值 values[{index}] 缺少字段：{', '.join(missing)}")
+            continue
+        if freeze_expected:
+            source_run = value.get("source_run", "")
+            if source_run not in run_ids:
+                issues.append(
+                    f"冻结值 values[{index}] 的 source_run={source_run!r} 未在 results/run_manifest.json 登记"
+                )
+            source_file = value.get("source_file", "")
+            if source_file and not (root / source_file).exists():
+                issues.append(
+                    f"冻结值 values[{index}] 的 source_file 不存在：{source_file}"
+                )
+
+
+def audit_decision_log(root: Path, issues: list[str]) -> None:
+    log_path = root / "planning" / "decision_log.jsonl"
+    if not log_path.exists():
+        issues.append("缺少 planning/decision_log.jsonl")
+        return
+    try:
+        lines = log_path.read_text(encoding="utf-8").splitlines()
+    except OSError as exc:
+        issues.append(f"planning/decision_log.jsonl 无法读取：{exc}")
+        return
+    for lineno, line in enumerate(lines, 1):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            entry = json.loads(line)
+        except json.JSONDecodeError as exc:
+            issues.append(f"decision_log.jsonl 第 {lineno} 行不是合法 JSON：{exc}")
+            continue
+        if not isinstance(entry, dict):
+            issues.append(f"decision_log.jsonl 第 {lineno} 行不是对象")
+            continue
+        classification = entry.get("classification")
+        if classification not in DECISION_CLASSES:
+            issues.append(
+                f"decision_log.jsonl 第 {lineno} 行 classification={classification!r} 无效，"
+                f"允许 {sorted(DECISION_CLASSES)}"
+            )
+        if not isinstance(entry.get("at"), str) or not entry["at"].strip():
+            issues.append(f"decision_log.jsonl 第 {lineno} 行缺少 at 时间戳")
+        if not isinstance(entry.get("subject"), str) or not entry["subject"].strip():
+            issues.append(f"decision_log.jsonl 第 {lineno} 行缺少 subject")
 
 
 def audit_acceptance_contracts(root: Path, issues: list[str]) -> None:
@@ -165,6 +247,37 @@ def audit_acceptance_contracts(root: Path, issues: list[str]) -> None:
                     issues.append(f"model_route.subproblems[{index}] 不是对象")
                 elif not item.get("acceptance_criteria"):
                     issues.append(f"model_route.subproblems[{index}] 缺少 acceptance_criteria")
+
+    if isinstance(gates, dict) and gates.get("paper_written"):
+        evidence_map = read_json(root / "paper" / "evidence_map.json", issues, "paper/evidence_map.json")
+        frozen = read_json(root / "frozen_numbers.json", issues, "frozen_numbers.json")
+        frozen_names = set()
+        if isinstance(frozen, dict) and isinstance(frozen.get("values"), list):
+            for v in frozen["values"]:
+                if isinstance(v, dict) and isinstance(v.get("name"), str):
+                    frozen_names.add(v["name"])
+        if isinstance(evidence_map, dict):
+            claims = evidence_map.get("claims")
+            if not isinstance(claims, list) or not claims:
+                issues.append("paper_written 为 true，但 evidence_map.json claims 为空")
+            else:
+                for index, claim in enumerate(claims):
+                    if not isinstance(claim, dict):
+                        issues.append(f"evidence_map.claims[{index}] 不是对象")
+                        continue
+                    evidence = claim.get("evidence")
+                    if not isinstance(evidence, list) or not evidence:
+                        issues.append(f"evidence_map.claims[{index}] 缺少证据")
+                        continue
+                    for ev in evidence:
+                        if isinstance(ev, dict) and isinstance(ev.get("value"), str):
+                            val = ev["value"]
+                            if val.startswith("frozen_numbers.json#"):
+                                name = val.split("#", 1)[1]
+                                if name not in frozen_names:
+                                    issues.append(
+                                        f"evidence_map.claims[{index}] 引用的冻结值 {name!r} 不存在于 frozen_numbers.json"
+                                    )
 
     render = read_json(root / "paper" / "render_log.json", issues, "paper/render_log.json")
     if isinstance(render, dict) and isinstance(gates, dict) and gates.get("pdf_verified"):
@@ -190,6 +303,7 @@ def main() -> int:
     state = read_json(root / "state.json", issues, "state.json")
     audit_frozen_numbers(root, issues, state)
     audit_acceptance_contracts(root, issues)
+    audit_decision_log(root, issues)
 
     if isinstance(state, dict) and state.get("stage") == "READY":
         gates = state.get("gates", {}) if isinstance(state.get("gates"), dict) else {}

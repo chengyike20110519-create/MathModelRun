@@ -255,6 +255,118 @@ def test_audit_rejects_all_gates_true_before_ready():
         assert "所有门禁均已通过" in result.stdout
 
 
+
+def test_audit_rejects_invalid_gate_evidence_kind():
+    with tempfile.TemporaryDirectory() as tmp:
+        project = scaffold_project(tmp)
+        ge_path = project / "audit" / "gate_evidence.json"
+        ge = json.loads(ge_path.read_text())
+        ge["gates"]["input_snapshot"].append({"kind": "vibe", "value": "ok"})
+        ge_path.write_text(json.dumps(ge, ensure_ascii=False, indent=2))
+        result = run_script("my-mathmodel-agent/scripts/audit_workspace.py", project)
+        assert result.returncode == 1
+        assert "kind 无效" in result.stdout
+
+
+def test_audit_rejects_gate_evidence_with_missing_path():
+    with tempfile.TemporaryDirectory() as tmp:
+        project = scaffold_project(tmp)
+        ge_path = project / "audit" / "gate_evidence.json"
+        ge = json.loads(ge_path.read_text())
+        ge["gates"]["input_snapshot"].append({
+            "kind": "command", "value": "ls", "path": "nonexistent/file.txt"
+        })
+        ge_path.write_text(json.dumps(ge, ensure_ascii=False, indent=2))
+        result = run_script("my-mathmodel-agent/scripts/audit_workspace.py", project)
+        assert result.returncode == 1
+        assert "引用的 path 不存在" in result.stdout
+
+
+def test_audit_rejects_frozen_run_not_in_manifest():
+    with tempfile.TemporaryDirectory() as tmp:
+        project = scaffold_project(tmp)
+        state_path = project / "state.json"
+        state = json.loads(state_path.read_text())
+        state["stage"] = "FREEZE"
+        for g in ["input_snapshot","problem_decomposed","model_route_selected",
+                  "data_plan_ready","method_validated","experiments_reproduced","results_frozen"]:
+            state["gates"][g] = True
+        state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+        ge_path = project / "audit" / "gate_evidence.json"
+        ge = json.loads(ge_path.read_text())
+        for g in ["input_snapshot","problem_decomposed","model_route_selected",
+                  "data_plan_ready","method_validated","experiments_reproduced","results_frozen"]:
+            ge["gates"][g] = [{"kind": "manual", "value": "verified"}]
+        ge_path.write_text(json.dumps(ge, ensure_ascii=False, indent=2))
+        frozen = json.loads((project / "frozen_numbers.json").read_text())
+        frozen["frozen_at"] = "2026-09-11T00:00:00Z"
+        frozen["source_sha256"] = "abc123"
+        frozen["values"] = [{"name": "x", "value": 1, "unit": "u",
+                              "source_file": "results/runs/run-999/metrics.json",
+                              "source_run": "run-999", "subproblem": "Q1", "notes": "n"}]
+        (project / "frozen_numbers.json").write_text(json.dumps(frozen, ensure_ascii=False, indent=2))
+        result = run_script("my-mathmodel-agent/scripts/audit_workspace.py", project)
+        assert result.returncode == 1
+        assert "未在 results/run_manifest.json 登记" in result.stdout
+
+
+def test_audit_rejects_evidence_map_empty_claims():
+    with tempfile.TemporaryDirectory() as tmp:
+        project = scaffold_project(tmp)
+        state_path = project / "state.json"
+        state = json.loads(state_path.read_text())
+        state["stage"] = "WRITE"
+        for g in ["input_snapshot","problem_decomposed","model_route_selected",
+                  "data_plan_ready","method_validated","experiments_reproduced","results_frozen","paper_written"]:
+            state["gates"][g] = True
+        state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+        ge_path = project / "audit" / "gate_evidence.json"
+        ge = json.loads(ge_path.read_text())
+        for g in state["gates"]:
+            ge["gates"][g] = [{"kind": "manual", "value": "verified"}]
+        ge_path.write_text(json.dumps(ge, ensure_ascii=False, indent=2))
+        result = run_script("my-mathmodel-agent/scripts/audit_workspace.py", project)
+        assert result.returncode == 1
+        assert "claims 为空" in result.stdout
+
+
+def test_audit_rejects_evidence_map_dangling_frozen_ref():
+    with tempfile.TemporaryDirectory() as tmp:
+        project = scaffold_project(tmp)
+        state_path = project / "state.json"
+        state = json.loads(state_path.read_text())
+        state["stage"] = "WRITE"
+        for g in ["input_snapshot","problem_decomposed","model_route_selected",
+                  "data_plan_ready","method_validated","experiments_reproduced","results_frozen","paper_written"]:
+            state["gates"][g] = True
+        state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+        ge_path = project / "audit" / "gate_evidence.json"
+        ge = json.loads(ge_path.read_text())
+        for g in state["gates"]:
+            ge["gates"][g] = [{"kind": "manual", "value": "verified"}]
+        ge_path.write_text(json.dumps(ge, ensure_ascii=False, indent=2))
+        em = {"schema_version": "2.0", "claims": [{
+            "claim_id": "c1", "claim": "test", "paper_location": "s1",
+            "evidence": [{"kind": "data", "value": "frozen_numbers.json#nonexistent", "path": "frozen_numbers.json"}]
+        }]}
+        (project / "paper" / "evidence_map.json").write_text(json.dumps(em, ensure_ascii=False, indent=2))
+        result = run_script("my-mathmodel-agent/scripts/audit_workspace.py", project)
+        assert result.returncode == 1
+        assert "不存在于 frozen_numbers.json" in result.stdout
+
+
+def test_audit_rejects_bad_decision_log_classification():
+    with tempfile.TemporaryDirectory() as tmp:
+        project = scaffold_project(tmp)
+        log_path = project / "planning" / "decision_log.jsonl"
+        log_path.write_text(
+            json.dumps({"at": "2026-09-11T00:00:00Z", "subject": "x", "classification": "INVALID"}) + chr(10),
+            encoding="utf-8"
+        )
+        result = run_script("my-mathmodel-agent/scripts/audit_workspace.py", project)
+        assert result.returncode == 1
+        assert "classification" in result.stdout and "无效" in result.stdout
+
 def test_doctor_help():
     result = run_script("my-mathmodel-agent/scripts/doctor.py", "--help")
     assert result.returncode == 0, result.stderr
@@ -338,6 +450,12 @@ if __name__ == "__main__":
     test_audit_rejects_gate_without_evidence()
     test_audit_rejects_stage_ahead_of_gates()
     test_audit_rejects_all_gates_true_before_ready()
+    test_audit_rejects_invalid_gate_evidence_kind()
+    test_audit_rejects_gate_evidence_with_missing_path()
+    test_audit_rejects_frozen_run_not_in_manifest()
+    test_audit_rejects_evidence_map_empty_claims()
+    test_audit_rejects_evidence_map_dangling_frozen_ref()
+    test_audit_rejects_bad_decision_log_classification()
     test_doctor_help()
     test_freeze_requires_complete_provenance()
     test_freeze_writes_auditable_payload()

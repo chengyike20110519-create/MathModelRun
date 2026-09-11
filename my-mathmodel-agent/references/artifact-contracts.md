@@ -325,6 +325,10 @@ recorded in `leakage_checks`.
 Do not freeze an empty list at delivery. A valid `READY` project has at least
 one frozen value for every quantitative claim in the paper.
 
+When the `results_frozen` gate is `true`, `audit_workspace.py` also checks
+that every `source_run` is registered in `results/run_manifest.json` and that
+every `source_file` exists in the workspace.
+
 ## `paper/evidence_map.json`
 
 ```json
@@ -353,6 +357,11 @@ one frozen value for every quantitative claim in the paper.
 
 `paper_location` can be a section, label, or line reference. It must let a
 fresh reviewer find the claim quickly.
+
+When the `paper_written` gate is `true`, `audit_workspace.py` checks that
+`claims` is non-empty, that every claim has at least one evidence entry, and
+that any `frozen_numbers.json#<name>` reference resolves to a frozen value
+that actually exists.
 
 ## `paper/render_log.json`
 
@@ -404,6 +413,12 @@ hard errors.
 Every gate value is an evidence array. `state.json` should only set a gate to
 `true` when the matching array is non-empty and the reviewer can reproduce it.
 
+Each entry must be a valid evidence object (see Shared evidence object above):
+`kind` must be one of the six allowed values, `value` must be a non-empty
+string, and if `path` is present the file must exist in the workspace.
+`audit_workspace.py` rejects entries with an invalid `kind`, a blank
+`value`, or a `path` that does not exist.
+
 ## `planning/decision_log.jsonl`
 
 One JSON object per line:
@@ -413,7 +428,9 @@ One JSON object per line:
 ```
 
 The file is append-only. Correct a prior decision by adding a new record, not
-by editing history.
+by editing history. `audit_workspace.py` validates every line: it must be a
+JSON object with a non-empty `at` timestamp, a non-empty `subject`, and a
+`classification` of `KEEP`, `CUT`, `DEFER`, `PIVOT`, or `ACCEPT_RISK`.
 
 ## `audit/final_report.md`
 
