@@ -1,7 +1,7 @@
 # MathModel Run
 
 <p align="center">
-  <img src="docs/assets/mathmodel-mindmap.svg" alt="MathModel Run 数模作战地图" width="720">
+  <img src="docs/assets/mathmodel-mindmap.svg" alt="MathModel Run 数模作战思维导图" width="960">
 </p>
 
 <p align="center">
@@ -29,19 +29,22 @@
 ## 工作流总览
 
 ```mermaid
-flowchart LR
-    S0["S0 输入预检<br/>input_manifest"] -->|input_snapshot| S1["S1 题意拆解<br/>problem_analysis"]
-    S1 -->|problem_decomposed| S2["S2 模型选路<br/>model_route"]
-    S2 -->|model_route_selected| S3["S3 数据图表<br/>data_plan"]
-    S3 -->|data_plan_ready| S4["S4 方法 PoC<br/>method_validation"]
-    S4 -->|method_validated| S5["S5 正式实验<br/>run_manifest"]
-    S5 -->|experiments_reproduced| S6["S6 结果冻结<br/>frozen_numbers"]
-    S6 -->|results_frozen| S7["S7 证据写作<br/>evidence_map"]
-    S7 -->|paper_written| S8["S8 渲染检查<br/>render_log"]
-    S8 -->|pdf_verified| S9["S9 独立审计<br/>acceptance"]
-    S9 -->|audit_passed| R(["READY"])
-    style R fill:#4d7c0f,color:#fff
-    style S6 fill:#b45309,color:#fff
+mindmap
+  root((可辩护论文))
+    输入与题意
+      S0 输入预检
+      S1 题意拆解
+    建模与验证
+      S2 模型选路
+      S3 数据图表
+      S4 方法 PoC
+    实验与证据
+      S5 正式实验
+      S6 结果冻结
+    写作与交付
+      S7 证据写作
+      S8 渲染检查
+      S9 独立审计
 ```
 
 每一条边都是一个**门禁**：只有当机器可检查的证据落盘，门禁才会从 `false` 翻成 `true`，阶段才允许前进。声明的阶段不允许领先于第一个未通过的门禁——机械审计会直接判 FAIL。
