@@ -1,0 +1,80 @@
+\section{Model Preparation}
+\vspace{-0.3cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数
+
+In our plan, search and clearance is of vital importance, which involves a strategy carried by trained responders, moving from room to room ensure each trapped occupant position.
+
+We need to clarify a definition all-clear criterion - a room is deemed \textbf{cleared} only after all \textbf{effective areas} (accessible spaces where people might stay, such as under desks, behind shelves, enclosed corners) have been visually or physically inspected, confirming no trapped persons or hazards exist\upcite{6}. This criterion applies to all scenarios but adjusts dynamically based on room layout like checking cribs in childcare centers or file cabinets in offices.
+
+To address the problem of minimizing search time under information-constrained emergency conditions by optimizing the sweep and check processes of emergency personnel, this section clarifies the core elements of the model, defines key parameters, and establishes a quantitative calculation framework for \textbf{clearance time}, laying the foundation for subsequent combinatorial optimization.
+
+Informed by emergency management practices (e.g., standardized sweep procedures in response manuals)
+\upcite{7}
+%这里可以引用参考资料 
+and analogous optimization research, the model design is governed by five interconnected elements, each quantified by parameters or sub-models.
+
+    \begin{itemize}
+    \item \textbf{$C$ (Environmental Complexity Coefficient)} 
+    \end{itemize}
+    
+    Environmental complexity coefficient $C$ is to quantify the obstacles caused by the physical environment of the room to the investigation, which value adjusted linearly is based on the density of spatial obstacles (such as shelf spacing and the number of furniture). It is also affected by smoke diffusion.
+
+    
+    \begin{itemize}
+    \item \textbf{$L$ (Layout Complexity Coefficient)} 
+    \end{itemize}
+    
+    In order to improve the accuracy of the model, we consider the three-dimensional room layout as a two-dimensional one, which can also enhance adaptability. Sweep complexity is significantly driven by occupant type, and $L$ quantifies this as a dimensionless coefficient. It scales from 1.0 for simple offices to 2.0 for high-complexity spaces like childcare centers or warehouses.
+
+
+    \begin{itemize}
+    \item \textbf{$E$ (Incident Impact Coefficient)} 
+    \end{itemize}
+    
+    Incident impact coefficient $E$ represents the indirect impact of non-structural incidents on search operations (e.g., reduced visibility due to fire). It ranges from 1.0 (no impact, e.g., false alarm) to 1.3 (mild impact, e.g., low-concentration smoke) and is dimensionless. Incidents causing severe environmental changes are excluded from the current model. Notably, this may be a time-related coefficient.
+    
+    \begin{itemize}
+    \item \textbf{$A$ (Effective Area)} 
+    \end{itemize}
+    
+    $A$ represents the actual, accessible floor space requiring a sweep (excluding walls and fixed structures), measured in $\text{m}^2$. A linear relationship between sweep time and area ($A$) is assumed.
+  
+    \begin{itemize}
+    \item \textbf{$R$ (Redundancy Coefficient)} 
+    \end{itemize}
+    
+    The basic model does not currently involve redundancy strategies. In the expanded model, a redundancy coefficient ($R$) will be incorporated as a time multiplier. For example, $R=1.2$ indicates an additional 20\% check time.
+
+
+
+    \begin{itemize}
+    \item \textbf{$\alpha_c$ (Checking Velocity)} 
+    \end{itemize}
+
+    According to the professional type, responders can be classified into 3 types (with coefficients arranged in descending order): Trained fire captain, regular firefighter, and security guard. The parameter $\alpha_c$ reflects the checking velocity with unit $\text{m}^2/\text{s}$. In addition to the search speed of the room, the movement speed also needs to be defined. 
+    
+    \begin{itemize}
+    \item \textbf{$\alpha_m$ (Moving Velocity)} 
+    \end{itemize}
+
+    $\alpha_m$ reflects the moving velocity with unit $\text{m/s}$. Similar to the checking speed, responders are classified into 3 types with each a different expected value of normal distribution. The moving speed is particularly influenced by visibility, which can be affected by the spread of smog; thus it can also become a function of time.
+
+    
+Assumptions have been made about Responders in the previous section. Based on a Gaussian distribution, the two types of speeds of the same type of personnel both follow a normal distribution, with their expected values denoted as \( \alpha_m \) and \( \alpha_c \), which can be adjusted. Specially, when considering the spread of smog, the checking velocity varies with time (also seen in Task 4).
+
+We then define \textbf{the room search volume to clear}: \(Q = C \cdot L \cdot E \cdot A \cdot R\), where \(Q\) has the units of \(\text{m}^2\). So we can obtain the expression for check time \(T_{\text{check}} = Q/\alpha_c\), where \(T_{\text{check}}\) has the dimension of \(\text{s}\).
+    
+    
+    As listed in Table \ref{notation}, \(D_{ij}\) represents \textbf{the actual shortest spatial distance} from room \(i\) to room \(j\). For buildings with complex structures, we need to draw a mask based on the architecture's layout and use \textbf{A* algorithm} to find the shortest path distance between two rooms while bypassing obstacles. 
+    
+    But more commonly, in simple scenarios, the Euclidean Distance and Manhattan Distance are used with the formulas: \(D_{euclidean} = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}\) and \(D_{manhattan} = |x_1 - x_2| + |y_1 - y_2|\). Then we can obtain the time a responder needs to move from room \( i \) to room \( j \) \( T_{\text{move}} = D/\alpha_m\). Take the layout in Figure\ref{fig:layoutpre} for an example, doors of the rooms are marked with red stars. For environment with cubic obstacles, we can also use the Manhattan distance to calculate.
+
+\begin{figure}[htbp]  % h表示此处，t表示页顶，b表示页底，p表示独立一页，控制浮动体位置
+    \centering
+    \includegraphics[width=0.85\linewidth]{layoutpre.png}
+    \caption{Layout of a Two-Story Daycare Center}
+    \label{fig:layoutpre}
+\end{figure}
+
+Finally, the time for a firefighter to travel from room \( i \) to room \( j \) plus the search time is calculated as \(T_{\text{sweep}} = T_{\text{check}} + T_{\text{move}} \). This quantifies the clearance time for a single room by integrating room characteristics, personnel capabilities, and environmental factors, providing fundamental input for subsequent combinatorial optimization of multi-room and multi-personnel scenarios, such as path allocation and task scheduling.
+
+\vspace{-0.1cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数

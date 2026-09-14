@@ -1,0 +1,31 @@
+\section{Model Evaluation}
+%优缺点一定要写，不写讨论也要写评价
+%低调地多夸一夸，虔诚地反思哪里做得不好（一般比优点少些一点）（如果有什么突然想出来的点子没时间建模了也可以放在这里）
+\subsection{Strengths}
+
+\begin{itemize}
+    \item \textbf{Scenario Adaptability and Efficient Planning} \\
+    By decoupling the assignment problem (simulated annealing) and ordering problem (ant colony algorithm), the model dynamically adjusts node attributes and edge weights to fit diverse scenarios—including low/high floors, circular/linear corridors, and various risk zones. Leveraging pheromone parameters ($\alpha$, $\beta$), the ant colony algorithm optimizes large-scale paths, avoids congestion and distance waste, and supports entry/exit via nearest exits, balancing efficiency and rationality.
+    
+    \item \textbf{Risk Responsiveness and Redundancy Integration} \\
+    The ant colony algorithm’s pheromone parameters ($\rho$, $Q$) adjust dynamically with risk levels, naturally enabling priority inspection of high-risk areas. Integrated with redundancy designs (reserved personnel, recheck mechanisms, etc.), it reduces missed checks significantly with only a 4\%-8\% time increase, balancing safety and efficiency.
+    
+    \item \textbf{Strong Practical Value} \\
+    Outputs (check order, starting points) align with emergency response logic. Personnel allocation precisely matches room quantity and risk levels—outperforming traditional greedy algorithms—while meeting industry safety standards, ensuring high operability.
+\end{itemize}
+
+\section{Weaknesses}
+\begin{itemize}
+    \item \textbf{Suboptimal Solution Limitation} \\
+    The model's optimization relies on limited iteration and probabilistic exploration, failing to cover all room assignment and path sequencing combinations. Both algorithms only yield suboptimal solutions within a limited range, with no proof of global optimality.
+
+    \item \textbf{·High Parameter Sensitivity and Weak Adaptive Capability  } \\
+The model has flaws in parameter design. Its core parameters are manually set without adaptation. Take the pheromone weight $\alpha$ in the ACO as an example. In a single-story office with 6 sparse rooms (simple paths), $\alpha$ is manually set to 1.2 to boost pheromone impact and speed up convergence. In a multi-story mall with 20 dense rooms (complex paths prone to local optimality), $\alpha$ is adjusted to 0.8, depending on manual setting per unit building traits such as room density, with no model-calculated adaptive value.
+\end{itemize}
+
+
+
+
+%这里写模型的改进和拓展，可以有哪些方面做得更好，如何改进；可以应用到哪些别的领域发挥什么作用
+
+

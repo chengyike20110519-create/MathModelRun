@@ -1,0 +1,29 @@
+\section{Assumptions and Justifications}
+\vspace{-0.3cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数
+
+%Considering that there are complex unknown factors in practical problems, reasonable assumptions are made to simplify the model.
+%无论是什么赛题，都应该明确列出所用到假设条件并解释其合理性
+%评委们会审视这些假设是不是在后续的论文里被用到
+
+\textbf{1.Perfect Information and Training:} Assuming all responders have identical training, perfectly recall the building layout, and execute commands without error.
+
+   \textbf{    Justification:} This isolates the optimization problem from human performance variability and communication delays, allowing us to focus on the intrinsic efficiency of the sweep strategy itself. Subsequently, by introducing parameters such as information error rate and execution fault tolerance rate, it can gradually approach the actual scenario.
+
+
+\textbf{2.Stable Site Conditions:} Assuming that factors such as explosions or earthquakes that cause room collapse are not considered. After an emergency occurs, the layout structure and physical distances of the site remain unchanged.
+
+\textbf{Justification:} Stabilizing the site condition can simplify the basic model and provide stable spatial constraints for optimization tasks such as path planning and task allocation.
+
+
+\textbf{3.Reponder Safety and Capability Assurance:} This means emergency response personnel of different professional types have received professional training, are equipped with sophisticated equipment. Therefore, no casualties will occur during the search process on-site.
+
+\textbf{Justification:} This eliminates the reduction in the number of personnel due to casualties, task interruptions, or strategy adjustments, allowing the model to focus solely on time optimization. The actual safety risks in the real scenario can be corrected in subsequent models by introducing a risk coefficient.
+
+
+\textbf{4.Graph-Theoretic Abstraction of Architectural Space:} We discretize the complex architectural floor plan into a graph theory model G = (V, E), where \textbf{rooms and exits are abstracted} as nodes V, and\textbf{ times responders cost travelling between each nodes} are abstracted as edges E. This model ignores the specific shapes, areas, and physical properties of doors and windows of the rooms.
+
+\textbf{Justification:} This process is a standard pre-step in network optimization problems. It transforms the continuous search space into a discrete mathematical structure, thereby providing a rigorous mathematical foundation for applying shortest path algorithms. This simplification enables us to focus on the core logic of path sequences and personnel allocation.
+
+We also made some other assumptions to simplify analysis for individual sections. These assumptions will be raised where relevant.
+\vspace{-0.5cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数
+%如果有一些专有名词或者模糊概念的定义，可以加一个Definition版块。

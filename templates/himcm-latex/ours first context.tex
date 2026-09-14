@@ -1,0 +1,319 @@
+ %美赛模板：正文部分
+\documentclass[12pt]{article}  % 官方要求字号不小于 12 号，此处选择 12 号字体（是不是这样可以在25页以内多写一些字？）
+
+% \linespread{1.1}
+% \bibliographystyle{plain}
+% 本模板不需要填写年份，以当前电脑时间自动生成
+% 以下方括号中填写队伍控制号
+\usepackage[00000]{easymcm}  % 载入 EasyMCM 模板文件
+
+\problem{F}  % 此处填写题号
+
+\usepackage{newtxtext}
+
+\usepackage{hyperref}%这个包可以用来生成图片超链接
+
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{mathptmx}  % 这是 Times 字体，中规中矩 ，确实，这个看起来比较乖
+%\usepackage{palatino}  % mathpazo 这是 COMAP 官方杂志采用的更好看的 Palatino 字体，可替代以上的 mathptmx 宏包
+
+\usepackage{pdfpages}
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{listings}
+\usepackage{paralist}
+\usepackage{booktabs}
+\usepackage{amsmath}%解决编号问题
+\numberwithin{figure}{section}
+
+\graphicspath{{fig/}}  %此处{imgages/}为相对路径，注意加上“/”
+%\graphicspath{{.}}  % Place your graphic files in the same directory as your main document
+%红色字体\textcolor{red}{}
+\let\itemize\compactitem
+\let\enditemize\endcompactitem
+
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+
+\title{Model}  % 标题
+
+% 如需要修改题头（默认为 MCM/ICM），请使用以下命令（此处修改为 MCM）
+%\renewcommand{\contest}{MCM}
+%文档开始
+\begin{document}
+	% 此处填写摘要内容
+	\begin{abstract}
+
+
+The pace of modernization has led to high concentrations of people in confined indoor spaces. To ensure safety during disasters, responders are tasked with checking whether everyone has evacuated. However, multi-story and complex building layouts make their work extremely challenging. This study establishes a \textbf{graph theory model} that considers multiple factors such as smoke spread and changing risks to determine the optimal search strategy for responders.
+
+
+For \textbf{Task 1}, we first define the \textbf{criteria for clearing a room}. Then, by introducing multiple parameters, we simulate how different environments affect a responder’s ability to confirm clearance. We quantify the \textbf{time to move to another room ($T_{\text{moving}}$)} and the \textbf{time to search a room ($T_{\text{checking}}$)} based on the \textbf{movement speed ($\alpha_m$)} and \textbf{search speed ($\alpha_c$)} of different types of personnel. These two components sum to the \textbf{total sweep time ($T_{\text{sweep}}$)}.
+
+
+In \textbf{Task 2}, we abstract rooms as nodes and the time costs as edges, building a \textbf{Graph-Metaheuristic Optimization Model} for responder sweep scheduling. We focus on three key aspects: room assignment, the traversal order for each responder, and how to evaluate these assignments and orders. For evaluation, we use an \textbf{encoding format $[N_1,N_2,\dots,N_n|x_1,x_2,\dots,x_m]$} to represent all information of a solution, and define a \textbf{fitness score ($F$)} for each plan. To optimize the traversal order, we apply the \textbf{Ant Colony Optimization (ACO)} algorithm. For global assignment optimization, we use \textbf{Simulated Annealing nested with ACO} and a \textbf{Particle Swarm Optimization-enhanced Genetic Algorithm} to iterate toward better solutions. We also hypothesize about the scalability of both algorithms for problems of different sizes. Additionally, considering both redundancy and efficiency in personnel deployment, we define multiple parameters to calculate an evaluation metric \textbf{$S$} reflecting \textbf{personnel utilization}, helping determine the \textbf{optimal number of responders ($n$)} for a given scenario.
+
+
+In \textbf{Task 3}, we apply the above model to three different scenarios. The basic layout consists of six rooms of equal weight distributed along a corridor. The optimal path for \textbf{2 responders} achieves a \textbf{minimum time of 197.4s}. We then extend the model to multi-story layouts using the concept of \textbf{strongly connected components}. In a two-story nursery case, we find the optimal number of responders to be \textbf{3}, with a minimum clearance time \textbf{133.6s}. Finally, in a more complex and realistic setting, we analyze the World Trade Center Building 3, determining that \textbf{15 firefighters} is optimal, with a clearance time of \textbf{20.4min}. By comparing the performance of the two algorithms, we verify our earlier hypotheses about their \textbf{applicability}.
+
+
+For \textbf{Task 4}, we focus on the impact of \textbf{smoke diffusion} on the model. We introduce equations such as \textbf{Boussinesq and Navier-Stokes}, and use masking and discretization of continuous functions to calculate \textbf{smoke concentration ($C$)} at each point. Using Mulholland’s correlation, we derive the \textbf{obscuration level ($C_s$)} caused by smoke, which dynamically affects both \textbf{movement speed ($\alpha_m$)} and \textbf{risk level ($R$)}. These dynamic effects are then incorporated into the Task 3 scenarios for recomputation. Finally, we simulate the impacts of \textbf{smoke, fire, and earthquakes} by adjusting relevant parameters.
+
+
+In conclusion, we present our model to a local committee, demonstrating that simple and implementable strategies can significantly optimize evacuation efforts. We provide \textbf{recommendations on how to maximize personnel efficiency and minimize total search time while ensuring safety and reducing risks}, and offer directions for future development.	
+		
+    
+			% 美赛论文中无需注明关键字。不使用可以把下面两行注释掉
+	%		\vspace{5pt}  %mm	毫米	1 mm = 2.845 pt   pt 点	1 pt = 0.351 mm
+	
+		\end{abstract}	
+		\maketitle  % 生成 Summary Sheet 
+		\tableofcontents  % 生成目录
+	\end{document}  % 结束
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%美赛模板：正文部分
+
+% \linespread{1.1}
+% \bibliographystyle{plain}
+% 本模板不需要填写年份，以当前电脑时间自动生成
+% 以下方括号中填写队伍控制号
+\usepackage[16793]{easymcm}  % 载入 EasyMCM 模板文件
+\usepackage{siunitx}
+\problem{A}  % 此处填写题号
+\usepackage{newtxtext}%使用某一个库
+\usepackage{hyperref}%这个包可以用来生成图片超链接
+\usepackage{amsmath,amssymb,amsthm}
+%\usepackage{mathptmx}  % 这是 Times 字体，中规中矩 ，确实，这个看起来比较乖
+\usepackage{palatino}  % mathpazo 这是 COMAP 官方杂志采用的更好看的 Palatino 字体，可替代以上的 mathptmx 宏包
+\usepackage{background}  % 用于设置背景图
+\usepackage{pdfpages}
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{listings}
+\usepackage{paralist}
+\usepackage{booktabs}
+\usepackage{amsmath} %解决编号问题
+\numberwithin{figure}{section} %应该是关于编号的语句
+
+\graphicspath{{fig/}}  %此处{fig/}为相对路径，所有的图片文件传到fig文件夹理即可注意加上“/”，文件夹也可以叫其他的名字，在这里对应好就行
+%\graphicspath{{.}}  % Place your graphic files in the same directory as your main document
+%红色字体\textcolor{red}{}
+
+\let\itemize\compactitem
+\let\enditemize\endcompactitem
+
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+
+
+\title{Sweep Smart: Strategies for Emergency Response}  % 标题
+
+% 如需要修改题头（默认为 MCM/ICM），请使用以下命令（此处修改为 MCM）
+\renewcommand{\contest}{HiMCM/MidMCM}
+%文档开始
+\begin{document}
+	% 此处填写摘要内容,下面为示例
+	\begin{abstract}
+
+	\begin{center}
+	    
+	\end{center}
+
+		%加粗直接选中在点击工具栏的“B”即可自动生成代码
+		% 公式需要通过$\...$ 输出，百分号或者美元符号等特殊字符需要先加"\"以防被当成注释或者公式转义字符
+        
+		%输入方程/等式用
+		%\begin{equation}
+		%	内容...
+		%\end{equation}
+        
+		%公式居中用$$   $$或者\begin{center}或\centering
+			%换行\newline%换行空两行\\[2ex]
+			%引用直接在后面加“\upcite{1}”,大括号里写数字（其他字符会显示问号什么的），正文输出方括号		
+			
+			% 美赛论文中无需注明关键字。不使用可以把下面两行注释掉
+	%		\vspace{5pt}  %mm	毫米	1 mm = 2.845 pt   pt 点	1 pt = 0.351 mm
+	%		\textbf{Keywords}:\textbf{ Extreme Weather Events; Game Theory; Development Potential Index; Gaussian Mixture Model; Sensitivity Analysis}		
+			
+		\end{abstract}	
+		\maketitle  % 生成 Summary Sheet 
+		%\tableofcontents  % 生成目录
+		
+
+		
+		%正文部分
+		\input{sec/1introduction}
+		\input{sec/2assumptions.tex}
+		\input{sec/3notations.tex}
+		\input{sec/4preparation.tex}
+		\input{sec/5model1.tex}
+		\input{sec/6applymodel.tex}
+		\input{sec/7model3.tex}
+		\input{sec/8model4.tex}
+		\input{sec/9sensitivity_analysis.tex}
+		\input{sec/10evaluation_discussion.tex}
+		\input{sec/11conclusion.tex}	
+		\input{sec/12non_technical.tex}
+
+		
+		% 参考文献，此处以 MLA 引用格式为例
+		\clearpage   %另起一页继续写时,最好使用“\clearpage” 
+            \backgroundsetup{contents={}}%在当前页重置背景，以免上一页的背景延续
+        
+		\begin{thebibliography}{99}
+			\bibitem{1}Xie, C. T., Chen, Q., Zhu, B., Lee, E. W. M., Tang, T. Q., Yin, X., Yuan, Z., \& Zhang, B. (2025). Coordinating dynamic signage for evacuation guidance: A multi-agent reinforcement learning approach integrating mesoscopic crowd modeling and fire propagation. Chaos, Solitons \& Fractals, 194. https://www.sciencedirect.com/science/article/abs/pii/S0960077925002590
+			\bibitem{2}  Liu, L., Zhang, H., Shi, J., \& Geng, J. (2023). Real-time evacuation route optimization in the fire scenarios of cruise ships. Simulation Modelling Practice and Theory, 129, 102843. https://www.sciencedirect.com/science/article/abs/pii/S1569190X2300120X?via\%3Dihub
+			\bibitem{3}  Zhang, Y., \& Sonta, A. (2026). OccuEMBED: Occupancy extraction merged with building energy disaggregation for occupant-responsive operation at scale. Energy and Buildings, 350, 116610. https://doi.org/10.1016/j.enbuild.2025.116610
+			\bibitem{4}  Wang, J., Zhao, H., \& Winter, S. (2015). Integrating sensing, routing and timing for indoor evacuation. Fire Safety Journal, 78, 111–121. https://doi.org/10.1016/j.firesaf.2015.08.009
+			\bibitem{5} Lu, P., Zhang, Z., Onyebuchi, C. H., \& Zheng, L. (2024). Agent-based modeling of high-rise building fires reveals self-rescue behaviors and better fire protection designs. Engineering Applications of Artificial Intelligence, 127(Part B), 107401. https://doi.org/10.1016/j.engappai.2023.107401
+			\bibitem{6} Spearpoint, M., Arnott, M., Xie, H., Gwynne, S., \& Templeton, A. (2024). Comparative analysis of two evacuation simulation tools when applied to high-rise residential buildings. Safety Science, 175, 106515. https://doi.org/10.1016/j.ssci.2024.106515
+
+
+
+
+           \bibitem{7} 
+           
+
+           \bibitem{8} China Academy of Building Research, Institute of Building Fire Protection (CABR-Fire). (n.d.). Appendix J: Impact of smoke on walking speed. CABR-Fire. https://gf.cabr-fire.com/article-21016.htm
+
+           \bibitem{9}https://www.zhulong.com/bbs/d/32581046.html
+		\end{thebibliography}
+
+
+
+
+
+\clearpage 
+\section{AI Use Report}
+
+1. DeepSeek (November 2024 version) Query: \textless What is a meta-heuristic algorithm? Are the ant colony optimization and simulated annealing in our model examples of this type?\textgreater Output: \textless A meta-heuristic algorithm is a sophisticated, general "problem-solving strategy" or "thinking framework" that does not directly provide an answer, but instead guides you on how to efficiently "search" for an approximate optimal solution within a vast and complex space of possible solutions. Both ant colony optimization and simulated annealing are typical meta-heuristic algorithms. Ant colony optimization mimics the foraging behavior of ant colonies, balancing exploration and exploitation through a pheromone mechanism; simulated annealing mimics the metal annealing process, controlling the probability of accepting inferior solutions through temperature to escape local optima.\textgreater
+
+2. DeepSeek (November 2024 version) Query: \textless Help me optimize this statement: "Let's first make the search volumes all the same. This way, we have a kind of ant colony model. We will allocate n rooms to m firefighters, and we need to ensure that the number of rooms allocated to the firefighter with the least allocation is equal to the number of rooms allocated to the firefighter with the most allocation minus one"\textgreater Output:
+
+\textless During the model initialization stage, we assume that all rooms have the same search workload, thereby constructing a basic ant colony optimization model. In the room allocation process, we adopt an equal distribution strategy: allocate \( n \) rooms to \( m \) firefighters, ensuring that the difference in the number of rooms allocated between any two firefighters does not exceed 1, i.e., satisfying the constraint condition \( \max(x_i) - \min(x_i) \leq 1 \), where \( x_i \) represents the number of rooms allocated to the \( i \)-th firefighter.\textgreater
+
+3. DeepSeek (November 2024 version) Query: \textless Please write the state transition probability formula and the pheromone update formula in LaTeX format\textgreater Output: \textless State transition probability formula: $P_{ij} = \frac{[\tau_{ij}]^\alpha \cdot [\eta_{ij}]^\beta}{\sum_{k} [\tau_{ik}]^\alpha \cdot [\eta_{ik}]^\beta}$ Pheromone update formula: $\tau_{ij} = (1-\rho)\cdot\tau_{ij} + \sum_{k=1}^{m} \Delta\tau_{ij}^k$\textgreater
+
+4. Qwen3-Max-Thinking-Preview Query: \textless Which of the genetic algorithm and the simulated annealing is more suitable for large-scale combinatorial optimization problems?\textgreater Output: \textless Genetic Algorithm vs. Simulated Annealing for Large-Scale Combinatorial Optimization Problems. For large-scale combinatorial optimization problems, both algorithms have distinct advantages depending on the specific problem characteristics: Genetic Algorithm (GA) is preferable when: Strong global search capability is needed: Maintains a population that explores multiple regions of the solution space in parallel. Problem structure is complex: Crossover operations can effectively combine beneficial features from different solutions. Parallelization potential is valuable: Fitness evaluation processes can be easily parallelized. Multi-modal optimization is required: Can simultaneously explore multiple promising regions of the search space. Simulated Annealing (SA) is preferable when: Computational resources are limited: Only maintains a single solution, requiring less memory and computation. Solution evaluation is expensive: Each iteration requires evaluating only one new solution. Quick feasible solutions are needed: Simpler implementation with faster iterations. Good neighborhood structure exists: Performs well when local moves can effectively improve solutions. Practical Recommendations: Extremely large-scale problems (with extremely many variables): Simulated Annealing is typically more efficient with lower computational overhead. Multi-modal complex problems: Genetic Algorithms may find better solutions, but require careful parameter tuning. Hybrid approaches: In practice, both methods are often combined (e.g., using SA for local search within a GA framework). Problem-specific adaptations: Consider incorporating domain-specific heuristics to enhance either algorithm. There is no absolute "better" algorithm - the optimal choice depends on problem scale, structural characteristics, and available computational resources. In real-world applications, experimental comparison of both methods on the specific problem instance is often necessary to determine the most effective approach.\textgreater
+
+
+
+\begin{table}[htbp]
+\centering
+\caption{Smoke Diffusion Simulation Algorithm Pseudocode}
+\label{tab:smoke_simulation_pseudocode}
+\begin{tabular}{p{0.9\textwidth}}
+\toprule
+\textbf{Pseudocode} \\
+\midrule
+\textbf{Initialize} \\
+1. Generate grid $(X,Y)$ \\
+2. Initialize velocity, temperature, density fields to zero \\
+3. Set wall boundaries and fire source region \\
+4. Define safety exit locations \\
+\\
+\textbf{Main Loop} \\
+\textbf{For} $n = 1$ \textbf{to} $n_{\text{steps}}$: \\
+\quad 1. Advection: $[u,v,T,\rho] \leftarrow \text{ADVECTION}(u,v,T,\rho,\Delta t)$ \\
+\quad 2. Buoyancy: $v \leftarrow v + \Delta t \cdot \beta g (T - T_{\text{amb}})$ \\
+\quad 3. Diffusion: $[u,v,T,\rho] \leftarrow \text{DIFFUSION}(u,v,T,\rho,\nu,\kappa_T,\kappa_\rho,\Delta t)$ \\
+\quad 4. Pressure: $p \leftarrow \text{SOLVE\_PRESSURE}(u,v,p,\Delta t)$ \\
+\quad 5. Correction: $[u,v] \leftarrow \text{PRESSURE\_CORRECTION}(u,v,p,\Delta t)$ \\
+\quad 6. Boundaries: $[u,v,T,\rho] \leftarrow \text{APPLY\_BC}(u,v,T,\rho)$ \\
+\quad 7. Fire source: $T(\text{fire}) \leftarrow 80$, $\rho(\text{fire}) \leftarrow 1.0$ \\
+\quad 8. Output data (save at intervals) \\
+\\
+\textbf{Visualistion} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Discrete Model Simulation Algorithm}
+
+\begin{table}[htbp]
+\centering
+\caption{Discrete Smoke Diffusion Simulation Algorithm}
+\label{tab:discrete_smoke_simulation}
+\begin{tabular}{p{0.9\textwidth}}
+\toprule
+\textbf{Algorithm} \\
+\midrule
+\textbf{Input} \\
+Network: $(\mathcal{R}, \mathcal{E})$, Parameters: $(D, v_{ij}, \Delta t, t_{\text{total}})$, Source: $(R_{\text{fire}}, S_0)$ \\
+\\
+\textbf{Initialize} \\
+1. $\mathcal{R} \leftarrow \{R_1, R_2, \dots, R_N\}$ \\
+2. $\mathcal{E} \leftarrow \{(i,j): \text{connected rooms}\}$ \\
+3. $C_i(0) \leftarrow 0$, $C_{ij}(0) \leftarrow 0$ \\
+4. $C_{\text{fire}}(0) \leftarrow C_0$ \\
+5. $H(:,:,1) \leftarrow \text{initialize\_heatmap}(C_i(0), C_{ij}(0))$ \\
+\\
+\textbf{Main Loop} \\
+\textbf{For} $k = 1$ \textbf{to} $k_{\text{max}}$: \\
+\quad 1. $P_i \leftarrow \alpha T_i + \beta C_i$ \\
+\quad 2. $F_{ij} \leftarrow v_{ij} A_{ij} \cdot \text{sign}(P_j - P_i) \cdot \min(C_i, C_j)$ \\
+\quad 3. $\Delta C_i \leftarrow S_i - \sum_j F_{ij} + D \sum_j (C_j - C_i)$ \\
+\quad 4. $C_i \leftarrow C_i + \Delta t \cdot \Delta C_i$ \\
+\quad 5. $C_{ij} \leftarrow \frac{1}{2}(C_i + C_j) + \Delta t[-v_{ij}\frac{C_j-C_i}{L_{ij}} + D\frac{C_j-2C_{i  j}+C_i}{L_{ij}^2}]$ \\
+\quad 6. Apply boundary conditions \\
+\quad 7. $H(:,:,k+1) \leftarrow \text{update\_heatmap}(C_i, C_{ij})$ \\
+\quad 8. \textbf{If} $\mod(k, \text{save\_interval}) = 0$: \\
+\qquad $\text{visualize\_heatmap}(H(:,:,k+1))$ \\
+\\
+\textbf{Visualistion} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{thebibliography}{9}
+
+\bibitem[Jin, 1978]{Jin1978}
+Jin, T. (1978). \textit{Studies on Human Behavior in Smoke-Filled Corridors}. Fire Safety Science, 1(2), 45-56. \\
+URL: \texttt{https://doi.org/10.3801/IAFSS.FSS.1-45}
+
+\bibitem[NIOSH CO]{NIOSH_CO}
+NIOSH (1994). \textit{Carbon Monoxide IDLH Documentation}. CDC. \\
+URL: \texttt{https://www.cdc.gov/niosh/idlh/630080.html}
+
+\bibitem[ISO 13571]{ISO13571}
+ISO 13571:2012. \textit{Life-Threatening Components of Fires -- Guidelines on the Estimation of Time to Compromised Tenability in Fires}. \\
+URL: \texttt{https://www.iso.org/standard/53635.html}
+
+\bibitem[Gas Leak Study]{GasLeakStudy}
+Zhang, F. et al. (2012). \textit{Gas Pipeline Leak Location and Risk Assessment}. Safety Management Network. \\
+URL: \texttt{https://p.safehoo.com/Essay/Chemical/201204/267778\_2.shtml}
+
+\bibitem[NFPA 68]{NFPA68}
+NFPA 68 (2018). \textit{Standard on Explosion Protection by Deflagration Venting}. \\
+URL: \texttt{https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=68}
+
+\bibitem[NIOSH H2S]{NIOSH_H2S}
+NIOSH (1994). \textit{Hydrogen Sulfide IDLH Documentation}. CDC. \\
+URL: \texttt{https://www.cdc.gov/niosh/idlh/7783064.html}
+
+\end{thebibliography}
+
+
+\begin{thebibliography}{00}
+\bibitem[Jin, 1978]{Jin1978} Jin, T. (1978). Studies on Human Behavior in Smoke-Filled Corridors. \textit{Fire Safety Science}, 1(2), 45-56.
+\bibitem[Frantzich et al., 2005]{Frantzich2005} Frantzich, H., \& Nilsson, D. (2005). Evacuation in an Underground Railway System: A Study of the Impact of Smoke and Visual Conditions. \textit{Proceedings of the 5th International Symposium on Underground Transportation Systems}.
+\bibitem[GB/T 31593.9-2015]{GB31593.9} GB/T 31593.9-2015. (2015). \textit{Fire Safety Engineering - Part 9: Guidelines for Personnel Evacuation Assessment}. China Standards Press.
+\bibitem[Mulholland, 1998]{Mulholland1998} Mulholland, G. W. (1998). Smoke Production and Properties. \textit{SFPE Handbook of Fire Protection Engineering} (3rd ed.). National Fire Protection Association.
+\end{thebibliography}
+
+	\end{document}  % 结束

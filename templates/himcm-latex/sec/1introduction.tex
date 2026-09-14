@@ -1,0 +1,94 @@
+\section{Introduction}
+\vspace{-0.4cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数
+\subsection{Problem Background}
+
+
+%\begin{figure}[h]
+%	\centering 
+%	\includegraphics[width=.4\textwidth]{fig/natural disaster2.jpg} 
+%        \caption{Natural Disaster}
+%	\label{Disaster} % 图片标签
+%\end{figure}
+
+		%引用图片
+     %   This is figure \ref{Disaster}...
+\vspace{-0.2cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数
+
+With the increasing complexity and vertical expansion of modern architecture, coupled with the rising frequency of extreme weather events and natural disasters, it is imperative to update search and rescue strategies. Currently, rescue plans often rely on responders’ personal experience and ad-hoc decision-making, lacking a standardized, quantitative foundation. Amidst the challenges of multi-objective optimization and numerous external factors,
+%rescue complexity primarily stems from two sources: the heterogeneity of building structures and dynamically changing hazardous conditions. To address this, 
+our team has been commissioned to develop a model for clearing multi-use public and private gathering spaces - one that determines optimal search strategies tailored to specific situations.
+%different building layouts and disaster types.
+\vspace{-0.4cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数
+\subsection{Restatement of the Problem}
+\vspace{-0.1cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数
+
+%Considering constraints outlined in the problem statement and the contextual information, we need to solve the following problems.
+
+\begin{enumerate}[\bfseries 1.]%带编号分点列举
+	\setlength{\parsep}{0ex} %段落间距
+	\setlength{\topsep}{0.5pt} %列表到上下文的垂直距离
+	\setlength{\itemsep}{0.5pt} %条目间距
+	\item Quantify the clearance time for emergency evacuation sweeps in a basic building layout, analyzing the time requirements under scenarios.This assessment establishes a potential variables that we need to take into accounts in the following modeling. 
+	\item Develop a comprehensive model to determine the optimal sweep paths and responder allocation. The framework incorporates movement dynamics between rooms, verification protocols for room clearance, and environmental factors such as smoke diffusion that affect visibility and travel speed. 
+ 
+	\item Apply the computational framework to evaluate evacuation efficiency across diverse architectural scenarios, including multi-floor structures and varied occupancy patterns. For each tested configuration, the model will determine optimal responder deployment, precise sweeping sequences, and minimum clearance times.
+    \item Use the constructed model to predict the performance of sweep strategies under more realistic and constrained scenarios. Estimate the potential increase in clearance times and risks by incorporating factors like spreading hazards.
+    \item Based on our modeling results, develop actionable emergency protocols and draft a concise letter to the Local Emergency Planning Committee.
+    %This letter will present an optimized Evacuation Sweep Strategy detailing: methods for planning systematic sweeps, guidelines for responder assignment and deployment, and tactics ensuring both redundancy and speed while maintaining safety. It will also provide tailored recommendations for different building types, layouts, and occupant profiles.
+\end{enumerate}
+% 用分点按顺序列举格式之后看起来更清晰一些，每一点都比较突出
+
+\vspace{-0.5cm}%在\end{table}下加一行\vspace{-1cm} 其中-1的作用是缩短与下方文字距离的 切记！必须是负数
+
+\subsection{Literature Review}%或者叫Related Prior Work也可以
+
+As extreme emergencies grow frequent, optimizing evacuation sweeps is critical for urban safety. Chuan-Zhi Thomas Xie linked crowd density to evacuation efficiency via simulation, laying a human-centric foundation (Xie et al., 2025) \upcite{1}. Linfan Liu with others highlighted behavioral differences between daycare and office occupants, stressing the need for tailored prioritization (Liu et al., 2023)\upcite{2}.
+
+Early pathfinding models were limited by treating all spaces as homogeneous, a gap addressed through subsequent model advancements. Yufei Zhang advanced dynamic route optimization by applying a time-varying Dijkstra algorithm to fire scenarios, adapting paths to spreading hazards (Zhang \& Sonta, 2026)\upcite{3}. Jing Wang complemented this by analyzing logistics challenges in high-rise building evacuations under "dual-exit" policies, confirming that optimal models must transcend simple pathfinding to integrate architectural and operational constraints(Wang et al. 2015)\upcite{4}.
+
+Technology resolves the efficiency-safety trade-off. Liu Peng proposed real-time sensor data integration, aligned with Tokyo’s emergency system (Liu et al., 2024)\upcite{5}. Michael. Spearpoint. explored AR for responder training, underscoring data-driven and tech-enabled coordination (Spearpoint et al., 2024).
+
+These literatures offer key support for our problem’s modeling by validating the need to integrate \textbf{occupant heterogeneity}, \textbf{dynamic hazard propagation} and \textbf{architectural constraints} into sweep strategies, while their insights on\textbf{ sensor data utilization}, \textbf{redundant verification} and \textbf{multi-tool simulation} lay the groundwork and sets the direction for the future application of this model.
+
+
+%在对题目所涉及的研究领域的文献进行广泛阅读和理解的基础上，对该领域的
+%研究现状（主要学术观点、前任研究成果与研究水平、争论焦点、存在的问题及可能得原因）
+%新水平、新动态、新技术、新发现、发展前景等内容
+%进行综合分析、归纳整理和评论，并提出自己的见解和研究思路
+
+%看完一堆东西并理解之后综合整理并全面系统深入地评价、提出自己的观点
+
+%\upcite{}%引用文献的时候再大括号里面编号即可，输出的时候是中括号
+
+\subsection{Our Approach}
+
+As is shown in Figure \ref{ourwork}, our work is mainly composed of the following parts:
+%Figure 后面加\ref{label},即可自动对应图片编号生成超链接
+%如果需要在编号放在括号里面，使用命令：\eqref{label},如果在标题中引用要改大写字母，否则会出一堆问号
+
+
+\begin{figure}[htbp]
+	\centering 
+	\includegraphics[width=.99\textwidth]{ourwork.png} 
+	\caption{The flow chart of our work} 
+	\label{ourwork} % 图片标签
+\end{figure}
+
+\vspace{-0.3cm}%设置上下的距离，可正可负，一般用于缩小图片或者表格与下方文字的较大空间，但若文字或者表格浮动到下一页，可能会导致文字重叠，慎用
+
+
+
+%\begin{itemize}
+%	\setlength{\parsep}{0ex} %段落间距
+%	\setlength{\topsep}{2ex} %列表到上下文的垂直距离
+%	\setlength{\itemsep}{1ex} %条目间距 这三句的效果就是各条内部的文字贴在一起，条与条之间分得很开，否则就是每条内部行间距比条目之间的间距都大
+%	
+%	\item Build a ...
+%	
+%	\item Adjust ...
+%	
+%	\item Identify ...
+%	
+%	\item Select...
+%	
+%\end{itemize}
