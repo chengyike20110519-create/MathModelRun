@@ -219,6 +219,11 @@ python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a
 | [AGENTS.md](AGENTS.md) | 文件原位更新规则 |
 | [AGENT_PROMPT.md](AGENT_PROMPT.md) | 可直接给 Agent 使用的系统提示词 |
 
+## 真实案例
+
+已接入第一道可追溯试题：[HiMCM 2022 Problem B：CO2 与全球变暖](examples/himcm-2022-problem-b/)。
+案例保留本地数据、历史 working draft 和既有图表，同时用十门禁明确区分“已有素材”和“已独立复现”。当前已完成输入快照、题意拆解、模型选路和数据计划，停在 `method_validated`，下一步是补充可运行的独立复现脚本。
+
 ## 文件更新规则
 
 用户要求更新、修改或重写某个文件时：

@@ -1,98 +1,146 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
-  <title id="title">MathModel Run 数模作战思维导图</title>
-  <desc id="desc">以可辩护论文为中心，从输入、建模、实验、写作到审计的十阶段数学建模工作流</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1120" role="img" aria-labelledby="title desc">
+  <title id="title">MathModel Run System Map</title>
+  <desc id="desc">数学建模智能体系统架构：从题面输入、智能体编排、证据契约到执行与论文交付</desc>
   <defs>
     <style>
       .ink { fill:#172033; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .muted { fill:#697586; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .branch { fill:none; stroke-width:5; stroke-linecap:round; stroke-linejoin:round; }
-      .link { fill:none; stroke-width:2.5; stroke-linecap:round; }
-      .box { stroke-width:2; }
-      .title { font-size:30px; font-weight:780; }
-      .branch-title { font-size:22px; font-weight:750; }
-      .node-title { font-size:18px; font-weight:720; }
-      .node-sub { font-size:13px; }
-      .meta { font-size:12px; font-weight:650; }
-      .small { font-size:12px; }
+      .muted { fill:#687385; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .white { fill:#fff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .h1 { font-size:32px; font-weight:800; }
+      .h2 { font-size:20px; font-weight:780; }
+      .node { font-size:15px; font-weight:730; }
+      .detail { font-size:12px; }
+      .micro { font-size:10px; font-weight:650; letter-spacing:1px; }
+      .layer { stroke:#d9dfe7; stroke-width:1.5; }
+      .nodebox { fill:#fff; stroke:#ccd4de; stroke-width:1.5; }
+      .line { fill:none; stroke:#a9b4c2; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+      .accentline { fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
     </style>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#172033" flood-opacity=".13"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#172033" flood-opacity=".13"/>
     </filter>
   </defs>
 
-  <rect width="1600" height="1000" fill="#f7f8fa"/>
-  <path d="M64 76H1536" stroke="#dfe4eb" stroke-width="2"/>
-  <text x="72" y="55" class="ink title">MathModel Run</text>
-  <text x="1530" y="54" text-anchor="end" class="muted" font-size="15">十阶段 · 十门禁 · 证据闭环</text>
+  <rect width="1800" height="1120" fill="#f6f7f9"/>
+  <path d="M72 84H1728" stroke="#dce2e9" stroke-width="2"/>
+  <text x="78" y="55" class="ink h1">MathModel Run</text>
+  <text x="1720" y="53" text-anchor="end" class="muted" font-size="14">SYSTEM MAP / EVIDENCE-DRIVEN MODELING</text>
+  <text x="78" y="113" class="muted detail">把题面推进成有证据、可复现、可审计的论文交付系统</text>
 
-  <!-- Four clean branches from the topic -->
-  <path class="branch" stroke="#2f6fed" d="M670 440 C570 390 520 300 455 235"/>
-  <path class="branch" stroke="#0f766e" d="M670 555 C560 605 515 680 455 745"/>
-  <path class="branch" stroke="#b45309" d="M930 440 C1030 390 1080 300 1145 235"/>
-  <path class="branch" stroke="#7c3aed" d="M930 555 C1040 605 1085 680 1145 745"/>
+  <!-- System layers -->
+  <rect x="72" y="150" width="1656" height="142" rx="12" fill="#eef3ff" class="layer"/>
+  <rect x="72" y="314" width="1656" height="190" rx="12" fill="#f1faf8" class="layer"/>
+  <rect x="72" y="536" width="1656" height="186" rx="12" fill="#fff8eb" class="layer"/>
+  <rect x="72" y="744" width="1656" height="194" rx="12" fill="#f6f1ff" class="layer"/>
+  <rect x="72" y="960" width="1656" height="100" rx="12" fill="#172033" stroke="#172033"/>
 
-  <!-- Center topic -->
+  <!-- Layer labels -->
+  <text x="105" y="184" class="ink h2">01 / USER INPUT</text>
+  <text x="105" y="209" class="muted detail">题面、数据和比赛约束</text>
+  <text x="105" y="347" class="ink h2">02 / AGENT ORCHESTRATION</text>
+  <text x="105" y="372" class="muted detail">可组合的角色与阶段推进</text>
+  <text x="105" y="569" class="ink h2">03 / EVIDENCE CONTRACTS</text>
+  <text x="105" y="594" class="muted detail">状态、来源、结果和验收标准</text>
+  <text x="105" y="777" class="ink h2">04 / EXECUTION LAYER</text>
+  <text x="105" y="802" class="muted detail">工具、运行和独立审查</text>
+  <text x="105" y="994" class="white h2">05 / DELIVERY</text>
+  <text x="105" y="1020" fill="#b9c2cf" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12">可提交，不等于可辩护；交付必须携带证据链</text>
+
+  <!-- Input nodes -->
+  <g>
+    <rect x="500" y="175" width="310" height="82" rx="8" class="nodebox"/>
+    <circle cx="530" cy="216" r="14" fill="#356edc"/>
+    <text x="530" y="220" text-anchor="middle" fill="#fff" font-size="11" font-weight="750">IN</text>
+    <text x="557" y="211" class="ink node">题面与附件</text>
+    <text x="557" y="233" class="muted detail">文件、数据、来源、哈希</text>
+    <rect x="850" y="175" width="310" height="82" rx="8" class="nodebox"/>
+    <circle cx="880" cy="216" r="14" fill="#356edc"/>
+    <text x="880" y="220" text-anchor="middle" fill="#fff" font-size="11" font-weight="750">C</text>
+    <text x="907" y="211" class="ink node">比赛约束</text>
+    <text x="907" y="233" class="muted detail">题目要求、截止时间、页数与格式</text>
+    <rect x="1200" y="175" width="310" height="82" rx="8" class="nodebox"/>
+    <circle cx="1230" cy="216" r="14" fill="#356edc"/>
+    <text x="1230" y="220" text-anchor="middle" fill="#fff" font-size="11" font-weight="750">GO</text>
+    <text x="1257" y="211" class="ink node">输入快照</text>
+    <text x="1257" y="233" class="muted detail">S0 / input_snapshot / 默认失败</text>
+    <path class="accentline" stroke="#356edc" d="M810 216H850M1160 216H1200"/>
+  </g>
+
+  <!-- Orchestration nodes -->
+  <g>
+    <path class="accentline" stroke="#168276" d="M470 440H1540"/>
+    <circle cx="500" cy="440" r="9" fill="#168276"/>
+    <circle cx="800" cy="440" r="9" fill="#168276"/>
+    <circle cx="1100" cy="440" r="9" fill="#168276"/>
+    <circle cx="1400" cy="440" r="9" fill="#168276"/>
+    <text x="500" y="400" text-anchor="middle" class="ink node">分析器</text>
+    <text x="500" y="421" text-anchor="middle" class="muted detail">S1 题意拆解</text>
+    <text x="800" y="400" text-anchor="middle" class="ink node">建模器</text>
+    <text x="800" y="421" text-anchor="middle" class="muted detail">S2 选路 / S3 数据</text>
+    <text x="1100" y="400" text-anchor="middle" class="ink node">实验器</text>
+    <text x="1100" y="421" text-anchor="middle" class="muted detail">S4 PoC / S5 正式实验</text>
+    <text x="1400" y="400" text-anchor="middle" class="ink node">交付器</text>
+    <text x="1400" y="421" text-anchor="middle" class="muted detail">S7 写作 / S8 渲染</text>
+    <path class="line" d="M500 449V478M800 449V478M1100 449V478M1400 449V478"/>
+    <text x="500" y="490" text-anchor="middle" class="muted micro">ROUTE</text>
+    <text x="800" y="490" text-anchor="middle" class="muted micro">MODEL</text>
+    <text x="1100" y="490" text-anchor="middle" class="muted micro">RUN</text>
+    <text x="1400" y="490" text-anchor="middle" class="muted micro">WRITE</text>
+  </g>
+
+  <!-- Contract nodes -->
+  <g>
+    <rect x="475" y="614" width="245" height="76" rx="7" class="nodebox"/>
+    <text x="497" y="645" class="ink node">state.json</text>
+    <text x="497" y="667" class="muted detail">阶段与十门禁 · default FAIL</text>
+    <rect x="745" y="614" width="245" height="76" rx="7" class="nodebox"/>
+    <text x="767" y="645" class="ink node">run_manifest</text>
+    <text x="767" y="667" class="muted detail">运行、命令、环境、哈希</text>
+    <rect x="1015" y="614" width="245" height="76" rx="7" class="nodebox"/>
+    <text x="1037" y="645" class="ink node">frozen_numbers</text>
+    <text x="1037" y="667" class="muted detail">论文数字的唯一来源</text>
+    <rect x="1285" y="614" width="245" height="76" rx="7" class="nodebox"/>
+    <text x="1307" y="645" class="ink node">evidence_map</text>
+    <text x="1307" y="667" class="muted detail">claim → evidence → figure</text>
+    <path class="line" d="M720 652H745M990 652H1015M1260 652H1285"/>
+  </g>
+
+  <!-- Execution nodes -->
+  <g>
+    <rect x="475" y="809" width="235" height="82" rx="8" class="nodebox"/>
+    <text x="497" y="842" class="ink node">数据与代码</text>
+    <text x="497" y="865" class="muted detail">清洗、PoC、正式运行</text>
+    <rect x="735" y="809" width="235" height="82" rx="8" class="nodebox"/>
+    <text x="757" y="842" class="ink node">图表与渲染</text>
+    <text x="757" y="865" class="muted detail">图、表、PDF、逐页检查</text>
+    <rect x="995" y="809" width="235" height="82" rx="8" class="nodebox"/>
+    <text x="1017" y="842" class="ink node">机械审计</text>
+    <text x="1017" y="865" class="muted detail">结构、门禁、溯源、契约</text>
+    <rect x="1255" y="809" width="235" height="82" rx="8" class="nodebox"/>
+    <text x="1277" y="842" class="ink node">独立复核</text>
+    <text x="1277" y="865" class="muted detail">评分、硬错误、最终意见</text>
+    <path class="line" d="M710 850H735M970 850H995M1230 850H1255"/>
+  </g>
+
+  <!-- Delivery results -->
   <g filter="url(#shadow)">
-    <rect x="610" y="395" width="380" height="200" rx="22" fill="#172033"/>
-    <rect x="626" y="411" width="348" height="168" rx="15" fill="#fff"/>
-    <text x="800" y="474" text-anchor="middle" class="ink" font-size="31" font-weight="780">可辩护论文</text>
-    <text x="800" y="508" text-anchor="middle" class="muted" font-size="14">READY / DELIVERY</text>
-    <line x1="700" y1="533" x2="900" y2="533" stroke="#dfe4eb" stroke-width="2"/>
-    <text x="800" y="562" text-anchor="middle" class="muted meta">数字可追溯 · 结论可复现 · 过程可审计</text>
+    <rect x="475" y="976" width="235" height="68" rx="7" fill="#26334a"/>
+    <text x="497" y="1006" class="white node">可复现结果</text>
+    <text x="497" y="1027" fill="#b9c2cf" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" class="detail">run + logs + frozen values</text>
+    <rect x="735" y="976" width="235" height="68" rx="7" fill="#26334a"/>
+    <text x="757" y="1006" class="white node">可追溯论文</text>
+    <text x="757" y="1027" fill="#b9c2cf" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" class="detail">claims mapped to evidence</text>
+    <rect x="995" y="976" width="235" height="68" rx="7" fill="#26334a"/>
+    <text x="1017" y="1006" class="white node">可提交 PDF</text>
+    <text x="1017" y="1027" fill="#b9c2cf" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" class="detail">rendered and checked</text>
+    <rect x="1255" y="976" width="235" height="68" rx="7" fill="#b45309"/>
+    <text x="1277" y="1006" class="white node">READY / AUDITED</text>
+    <text x="1277" y="1027" fill="#fff1d2" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" class="detail">ten gates + final acceptance</text>
+    <path d="M710 1010H735M970 1010H995M1230 1010H1255" stroke="#75849a" stroke-width="2"/>
   </g>
 
-  <!-- 01 Input -->
-  <g>
-    <rect x="80" y="125" width="470" height="100" rx="14" fill="#eaf1ff" stroke="#2f6fed" class="box"/>
-    <circle cx="120" cy="164" r="17" fill="#2f6fed"/><text x="120" y="169" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">01</text>
-    <text x="153" y="164" class="ink branch-title">输入与题意</text><text x="153" y="193" class="muted node-sub">确认问题、文件、单位和边界</text>
-    <path class="link" stroke="#2f6fed" d="M315 225V265H195"/><path class="link" stroke="#2f6fed" d="M315 265H440V300"/>
-    <rect x="80" y="300" width="230" height="92" rx="10" fill="#fff" stroke="#9bb9f5" class="box"/>
-    <text x="104" y="359" class="ink node-title">S0 输入预检</text><text x="104" y="383" class="muted node-sub">input_snapshot</text><text x="104" y="403" class="muted meta">题面 · 附件 · 哈希 · 来源</text>
-    <rect x="330" y="300" width="220" height="92" rx="10" fill="#fff" stroke="#9bb9f5" class="box"/>
-    <text x="354" y="334" class="ink node-title">S1 题意拆解</text><text x="354" y="358" class="muted node-sub">problem_decomposed</text><text x="354" y="378" class="muted meta">子问题 · 变量 · 约束 · 验收</text>
-  </g>
-
-  <!-- 02 Modeling -->
-  <g>
-    <rect x="80" y="720" width="470" height="90" rx="14" fill="#e8f8f4" stroke="#0f766e" class="box"/>
-    <circle cx="120" cy="755" r="17" fill="#0f766e"/><text x="120" y="760" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">02</text>
-    <text x="153" y="755" class="ink branch-title">建模与验证</text><text x="153" y="783" class="muted node-sub">先做小实验，再扩大到正式实验</text>
-    <path class="link" stroke="#0f766e" d="M315 720V660H195"/><path class="link" stroke="#0f766e" d="M315 660H440V608"/>
-    <rect x="80" y="508" width="230" height="92" rx="10" fill="#fff" stroke="#8ccfc4" class="box"/>
-    <text x="104" y="542" class="ink node-title">S2 模型选路</text><text x="104" y="566" class="muted node-sub">model_route_selected</text><text x="104" y="586" class="muted meta">baseline · primary · fallback</text>
-    <rect x="330" y="508" width="220" height="92" rx="10" fill="#fff" stroke="#8ccfc4" class="box"/>
-    <text x="354" y="542" class="ink node-title">S3 数据图表</text><text x="354" y="566" class="muted node-sub">data_plan_ready</text><text x="354" y="586" class="muted meta">口径 · 字典 · 图表计划</text>
-    <rect x="80" y="608" width="310" height="92" rx="10" fill="#fff" stroke="#8ccfc4" class="box"/>
-    <text x="104" y="642" class="ink node-title">S4 方法 PoC</text><text x="104" y="666" class="muted node-sub">method_validated</text><text x="104" y="686" class="muted meta">可运行 · 可解释 · 可复现</text>
-  </g>
-
-  <!-- 03 Evidence -->
-  <g>
-    <rect x="1050" y="125" width="470" height="100" rx="14" fill="#fff5df" stroke="#b45309" class="box"/>
-    <circle cx="1090" cy="164" r="17" fill="#b45309"/><text x="1090" y="169" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">03</text>
-    <text x="1123" y="164" class="ink branch-title">实验与证据</text><text x="1123" y="193" class="muted node-sub">让每个数字都能回到真实运行</text>
-    <path class="link" stroke="#b45309" d="M1285 225V265H1165"/><path class="link" stroke="#b45309" d="M1285 265H1300V300"/>
-    <rect x="1050" y="300" width="230" height="92" rx="10" fill="#fff" stroke="#edc47b" class="box"/>
-    <text x="1074" y="334" class="ink node-title">S5 正式实验</text><text x="1074" y="358" class="muted node-sub">experiments_reproduced</text><text x="1074" y="378" class="muted meta">运行清单 · 日志 · 敏感性</text>
-    <rect x="1300" y="300" width="220" height="92" rx="10" fill="#fff" stroke="#edc47b" class="box"/>
-    <text x="1324" y="334" class="ink node-title">S6 结果冻结</text><text x="1324" y="358" class="muted node-sub">results_frozen</text><text x="1324" y="378" class="muted meta">论文数字唯一来源</text>
-  </g>
-
-  <!-- 04 Delivery -->
-  <g>
-    <rect x="1050" y="720" width="470" height="90" rx="14" fill="#f1edff" stroke="#7c3aed" class="box"/>
-    <circle cx="1090" cy="755" r="17" fill="#7c3aed"/><text x="1090" y="760" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">04</text>
-    <text x="1123" y="755" class="ink branch-title">写作与交付</text><text x="1123" y="783" class="muted node-sub">从证据地图走到最终 PDF</text>
-    <path class="link" stroke="#7c3aed" d="M1285 720V660H1165"/><path class="link" stroke="#7c3aed" d="M1285 660H1300V608"/>
-    <rect x="1050" y="508" width="230" height="92" rx="10" fill="#fff" stroke="#bca4f3" class="box"/>
-    <text x="1074" y="542" class="ink node-title">S7 证据写作</text><text x="1074" y="566" class="muted node-sub">paper_written</text><text x="1074" y="586" class="muted meta">claim → evidence → figure</text>
-    <rect x="1300" y="508" width="220" height="92" rx="10" fill="#fff" stroke="#bca4f3" class="box"/>
-    <text x="1324" y="542" class="ink node-title">S8 渲染检查</text><text x="1324" y="566" class="muted node-sub">pdf_verified</text><text x="1324" y="586" class="muted meta">逐页检查 · 版式确认</text>
-    <rect x="1050" y="608" width="310" height="92" rx="10" fill="#172033" stroke="#172033" class="box"/>
-    <text x="1074" y="642" fill="#fff" class="node-title">S9 独立审计</text><text x="1074" y="666" fill="#d6dce5" class="node-sub">audit_passed</text><text x="1074" y="686" fill="#d6dce5" class="meta">硬错误为 0，才允许 READY</text>
-  </g>
-
-  <path d="M1515 845 C1550 845 1550 900 1515 900 H85 C50 900 50 845 85 845" fill="none" stroke="#be123c" stroke-width="2.5" stroke-dasharray="8 8"/>
-  <text x="800" y="932" text-anchor="middle" class="muted small">回退原则：发现证据断点，回到最早未通过的阶段重新验证 · 默认失败，未复现不得放行</text>
+  <!-- Evidence spine -->
+  <path d="M1600 216V1010" stroke="#be123c" stroke-width="2" stroke-dasharray="6 7"/>
+  <text x="1630" y="250" class="muted micro" transform="rotate(90 1630 250)">EVIDENCE SPINE · EVERY CLAIM MUST HAVE A PATH BACK</text>
+  <path d="M1588 216H1600M1588 652H1600M1588 850H1600M1588 1010H1600" stroke="#be123c" stroke-width="2"/>
 </svg>
