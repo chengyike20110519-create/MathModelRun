@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 156" role="img" aria-labelledby="title desc">
+  <title id="title">MathModel Run</title>
+  <desc id="desc">Pixel logo for MathModel Run with a Sigma pipeline icon, wordmark, and tagline.</desc>
+  <style>
+    .ink { fill: #17203a; }
+    .blue { fill: #1f5ce8; }
+    .amber { fill: #b45309; }
+    .muted { fill: #5f6b80; }
+    .pixel { shape-rendering: crispEdges; }
+  </style>
+  <g class="pixel" transform="translate(12 12)">
+    <rect class="ink" x="0" y="0" width="120" height="120"/>
+    <rect fill="#ffffff" x="12" y="12" width="96" height="12"/>
+    <rect fill="#ffffff" x="12" y="24" width="12" height="12"/>
+    <rect fill="#ffffff" x="24" y="36" width="12" height="12"/>
+    <rect class="blue" x="36" y="48" width="48" height="12"/>
+    <rect class="amber" x="48" y="48" width="12" height="12"/>
+    <rect class="amber" x="60" y="36" width="12" height="12"/>
+    <rect class="amber" x="60" y="60" width="12" height="12"/>
+    <rect fill="#ffffff" x="84" y="48" width="12" height="12"/>
+    <rect fill="#ffffff" x="96" y="36" width="12" height="12"/>
+    <rect fill="#ffffff" x="84" y="60" width="12" height="12"/>
+    <rect fill="#ffffff" x="72" y="72" width="12" height="12"/>
+    <rect fill="#ffffff" x="60" y="84" width="12" height="12"/>
+    <rect fill="#ffffff" x="48" y="96" width="60" height="12"/>
+    <rect class="blue" x="12" y="48" width="24" height="12"/>
+    <rect class="blue" x="84" y="48" width="24" height="12"/>
+    <rect class="amber" x="48" y="42" width="12" height="6"/>
+    <rect class="amber" x="48" y="60" width="12" height="6"/>
+  </g>
+  <defs>
+    <g id="M"><path d="M0 56V0h8l12 16L32 0h8v56h-8V14L20 30 8 14v42z"/></g>
+    <g id="A"><path d="M0 56L14 0h12l14 56h-8l-3-12H11L8 56zm13-20h14l-7-27z"/></g>
+    <g id="T"><path d="M0 0h40v8H24v48h-8V8H0z"/></g>
+    <g id="H"><path d="M0 0h8v23h24V0h8v56h-8V31H8v25H0z"/></g>
+    <g id="O"><path d="M8 0h24l8 8v40l-8 8H8L0 48V8zm3 8L8 11v34l3 3h18l3-3V11l-3-3z"/></g>
+    <g id="D"><path d="M0 0h30l10 10v36L30 56H0zm8 8v40h18l6-6V14l-6-6z"/></g>
+    <g id="E"><path d="M0 0h40v8H8v15h27v8H8v17h32v8H0z"/></g>
+    <g id="L"><path d="M0 0h8v48h32v8H0z"/></g>
+    <g id="R"><path d="M0 0h30l10 10v17L30 37h-4l14 19H29L16 37H8v19H0zm8 8v21h18l6-6V14l-6-6z"/></g>
+    <g id="U"><path d="M0 0h8v45l3 3h18l3-3V0h8v48l-8 8H11L0 48z"/></g>
+    <g id="N"><path d="M0 56V0h9l23 41V0h8v56h-9L8 15v41z"/></g>
+  </defs>
+  <g class="ink" transform="translate(158 18) scale(.82)">
+    <use href="#M"/><use href="#A" x="50"/><use href="#T" x="100"/><use href="#H" x="150"/>
+    <use href="#M" x="200"/><use href="#O" x="250"/><use href="#D" x="300"/><use href="#E" x="350"/><use href="#L" x="400"/>
+  </g>
+  <g class="blue" transform="translate(158 76) scale(.82)">
+    <use href="#R"/><use href="#U" x="50"/><use href="#N" x="100"/>
+  </g>
+  <rect class="amber pixel" x="328" y="91" width="10" height="10"/>
+  <text class="muted" x="158" y="148" font-family="monospace" font-size="13" font-style="italic" font-weight="700">tiny gates, defensible papers</text>
+</svg>

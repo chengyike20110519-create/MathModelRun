@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="docs/assets/mathmodel-logo.svg" alt="MathModel Run Logo" width="680">
+</p>
+
+<p align="center">
   <img src="docs/assets/mathmodel-mindmap.svg" alt="MathModel Run 系统架构：五段流水线、十道门禁与证据脊" width="960">
 </p>
 
