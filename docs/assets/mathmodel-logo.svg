@@ -2,7 +2,8 @@
   <title id="title">MathModel Run</title>
   <desc id="desc">Pixel logo for MathModel Run with a Sigma pipeline icon, wordmark, and tagline.</desc>
   <style>
-    .ink { fill: #285db5; }
+    .ink { fill: #17203a; }
+    .wordmark { fill: #285db5; }
     .blue { fill: #1f5ce8; }
     .amber { fill: #b45309; }
     .muted { fill: #5f6b80; }
@@ -42,7 +43,7 @@
     <g id="U"><path d="M0 0h8v45l3 3h18l3-3V0h8v48l-8 8H11L0 48z"/></g>
     <g id="N"><path d="M0 56V0h9l23 41V0h8v56h-9L8 15v41z"/></g>
   </defs>
-  <g class="ink" transform="translate(158 18) scale(.82)">
+  <g class="wordmark" transform="translate(158 18) scale(.82)">
     <use href="#M"/><use href="#A" x="50"/><use href="#T" x="100"/><use href="#H" x="150"/>
     <use href="#M" x="200"/><use href="#O" x="250"/><use href="#D" x="300"/><use href="#E" x="350"/><use href="#L" x="400"/>
   </g>
