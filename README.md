@@ -8,7 +8,6 @@
 
 An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathematical modeling competitions. One workflow takes a team from problem files to reproducible experiments, frozen results, rendered papers, and independent audit: **clarify, decompose, choose, validate, run, freeze, write, render, audit**.
 
-
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python 3.9+"></a>
@@ -24,19 +23,26 @@ An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathe
   <a href="docs/INSTALL.md">安装</a>
 </p>
 
+<p align="center">
+  <a href="#它解决什么">为什么用它</a> ·
+  <a href="#快速开始">快速开始</a> ·
+  <a href="#十阶段">十阶段</a> ·
+  <a href="#文档与入口">文档</a>
+</p>
+
 ---
 
-## Workflow Overview
+## 工作流总览
 
 <p align="center">
-  <img src="docs/assets/mathmodel-workflow.svg" alt="Ten-stage mathematical modeling workflow with evidence gates" width="960">
+  <img src="docs/assets/mathmodel-workflow.svg" alt="十阶段数学建模工作流与证据门禁" width="960">
 </p>
 
 把题面推进成有证据的论文：十阶段、十门禁、默认失败、独立复核、结果冻结、逐页渲染、最终审计。
 
 每一条边都是一个**门禁**：只有当机器可检查的证据落盘，门禁才会从 `false` 翻成 `true`，阶段才允许前进。声明的阶段不允许领先于第一个未通过的门禁——机械审计会直接判 FAIL。
 
-## 为什么需要它
+## 它解决什么
 
 数学建模比赛不是"先选一个高级模型，再把论文写满"的过程。真正容易失控的是：
 
@@ -48,6 +54,8 @@ An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathe
 - 最终 PDF 编译成功，却没人逐页检查。
 
 MathModel Run 把比赛拆成一条可恢复的证据链：**输入 → 拆题 → 选路 → 数据 → PoC → 实验 → 冻结 → 写作 → 渲染 → 审计**。每个阶段都有机器产物，任何门禁默认未通过，只有独立复核后才能翻门。
+
+它适合需要可复现、可交接、可审计的 **CUMCM、MCM/ICM、HiMCM** 及类似数学建模竞赛。它不替你“猜一个高级模型”，而是帮助团队持续回答三个问题：**现在处于哪一步？下一步需要什么证据？论文里的结论能否追溯？**
 
 ## 核心机制
 
@@ -65,7 +73,9 @@ MathModel Run 把比赛拆成一条可恢复的证据链：**输入 → 拆题 �
 
 ## 快速开始
 
-### 1. 新建一个比赛项目
+从一个新的比赛项目开始，通常按下面五步推进：
+
+### 1. 创建项目骨架
 
 ```bash
 python3 my-mathmodel-agent/scripts/init_project.py 2026-cumcm-a
@@ -98,7 +108,7 @@ python3 my-mathmodel-agent/scripts/init_project.py 2026-cumcm-a
 └── PROGRESS.md                     # 跨上下文交接日志
 ```
 
-### 2. 查看当前应做什么
+### 2. 查看权威下一步
 
 ```bash
 python3 my-mathmodel-agent/scripts/status.py 2026-cumcm-a
@@ -120,13 +130,13 @@ Gate:    input_snapshot
 Missing artifacts: none
 ```
 
-### 3. 检查本机环境
+### 3. 检查执行环境
 
 ```bash
 python3 my-mathmodel-agent/scripts/doctor.py
 ```
 
-### 4. 冻结最终数字
+### 4. 冻结论文数字
 
 结果文件中的每个值必须包含：
 
@@ -148,7 +158,7 @@ python3 my-mathmodel-agent/scripts/doctor.py
 python3 my-mathmodel-agent/scripts/freeze_numbers.py   results/verified_results.json   --output 2026-cumcm-a/frozen_numbers.json
 ```
 
-### 5. 机械审计
+### 5. 执行机械审计
 
 ```bash
 python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a
@@ -156,7 +166,7 @@ python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a
 
 `INCOMPLETE` 表示还没走完；`FAIL` 表示已声称通过但证据或契约有问题；`MECHANICAL_PASS` 只说明结构、门禁和溯源通过，最终 `READY` 仍要求独立审查者写出 `audit/final_report.md`。
 
-## 机械审计清单
+## 审计规则
 
 `audit_workspace.py` 对每一个声称为 `true` 的门禁强制执行：
 
@@ -191,7 +201,7 @@ python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a
 
 完整输入、出口标准、失败回退见 [my-mathmodel-agent/references/workflow-contract.md](my-mathmodel-agent/references/workflow-contract.md)。
 
-## 文档入口
+## 文档与入口
 
 | 文件 | 用途 |
 |---|---|
@@ -206,12 +216,12 @@ python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a
 | [AGENTS.md](AGENTS.md) | 文件原位更新规则 |
 | [AGENT_PROMPT.md](AGENT_PROMPT.md) | 可直接给 Agent 使用的系统提示词 |
 
-## 真实案例
+## 可追溯案例
 
 已接入第一道可追溯试题：[HiMCM 2022 Problem B：CO2 与全球变暖](examples/himcm-2022-problem-b/)。
 案例保留本地数据、历史 working draft 和既有图表，同时用十门禁明确区分“已有素材”和“已独立复现”。当前已完成输入快照、题意拆解、模型选路和数据计划，停在 `method_validated`，下一步是补充可运行的独立复现脚本。
 
-## 文件更新规则
+## 维护规则
 
 用户要求更新、修改或重写某个文件时：
 
