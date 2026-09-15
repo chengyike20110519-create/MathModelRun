@@ -2,12 +2,19 @@
   <title id="title">MathModel Run</title>
   <desc id="desc">Pixel logo for MathModel Run with a Sigma pipeline icon, wordmark, and tagline.</desc>
   <style>
-    .ink { fill: #17203a; }
-    .wordmark { fill: #0891a8; }
-    .blue { fill: #08b6c7; }
-    .amber { fill: #b45309; }
-    .muted { fill: #5f6b80; }
+    .ink { fill: #111827; }
+    .wordmark { fill: #111827; }
+    .blue { fill: #0f766e; }
+    .amber { fill: #0f766e; }
+    .muted { fill: #475569; }
     .pixel { shape-rendering: crispEdges; }
+    @media (prefers-color-scheme: dark) {
+      .ink { fill: #f8fafc; }
+      .wordmark { fill: #f8fafc; }
+      .blue { fill: #5eead4; }
+      .amber { fill: #5eead4; }
+      .muted { fill: #cbd5e1; }
+    }
   </style>
   <g class="pixel" transform="translate(12 12)">
     <rect class="ink" x="0" y="0" width="120" height="120"/>
