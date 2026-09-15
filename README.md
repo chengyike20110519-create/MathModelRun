@@ -1,15 +1,9 @@
-<p align="center">
-  <img src="docs/assets/mathmodel-logo.svg" alt="MathModel Run Logo" width="680">
-</p>
+# MathModel Run
 
-<p align="center">
-  <img src="docs/assets/mathmodel-mindmap.svg" alt="MathModel Run 系统架构：五段流水线、十道门禁与证据脊" width="960">
-</p>
+> Build the model. Freeze the evidence. Audit the paper.
 
-<p align="center">
-  <strong>把题面推进成有证据的论文。</strong><br>
-  十阶段、十门禁、默认失败、独立复核、结果冻结、逐页渲染、最终审计。
-</p>
+An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathematical modeling competitions. One workflow takes a team from problem files to reproducible experiments, frozen results, rendered papers, and independent audit: **clarify, decompose, choose, validate, run, freeze, write, render, audit**.
+
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
@@ -28,11 +22,13 @@
 
 ---
 
-## 工作流总览
+## Workflow Overview
 
 <p align="center">
-  <img src="docs/assets/mathmodel-workflow.svg" alt="十阶段工作流：四组阶段卡与十道门禁流水线" width="960">
+  <img src="docs/assets/mathmodel-workflow.svg" alt="Ten-stage mathematical modeling workflow with evidence gates" width="960">
 </p>
+
+把题面推进成有证据的论文：十阶段、十门禁、默认失败、独立复核、结果冻结、逐页渲染、最终审计。
 
 每一条边都是一个**门禁**：只有当机器可检查的证据落盘，门禁才会从 `false` 翻成 `true`，阶段才允许前进。声明的阶段不允许领先于第一个未通过的门禁——机械审计会直接判 FAIL。
 
