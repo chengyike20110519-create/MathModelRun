@@ -2,7 +2,7 @@
   <title id="title">MathModel Run</title>
   <desc id="desc">Pixel logo for MathModel Run with a Sigma pipeline icon, wordmark, and tagline.</desc>
   <style>
-    .ink { fill: #17203a; }
+    .ink { fill: #285db5; }
     .blue { fill: #1f5ce8; }
     .amber { fill: #b45309; }
     .muted { fill: #5f6b80; }
