@@ -1,146 +1,201 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1120" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" role="img" aria-labelledby="title desc">
   <title id="title">MathModel Run System Map</title>
-  <desc id="desc">数学建模智能体系统架构：从题面输入、智能体编排、证据契约到执行与论文交付</desc>
+  <desc id="desc">五段流水线：输入、智能体编排、证据契约、执行、交付，十道门禁与证据脊贯穿全程</desc>
   <defs>
     <style>
-      .ink { fill:#172033; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .muted { fill:#687385; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .white { fill:#fff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .h1 { font-size:32px; font-weight:800; }
-      .h2 { font-size:20px; font-weight:780; }
-      .node { font-size:15px; font-weight:730; }
-      .detail { font-size:12px; }
-      .micro { font-size:10px; font-weight:650; letter-spacing:1px; }
-      .layer { stroke:#d9dfe7; stroke-width:1.5; }
-      .nodebox { fill:#fff; stroke:#ccd4de; stroke-width:1.5; }
-      .line { fill:none; stroke:#a9b4c2; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-      .accentline { fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+      .ink { fill:#17203a; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .muted { fill:#5f6b80; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .stage-num { fill:#7ea2ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .stage-title { fill:#ffffff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .stage-sub { fill:#93a0c0; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .node-title { fill:#1b2438; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .node-sub { fill:#6b7690; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .gate-label { fill:#8a5a13; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .spine-label { fill:#aebadd; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .chip { fill:#1f2a44; stroke:#3d4d78; stroke-width:1.2; }
+      .chip-text { fill:#d9e2ff; font-family:'SF Mono',Menlo,Consolas,monospace; }
+      .nodecard { fill:#ffffff; stroke:#e2e8f2; stroke-width:1.2; }
+      .stub { stroke:#c9d2e2; stroke-width:2; }
+      .flow { stroke:#1f5ce8; stroke-width:3; fill:none; stroke-linecap:round; }
     </style>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#172033" flood-opacity=".13"/>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#17203a" flood-opacity=".08"/>
     </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#1f5ce8"/>
+    </marker>
   </defs>
 
-  <rect width="1800" height="1120" fill="#f6f7f9"/>
-  <path d="M72 84H1728" stroke="#dce2e9" stroke-width="2"/>
-  <text x="78" y="55" class="ink h1">MathModel Run</text>
-  <text x="1720" y="53" text-anchor="end" class="muted" font-size="14">SYSTEM MAP / EVIDENCE-DRIVEN MODELING</text>
-  <text x="78" y="113" class="muted detail">把题面推进成有证据、可复现、可审计的论文交付系统</text>
+  <rect width="1600" height="800" fill="#fbfcfe"/>
 
-  <!-- System layers -->
-  <rect x="72" y="150" width="1656" height="142" rx="12" fill="#eef3ff" class="layer"/>
-  <rect x="72" y="314" width="1656" height="190" rx="12" fill="#f1faf8" class="layer"/>
-  <rect x="72" y="536" width="1656" height="186" rx="12" fill="#fff8eb" class="layer"/>
-  <rect x="72" y="744" width="1656" height="194" rx="12" fill="#f6f1ff" class="layer"/>
-  <rect x="72" y="960" width="1656" height="100" rx="12" fill="#172033" stroke="#172033"/>
+  <!-- Header -->
+  <text x="80" y="66" class="ink" font-size="34" font-weight="800">MathModel Run</text>
+  <text x="1520" y="46" text-anchor="end" class="muted" font-size="13" letter-spacing="3">SYSTEM MAP / EVIDENCE-DRIVEN MODELING</text>
+  <text x="1520" y="70" text-anchor="end" class="muted" font-size="13">五段流水线 · 十门禁 · 证据闭环</text>
+  <text x="80" y="104" class="muted" font-size="15">把题面推进成有证据、可复现、可审计的论文交付系统</text>
+  <rect x="80" y="120" width="64" height="4" fill="#1f5ce8"/>
 
-  <!-- Layer labels -->
-  <text x="105" y="184" class="ink h2">01 / USER INPUT</text>
-  <text x="105" y="209" class="muted detail">题面、数据和比赛约束</text>
-  <text x="105" y="347" class="ink h2">02 / AGENT ORCHESTRATION</text>
-  <text x="105" y="372" class="muted detail">可组合的角色与阶段推进</text>
-  <text x="105" y="569" class="ink h2">03 / EVIDENCE CONTRACTS</text>
-  <text x="105" y="594" class="muted detail">状态、来源、结果和验收标准</text>
-  <text x="105" y="777" class="ink h2">04 / EXECUTION LAYER</text>
-  <text x="105" y="802" class="muted detail">工具、运行和独立审查</text>
-  <text x="105" y="994" class="white h2">05 / DELIVERY</text>
-  <text x="105" y="1020" fill="#b9c2cf" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" font-size="12">可提交，不等于可辩护；交付必须携带证据链</text>
+  <!-- ===== Stage columns (x: 80, 372, 664, 956, 1248 ; centers 216,508,800,1092,1384) ===== -->
 
-  <!-- Input nodes -->
+  <!-- 01 USER INPUT -->
   <g>
-    <rect x="500" y="175" width="310" height="82" rx="8" class="nodebox"/>
-    <circle cx="530" cy="216" r="14" fill="#356edc"/>
-    <text x="530" y="220" text-anchor="middle" fill="#fff" font-size="11" font-weight="750">IN</text>
-    <text x="557" y="211" class="ink node">题面与附件</text>
-    <text x="557" y="233" class="muted detail">文件、数据、来源、哈希</text>
-    <rect x="850" y="175" width="310" height="82" rx="8" class="nodebox"/>
-    <circle cx="880" cy="216" r="14" fill="#356edc"/>
-    <text x="880" y="220" text-anchor="middle" fill="#fff" font-size="11" font-weight="750">C</text>
-    <text x="907" y="211" class="ink node">比赛约束</text>
-    <text x="907" y="233" class="muted detail">题目要求、截止时间、页数与格式</text>
-    <rect x="1200" y="175" width="310" height="82" rx="8" class="nodebox"/>
-    <circle cx="1230" cy="216" r="14" fill="#356edc"/>
-    <text x="1230" y="220" text-anchor="middle" fill="#fff" font-size="11" font-weight="750">GO</text>
-    <text x="1257" y="211" class="ink node">输入快照</text>
-    <text x="1257" y="233" class="muted detail">S0 / input_snapshot / 默认失败</text>
-    <path class="accentline" stroke="#356edc" d="M810 216H850M1160 216H1200"/>
+    <rect x="80" y="150" width="272" height="72" rx="12" fill="#17203a" filter="url(#soft)"/>
+    <text x="104" y="184" class="stage-num" font-size="20" font-weight="800">01</text>
+    <text x="142" y="182" class="stage-title" font-size="17" font-weight="750">输入</text>
+    <text x="142" y="204" class="stage-sub" font-size="11" letter-spacing="1.5">USER INPUT</text>
+
+    <rect x="80" y="238" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="98" y="264" class="node-title" font-size="14.5" font-weight="700">题面与附件</text>
+    <text x="98" y="286" class="node-sub" font-size="11.5">文件、数据、来源、哈希</text>
+
+    <rect x="80" y="314" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="98" y="340" class="node-title" font-size="14.5" font-weight="700">比赛约束</text>
+    <text x="98" y="362" class="node-sub" font-size="11.5">要求、截止、页数与格式</text>
+
+    <rect x="80" y="390" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="98" y="416" class="node-title" font-size="14.5" font-weight="700">输入快照</text>
+    <text x="98" y="438" class="node-sub" font-size="11.5">S0 · 默认失败</text>
   </g>
 
-  <!-- Orchestration nodes -->
+  <!-- 02 AGENT ORCHESTRATION -->
   <g>
-    <path class="accentline" stroke="#168276" d="M470 440H1540"/>
-    <circle cx="500" cy="440" r="9" fill="#168276"/>
-    <circle cx="800" cy="440" r="9" fill="#168276"/>
-    <circle cx="1100" cy="440" r="9" fill="#168276"/>
-    <circle cx="1400" cy="440" r="9" fill="#168276"/>
-    <text x="500" y="400" text-anchor="middle" class="ink node">分析器</text>
-    <text x="500" y="421" text-anchor="middle" class="muted detail">S1 题意拆解</text>
-    <text x="800" y="400" text-anchor="middle" class="ink node">建模器</text>
-    <text x="800" y="421" text-anchor="middle" class="muted detail">S2 选路 / S3 数据</text>
-    <text x="1100" y="400" text-anchor="middle" class="ink node">实验器</text>
-    <text x="1100" y="421" text-anchor="middle" class="muted detail">S4 PoC / S5 正式实验</text>
-    <text x="1400" y="400" text-anchor="middle" class="ink node">交付器</text>
-    <text x="1400" y="421" text-anchor="middle" class="muted detail">S7 写作 / S8 渲染</text>
-    <path class="line" d="M500 449V478M800 449V478M1100 449V478M1400 449V478"/>
-    <text x="500" y="490" text-anchor="middle" class="muted micro">ROUTE</text>
-    <text x="800" y="490" text-anchor="middle" class="muted micro">MODEL</text>
-    <text x="1100" y="490" text-anchor="middle" class="muted micro">RUN</text>
-    <text x="1400" y="490" text-anchor="middle" class="muted micro">WRITE</text>
+    <rect x="372" y="150" width="272" height="72" rx="12" fill="#17203a" filter="url(#soft)"/>
+    <text x="396" y="184" class="stage-num" font-size="20" font-weight="800">02</text>
+    <text x="434" y="182" class="stage-title" font-size="17" font-weight="750">智能体编排</text>
+    <text x="434" y="204" class="stage-sub" font-size="11" letter-spacing="1.5">AGENT ORCHESTRATION</text>
+
+    <rect x="372" y="238" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="390" y="264" class="node-title" font-size="14.5" font-weight="700">分析器</text>
+    <text x="390" y="286" class="node-sub" font-size="11.5">S1 题意拆解</text>
+
+    <rect x="372" y="314" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="390" y="340" class="node-title" font-size="14.5" font-weight="700">建模器</text>
+    <text x="390" y="362" class="node-sub" font-size="11.5">S2 选路 · S3 数据</text>
+
+    <rect x="372" y="390" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="390" y="416" class="node-title" font-size="14.5" font-weight="700">实验器</text>
+    <text x="390" y="438" class="node-sub" font-size="11.5">S4 PoC · S5 正式实验</text>
+
+    <rect x="372" y="466" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="390" y="492" class="node-title" font-size="14.5" font-weight="700">交付器</text>
+    <text x="390" y="514" class="node-sub" font-size="11.5">S7 写作 · S8 渲染</text>
   </g>
 
-  <!-- Contract nodes -->
+  <!-- 03 EVIDENCE CONTRACTS -->
   <g>
-    <rect x="475" y="614" width="245" height="76" rx="7" class="nodebox"/>
-    <text x="497" y="645" class="ink node">state.json</text>
-    <text x="497" y="667" class="muted detail">阶段与十门禁 · default FAIL</text>
-    <rect x="745" y="614" width="245" height="76" rx="7" class="nodebox"/>
-    <text x="767" y="645" class="ink node">run_manifest</text>
-    <text x="767" y="667" class="muted detail">运行、命令、环境、哈希</text>
-    <rect x="1015" y="614" width="245" height="76" rx="7" class="nodebox"/>
-    <text x="1037" y="645" class="ink node">frozen_numbers</text>
-    <text x="1037" y="667" class="muted detail">论文数字的唯一来源</text>
-    <rect x="1285" y="614" width="245" height="76" rx="7" class="nodebox"/>
-    <text x="1307" y="645" class="ink node">evidence_map</text>
-    <text x="1307" y="667" class="muted detail">claim → evidence → figure</text>
-    <path class="line" d="M720 652H745M990 652H1015M1260 652H1285"/>
+    <rect x="664" y="150" width="272" height="72" rx="12" fill="#17203a" filter="url(#soft)"/>
+    <text x="688" y="184" class="stage-num" font-size="20" font-weight="800">03</text>
+    <text x="726" y="182" class="stage-title" font-size="17" font-weight="750">证据契约</text>
+    <text x="726" y="204" class="stage-sub" font-size="11" letter-spacing="1.5">EVIDENCE CONTRACTS</text>
+
+    <rect x="664" y="238" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="682" y="264" class="node-title" font-size="14.5" font-weight="700" font-family="'SF Mono',Menlo,Consolas,monospace">state.json</text>
+    <text x="682" y="286" class="node-sub" font-size="11.5">阶段状态 · 十门禁</text>
+
+    <rect x="664" y="314" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="682" y="340" class="node-title" font-size="14.5" font-weight="700" font-family="'SF Mono',Menlo,Consolas,monospace">run_manifest</text>
+    <text x="682" y="362" class="node-sub" font-size="11.5">运行 · 命令 · 环境 · 哈希</text>
+
+    <rect x="664" y="390" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="682" y="416" class="node-title" font-size="14.5" font-weight="700" font-family="'SF Mono',Menlo,Consolas,monospace">frozen_numbers</text>
+    <text x="682" y="438" class="node-sub" font-size="11.5">论文数字的唯一来源</text>
+
+    <rect x="664" y="466" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="682" y="492" class="node-title" font-size="14.5" font-weight="700" font-family="'SF Mono',Menlo,Consolas,monospace">evidence_map</text>
+    <text x="682" y="514" class="node-sub" font-size="11.5">claim → evidence → figure</text>
   </g>
 
-  <!-- Execution nodes -->
+  <!-- 04 EXECUTION LAYER -->
   <g>
-    <rect x="475" y="809" width="235" height="82" rx="8" class="nodebox"/>
-    <text x="497" y="842" class="ink node">数据与代码</text>
-    <text x="497" y="865" class="muted detail">清洗、PoC、正式运行</text>
-    <rect x="735" y="809" width="235" height="82" rx="8" class="nodebox"/>
-    <text x="757" y="842" class="ink node">图表与渲染</text>
-    <text x="757" y="865" class="muted detail">图、表、PDF、逐页检查</text>
-    <rect x="995" y="809" width="235" height="82" rx="8" class="nodebox"/>
-    <text x="1017" y="842" class="ink node">机械审计</text>
-    <text x="1017" y="865" class="muted detail">结构、门禁、溯源、契约</text>
-    <rect x="1255" y="809" width="235" height="82" rx="8" class="nodebox"/>
-    <text x="1277" y="842" class="ink node">独立复核</text>
-    <text x="1277" y="865" class="muted detail">评分、硬错误、最终意见</text>
-    <path class="line" d="M710 850H735M970 850H995M1230 850H1255"/>
+    <rect x="956" y="150" width="272" height="72" rx="12" fill="#17203a" filter="url(#soft)"/>
+    <text x="980" y="184" class="stage-num" font-size="20" font-weight="800">04</text>
+    <text x="1018" y="182" class="stage-title" font-size="17" font-weight="750">执行与审查</text>
+    <text x="1018" y="204" class="stage-sub" font-size="11" letter-spacing="1.5">EXECUTION LAYER</text>
+
+    <rect x="956" y="238" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="974" y="264" class="node-title" font-size="14.5" font-weight="700">数据与代码</text>
+    <text x="974" y="286" class="node-sub" font-size="11.5">清洗 · PoC · 正式运行</text>
+
+    <rect x="956" y="314" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="974" y="340" class="node-title" font-size="14.5" font-weight="700">图表与渲染</text>
+    <text x="974" y="362" class="node-sub" font-size="11.5">图 · 表 · PDF · 逐页检查</text>
+
+    <rect x="956" y="390" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="974" y="416" class="node-title" font-size="14.5" font-weight="700">机械审计</text>
+    <text x="974" y="438" class="node-sub" font-size="11.5">结构 · 门禁 · 溯源</text>
+
+    <rect x="956" y="466" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="974" y="492" class="node-title" font-size="14.5" font-weight="700">独立复核</text>
+    <text x="974" y="514" class="node-sub" font-size="11.5">评分 · 硬错误 · 最终意见</text>
   </g>
 
-  <!-- Delivery results -->
-  <g filter="url(#shadow)">
-    <rect x="475" y="976" width="235" height="68" rx="7" fill="#26334a"/>
-    <text x="497" y="1006" class="white node">可复现结果</text>
-    <text x="497" y="1027" fill="#b9c2cf" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" class="detail">run + logs + frozen values</text>
-    <rect x="735" y="976" width="235" height="68" rx="7" fill="#26334a"/>
-    <text x="757" y="1006" class="white node">可追溯论文</text>
-    <text x="757" y="1027" fill="#b9c2cf" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" class="detail">claims mapped to evidence</text>
-    <rect x="995" y="976" width="235" height="68" rx="7" fill="#26334a"/>
-    <text x="1017" y="1006" class="white node">可提交 PDF</text>
-    <text x="1017" y="1027" fill="#b9c2cf" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" class="detail">rendered and checked</text>
-    <rect x="1255" y="976" width="235" height="68" rx="7" fill="#b45309"/>
-    <text x="1277" y="1006" class="white node">READY / AUDITED</text>
-    <text x="1277" y="1027" fill="#fff1d2" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif" class="detail">ten gates + final acceptance</text>
-    <path d="M710 1010H735M970 1010H995M1230 1010H1255" stroke="#75849a" stroke-width="2"/>
+  <!-- 05 DELIVERY -->
+  <g>
+    <rect x="1248" y="150" width="272" height="72" rx="12" fill="#1f5ce8" filter="url(#soft)"/>
+    <text x="1272" y="184" fill="#bcd0ff" font-size="20" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">05</text>
+    <text x="1310" y="182" class="stage-title" font-size="17" font-weight="750">交付</text>
+    <text x="1310" y="204" fill="#bcd0ff" font-size="11" letter-spacing="1.5" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">DELIVERY</text>
+
+    <rect x="1248" y="238" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="1266" y="264" class="node-title" font-size="14.5" font-weight="700">可复现结果</text>
+    <text x="1266" y="286" class="node-sub" font-size="11.5">run + logs + frozen values</text>
+
+    <rect x="1248" y="314" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="1266" y="340" class="node-title" font-size="14.5" font-weight="700">可追溯论文</text>
+    <text x="1266" y="362" class="node-sub" font-size="11.5">claims mapped to evidence</text>
+
+    <rect x="1248" y="390" width="272" height="64" rx="10" class="nodecard"/>
+    <text x="1266" y="416" class="node-title" font-size="14.5" font-weight="700">可提交 PDF</text>
+    <text x="1266" y="438" class="node-sub" font-size="11.5">rendered and checked</text>
+
+    <rect x="1248" y="466" width="272" height="64" rx="10" fill="#17203a" stroke="#17203a" stroke-width="1.2"/>
+    <text x="1266" y="492" fill="#ffffff" font-size="14.5" font-weight="750" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">READY / AUDITED</text>
+    <text x="1266" y="514" fill="#93a0c0" font-size="11.5" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">十门禁 + 最终验收</text>
   </g>
 
-  <!-- Evidence spine -->
-  <path d="M1600 216V1010" stroke="#be123c" stroke-width="2" stroke-dasharray="6 7"/>
-  <text x="1630" y="250" class="muted micro" transform="rotate(90 1630 250)">EVIDENCE SPINE · EVERY CLAIM MUST HAVE A PATH BACK</text>
-  <path d="M1588 216H1600M1588 652H1600M1588 850H1600M1588 1010H1600" stroke="#be123c" stroke-width="2"/>
+  <!-- ===== Flow spine with ten gates ===== -->
+  <line x1="216" y1="464" x2="216" y2="576" class="stub"/>
+  <line x1="508" y1="540" x2="508" y2="576" class="stub"/>
+  <line x1="800" y1="540" x2="800" y2="576" class="stub"/>
+  <line x1="1092" y1="540" x2="1092" y2="576" class="stub"/>
+  <line x1="1384" y1="540" x2="1384" y2="576" class="stub"/>
+  <path d="M216 576H1376" class="flow" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="316" y="569" width="14" height="14" transform="rotate(45 323 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="422" y="569" width="14" height="14" transform="rotate(45 429 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="528" y="569" width="14" height="14" transform="rotate(45 535 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="634" y="569" width="14" height="14" transform="rotate(45 641 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="740" y="569" width="14" height="14" transform="rotate(45 747 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="846" y="569" width="14" height="14" transform="rotate(45 853 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="952" y="569" width="14" height="14" transform="rotate(45 959 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="1058" y="569" width="14" height="14" transform="rotate(45 1065 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="1164" y="569" width="14" height="14" transform="rotate(45 1171 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <rect x="1270" y="569" width="14" height="14" transform="rotate(45 1277 576)" fill="#ffffff" stroke="#b45309" stroke-width="2"/>
+    <text x="323" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G1</text>
+    <text x="429" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G2</text>
+    <text x="535" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G3</text>
+    <text x="641" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G4</text>
+    <text x="747" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G5</text>
+    <text x="853" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G6</text>
+    <text x="959" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G7</text>
+    <text x="1065" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G8</text>
+    <text x="1171" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G9</text>
+    <text x="1277" y="602" text-anchor="middle" class="gate-label" font-size="10.5" font-weight="700">G10</text>
+    <text x="800" y="630" text-anchor="middle" class="muted" font-size="12.5">十道门禁 · 默认 FAIL，逐门通过才能继续推进</text>
+  </g>
+
+  <!-- ===== Evidence spine ===== -->
+  <rect x="80" y="664" width="1440" height="92" rx="14" fill="#17203a" filter="url(#soft)"/>
+  <text x="116" y="700" class="spine-label" font-size="13" font-weight="700" letter-spacing="3">EVIDENCE SPINE</text>
+  <text x="116" y="727" fill="#8e9bc0" font-size="12.5" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">每一个 claim 都必须能回溯到证据</text>
+
+  <rect x="880" y="690" width="150" height="40" rx="9" class="chip"/>
+  <text x="955" y="715" text-anchor="middle" class="chip-text" font-size="13">state.json</text>
+  <rect x="1042" y="690" width="166" height="40" rx="9" class="chip"/>
+  <text x="1125" y="715" text-anchor="middle" class="chip-text" font-size="13">run_manifest</text>
+  <rect x="1220" y="690" width="176" height="40" rx="9" class="chip"/>
+  <text x="1308" y="715" text-anchor="middle" class="chip-text" font-size="13">frozen_numbers</text>
+  <rect x="1408" y="690" width="74" height="40" rx="9" class="chip"/>
+  <text x="1445" y="715" text-anchor="middle" class="chip-text" font-size="13">evidence_map</text>
 </svg>

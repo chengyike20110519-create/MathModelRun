@@ -1,7 +1,7 @@
 # MathModel Run
 
 <p align="center">
-  <img src="docs/assets/mathmodel-mindmap.svg" alt="MathModel Run 数模作战思维导图" width="960">
+  <img src="docs/assets/mathmodel-mindmap.svg" alt="MathModel Run 系统架构：五段流水线、十道门禁与证据脊" width="960">
 </p>
 
 <p align="center">
