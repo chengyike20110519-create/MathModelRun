@@ -6,6 +6,10 @@
   <img src="docs/assets/mathmodel-logo.svg" alt="MathModel Run Logo" width="680">
 </p>
 
+<p align="center">
+  <img src="docs/assets/mathmodel-mindmap.svg" alt="MathModel Run 系统架构：五段流水线、十道门禁与证据脊" width="960">
+</p>
+
 An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathematical modeling competitions. One workflow takes a team from problem files to reproducible experiments, frozen results, rendered papers, and independent audit: **clarify, decompose, choose, validate, run, freeze, write, render, audit**.
 
 <p align="center">
