@@ -3,13 +3,12 @@
   <desc id="desc">Pixel logo for MathModel Run with a Sigma pipeline icon, wordmark, and tagline.</desc>
   <style>
     .ink { fill: #17203a; }
-    .wordmark { fill: #285db5; }
-    .blue { fill: #1f5ce8; }
+    .wordmark { fill: #0891a8; }
+    .blue { fill: #08b6c7; }
     .amber { fill: #b45309; }
     .muted { fill: #5f6b80; }
     .pixel { shape-rendering: crispEdges; }
   </style>
-  <rect x="1" y="1" width="758" height="154" rx="16" fill="#f4f7fb" stroke="#d8e0ec" stroke-width="2"/>
   <g class="pixel" transform="translate(12 12)">
     <rect class="ink" x="0" y="0" width="120" height="120"/>
     <rect fill="#ffffff" x="12" y="12" width="96" height="12"/>
