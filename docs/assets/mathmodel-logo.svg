@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">MathModel Run Logo</title>
+  <desc id="desc">墨蓝圆角方块中的白色西格玛，中线是一条蓝色流水线，中间卡着琥珀色门禁菱形</desc>
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="#17203a"/>
+  <text x="64" y="90" text-anchor="middle" font-size="76" font-weight="800" fill="#ffffff" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif">Σ</text>
+  <line x1="26" y1="64" x2="56" y2="64" stroke="#1f5ce8" stroke-width="5" stroke-linecap="round"/>
+  <line x1="72" y1="64" x2="102" y2="64" stroke="#1f5ce8" stroke-width="5" stroke-linecap="round"/>
+  <path d="M64,54 L74,64 L64,74 L54,64 z" fill="#fffbeb" stroke="#b45309" stroke-width="2.5"/>
+</svg>
