@@ -1,6 +1,9 @@
 # 安装指南
 
-本仓库是 Codex / Claude Code 双平台兼容的数学建模 Skill。
+本仓库包含两个 Codex / Claude Code 双平台兼容的 Skill：
+
+- `my-mathmodel-agent`：完整的数学建模比赛工作流；
+- `paper-iteration-pack`：把论文建议转化为图表、排版和渲染迭代的通用 Skill。
 
 ## 环境要求
 
@@ -16,6 +19,20 @@
 
 ```bash
 npx -y skills@latest add chengyike20110519-create/MathModelRun --skill '*' --agent codex claude-code
+```
+
+只安装论文迭代包：
+
+```bash
+npx -y skills@latest add chengyike20110519-create/MathModelRun \
+  --skill paper-iteration-pack --agent codex claude-code
+```
+
+只安装完整数模工作流：
+
+```bash
+npx -y skills@latest add chengyike20110519-create/MathModelRun \
+  --skill my-mathmodel-agent --agent codex claude-code
 ```
 
 ### Codex（macOS / Linux）
@@ -54,6 +71,19 @@ git clone https://github.com/chengyike20110519-create/MathModelRun.git `
 mkdir -p my-contest/.claude/skills
 git clone https://github.com/chengyike20110519-create/MathModelRun.git \
   my-contest/.claude/skills/my-mathmodel-agent
+```
+
+### 手动安装论文迭代 Skill
+
+`paper-iteration-pack` 是仓库中的独立 Skill。先取得仓库，再把它放到目标 Agent 的
+skills 目录中：
+
+```bash
+git clone --depth 1 https://github.com/chengyike20110519-create/MathModelRun.git \
+  /tmp/MathModelRun
+mkdir -p ~/.codex/skills ~/.claude/skills
+cp -R /tmp/MathModelRun/skills/paper-iteration-pack ~/.codex/skills/
+cp -R /tmp/MathModelRun/skills/paper-iteration-pack ~/.claude/skills/
 ```
 
 ## 环境诊断

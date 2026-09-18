@@ -29,6 +29,10 @@ REQUIRED_FILES = [
     "my-mathmodel-agent/scripts/doctor.py",
     "my-mathmodel-agent/scripts/freeze_numbers.py",
     "my-mathmodel-agent/scripts/audit_workspace.py",
+    "skills/paper-iteration-pack/SKILL.md",
+    "skills/paper-iteration-pack/agents/openai.yaml",
+    "skills/paper-iteration-pack/references/iteration-workflow.md",
+    "skills/paper-iteration-pack/references/visual-selection.md",
     ".claude/skills/my-mathmodel-agent/SKILL.md",
     ".claude/agents/mathmodel-analyst.md",
     ".claude/agents/mathmodel-modeler.md",
@@ -116,6 +120,16 @@ def test_codex_agent_yaml():
     text = (REPO_ROOT / "my-mathmodel-agent/agents/openai.yaml").read_text()
     assert "display_name" in text
     assert "MathModel Run" in text
+
+
+def test_paper_iteration_skill_contract():
+    skill_root = REPO_ROOT / "skills/paper-iteration-pack"
+    text = (skill_root / "SKILL.md").read_text()
+    assert text.startswith("---\n")
+    assert "name: paper-iteration-pack" in text
+    assert "[TODO:" not in text
+    assert "references/visual-selection.md" in text
+    assert "3D" in (skill_root / "references/visual-selection.md").read_text()
 
 
 def test_all_template_json_files_parse():
@@ -442,6 +456,7 @@ def test_freeze_writes_auditable_payload():
 if __name__ == "__main__":
     test_repo_structure()
     test_codex_agent_yaml()
+    test_paper_iteration_skill_contract()
     test_all_template_json_files_parse()
     test_init_project_scaffolds_default_fail_contract()
     test_status_reports_first_false_gate()

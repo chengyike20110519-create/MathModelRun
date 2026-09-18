@@ -29,6 +29,10 @@ REQUIRED_FILES = [
     "my-mathmodel-agent/scripts/doctor.py",
     "my-mathmodel-agent/scripts/freeze_numbers.py",
     "my-mathmodel-agent/scripts/audit_workspace.py",
+    "skills/paper-iteration-pack/SKILL.md",
+    "skills/paper-iteration-pack/agents/openai.yaml",
+    "skills/paper-iteration-pack/references/iteration-workflow.md",
+    "skills/paper-iteration-pack/references/visual-selection.md",
     ".claude/skills/my-mathmodel-agent/SKILL.md",
     ".claude/agents/mathmodel-analyst.md",
     ".claude/agents/mathmodel-modeler.md",
@@ -127,7 +131,10 @@ def validate_json_files():
             print(f"OK json: {rel}")
         except Exception as exc:
             ok = error(f"cannot parse {rel}: {exc}")
-    for rel in ["my-mathmodel-agent/agents/openai.yaml"]:
+    for rel in [
+        "my-mathmodel-agent/agents/openai.yaml",
+        "skills/paper-iteration-pack/agents/openai.yaml",
+    ]:
         path = REPO_ROOT / rel
         try:
             text = path.read_text(encoding="utf-8")

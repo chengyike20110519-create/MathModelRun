@@ -30,10 +30,14 @@
 
 新增子技能时：
 
-1. 在 `.claude/skills/` 创建新的 SKILL.md
-2. 在 `my-mathmodel-agent/` 创建对应的 Codex 入口（如适用）
-3. 更新 `README.md` 中的 Skill 索引
-4. 更新 `AGENTS.md` 入口说明
+1. 在 `skills/<skill-name>/SKILL.md` 创建通用 Skill，并只保留实际需要的
+   `references/`、`scripts/` 或 `assets/`。
+2. 运行 skill creator 的 `quick_validate.py`，确认 frontmatter、命名和
+   TODO 检查通过。
+3. 如果该 Skill 需要独立的 Claude Code 入口，再添加
+   `.claude/skills/<skill-name>/`，不要复制旧版本或保留废弃入口。
+4. 用 skills CLI 的 `add . --list --full-depth` 验证仓库可以发现新 Skill。
+5. 更新 `README.md`、`docs/INSTALL.md` 和 `AGENTS.md` 中的入口说明。
 
 ## 测试
 

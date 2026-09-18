@@ -1,6 +1,6 @@
 # MathModel Run / MyMathModelAgent
 
-This repository is a **Codex / Claude Code compatible skill** for mathematical modeling contests. It provides a stateful, evidence-backed path from problem files to an audited paper.
+This repository contains Codex / Claude Code compatible skills for mathematical modeling contests and paper iteration. MathModel Run provides a stateful, evidence-backed path from problem files to an audited paper; Paper Iteration Pack turns review feedback into verified figure, layout, and prose revisions.
 
 ## File update policy
 
@@ -20,6 +20,7 @@ This policy applies to documentation, prompts, workflows, templates, scripts, re
 - **Start page**: `index.html`
 - **Codex skill**: `my-mathmodel-agent/SKILL.md`
 - **Claude Code skill**: `.claude/skills/my-mathmodel-agent/SKILL.md`
+- **Paper iteration skill**: `skills/paper-iteration-pack/SKILL.md`
 - **Generic Agent**: read `README.md`, then follow `docs/WORKFLOW.md`
 - **Mind map**: `docs/assets/mathmodel-mindmap.svg`
 
@@ -60,6 +61,11 @@ MathModel Run/
 │       ├── doctor.py                  # environment diagnostic
 │       ├── freeze_numbers.py          # provenance-backed result freeze
 │       └── audit_workspace.py         # mechanical contract audit
+├── skills/paper-iteration-pack/       # generic review-to-render iteration skill
+│   ├── SKILL.md                       # entrypoint and operating contract
+│   └── references/
+│       ├── iteration-workflow.md      # evidence, sync, and verification flow
+│       └── visual-selection.md        # chart choice, 2D/3D rules, MCM preset
 ├── templates/                         # generated project artifact templates
 ├── .claude/                           # Claude Code skill, agents, workflow
 ├── scripts/validate_repo.py           # release validator

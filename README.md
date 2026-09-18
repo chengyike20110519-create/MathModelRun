@@ -16,13 +16,15 @@ An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathe
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python 3.9+"></a>
   <img src="https://img.shields.io/badge/version-0.3.0-blue.svg" alt="Version 0.3.0">
-  <img src="https://img.shields.io/badge/tests-19%20passing-brightgreen.svg" alt="Tests: 19 passing">
+  <img src="https://img.shields.io/badge/tests-20%20passing-brightgreen.svg" alt="Tests: 20 passing">
   <a href="my-mathmodel-agent/SKILL.md"><img src="https://img.shields.io/badge/Codex%20Skill-ready-green.svg" alt="Codex Skill"></a>
+  <a href="skills/paper-iteration-pack/SKILL.md"><img src="https://img.shields.io/badge/Paper%20Iteration-ready-f97316.svg" alt="Paper Iteration Skill"></a>
 </p>
 
 <p align="center">
   <a href="index.html">交互式作战地图</a> ·
   <a href="my-mathmodel-agent/SKILL.md">Codex Skill</a> ·
+  <a href="skills/paper-iteration-pack/SKILL.md">论文迭代 Skill</a> ·
   <a href="docs/WORKFLOW.md">中文执行说明</a> ·
   <a href="docs/INSTALL.md">安装</a>
 </p>
@@ -45,6 +47,20 @@ An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathe
 把题面推进成有证据的论文：十阶段、十门禁、默认失败、独立复核、结果冻结、逐页渲染、最终审计。
 
 每一条边都是一个**门禁**：只有当机器可检查的证据落盘，门禁才会从 `false` 翻成 `true`，阶段才允许前进。声明的阶段不允许领先于第一个未通过的门禁——机械审计会直接判 FAIL。
+
+## 包含的 Skill
+
+| Skill | 用途 | 入口 |
+|---|---|---|
+| MathModel Run | 从题面、模型、实验、冻结到论文审计的完整数模工作流 | [Codex](my-mathmodel-agent/SKILL.md) · [Claude Code](.claude/skills/my-mathmodel-agent/SKILL.md) |
+| Paper Iteration Pack | 把论文建议变成可验证的图表、排版、数字同步和渲染迭代包 | [通用 Skill](skills/paper-iteration-pack/SKILL.md) |
+
+只安装论文迭代包：
+
+```bash
+npx -y skills@latest add chengyike20110519-create/MathModelRun \
+  --skill paper-iteration-pack --agent codex claude-code
+```
 
 ## 它解决什么
 
@@ -211,6 +227,7 @@ python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a
 |---|---|
 | [index.html](index.html) | 交互式起始页面和作战地图 |
 | [my-mathmodel-agent/SKILL.md](my-mathmodel-agent/SKILL.md) | Codex skill 总入口 |
+| [skills/paper-iteration-pack/SKILL.md](skills/paper-iteration-pack/SKILL.md) | 通用论文建议迭代、图表升级与渲染检查 Skill |
 | [my-mathmodel-agent/references/workflow-contract.md](my-mathmodel-agent/references/workflow-contract.md) | 十阶段详细契约 |
 | [my-mathmodel-agent/references/artifact-contracts.md](my-mathmodel-agent/references/artifact-contracts.md) | JSON 产物字段规范 |
 | [my-mathmodel-agent/references/evaluation-rubric.md](my-mathmodel-agent/references/evaluation-rubric.md) | 独立审查评分表 |
