@@ -1,0 +1,27 @@
+{
+  "schema_version": "2.0",
+  "project_name": "himcm-2022-problem-b",
+  "contest": "HiMCM",
+  "paper_format": "latex",
+  "stage": "METHOD_POC",
+  "status": "in_progress",
+  "next_action": "run_a_minimal_proof_of_concept",
+  "gates": {
+    "input_snapshot": true,
+    "problem_decomposed": true,
+    "model_route_selected": true,
+    "data_plan_ready": true,
+    "method_validated": false,
+    "experiments_reproduced": false,
+    "results_frozen": false,
+    "paper_written": false,
+    "pdf_verified": false,
+    "audit_passed": false
+  },
+  "budget": {
+    "contest_minutes": null,
+    "elapsed_minutes": 0,
+    "delivery_buffer_minutes": 120
+  },
+  "updated_at": "2024-02-01T00:00:00Z"
+}

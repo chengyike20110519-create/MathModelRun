@@ -1,0 +1,56 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2024-02-01T00:00:00Z",
+  "gates": {
+    "input_snapshot": [
+      {
+        "kind": "manual",
+        "value": "noaa_mauna_loa_co2_monthly.csv_registered_in_input_manifest"
+      },
+      {
+        "kind": "manual",
+        "value": "gistemp_v4_monthly.csv_registered_in_input_manifest"
+      },
+      {
+        "kind": "manual",
+        "value": "problem_statement_reviewed"
+      }
+    ],
+    "problem_decomposed": [
+      {
+        "kind": "manual",
+        "value": "q1_q2_q3_decomposed_in_team_meeting"
+      },
+      {
+        "kind": "manual",
+        "value": "acceptance_criteria_agreed"
+      }
+    ],
+    "model_route_selected": [
+      {
+        "kind": "manual",
+        "value": "baseline_primary_fallback_for_each_q"
+      },
+      {
+        "kind": "manual",
+        "value": "rejected_models_documented"
+      }
+    ],
+    "data_plan_ready": [
+      {
+        "kind": "manual",
+        "value": "field_table_locked"
+      },
+      {
+        "kind": "manual",
+        "value": "leakage_split_plan_signed_off"
+      }
+    ],
+    "method_validated": [],
+    "experiments_reproduced": [],
+    "results_frozen": [],
+    "paper_written": [],
+    "pdf_verified": [],
+    "audit_passed": []
+  }
+}

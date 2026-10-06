@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+from typing import Optional
 
 
 REQUIRED_DIRECTORIES = (
@@ -158,7 +159,7 @@ def audit_gate_contract(root: Path, issues: list[str]) -> None:
         )
 
 
-def audit_frozen_numbers(root: Path, issues: list[str], state: dict | None) -> None:
+def audit_frozen_numbers(root: Path, issues: list[str], state: Optional[dict]) -> None:
     frozen = read_json(root / "frozen_numbers.json", issues, "frozen_numbers.json")
     if not isinstance(frozen, dict):
         return

@@ -1,0 +1,53 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2024-02-01T00:00:00Z",
+  "fields": [
+    {
+      "name": "year",
+      "source": "noaa_mauna_loa_co2_monthly.csv",
+      "unit": "year",
+      "dtype": "int",
+      "cleaning": "parse_date, drop_na"
+    },
+    {
+      "name": "month",
+      "source": "noaa_mauna_loa_co2_monthly.csv",
+      "unit": "month",
+      "dtype": "int",
+      "cleaning": "range_check(1,12)"
+    },
+    {
+      "name": "co2_ppm",
+      "source": "noaa_mauna_loa_co2_monthly.csv",
+      "unit": "ppm",
+      "dtype": "float",
+      "cleaning": "interpolate_missing, drop_outlier_3sigma"
+    },
+    {
+      "name": "temp_anomaly_c",
+      "source": "gistemp_v4_monthly.csv",
+      "unit": "celsius",
+      "dtype": "float",
+      "cleaning": "align_month_index, fillna_with_zero"
+    }
+  ],
+  "cleaning_rules": [
+    "remove months with co2_ppm missing after interpolation",
+    "align CO2 and GISTEMP by month index",
+    "drop pre-1959 rows (no GISTEMP coverage)"
+  ],
+  "leakage_checks": [
+    "never use future years when fitting trend up to year T",
+    "scenario projections do not leak AR6 ensemble into baseline"
+  ],
+  "split_plan": {
+    "train_end": "2010-12-31",
+    "val_end": "2017-12-31",
+    "test_end": "2022-12-31"
+  },
+  "external_sources": [
+    "NOAA GML Mauna Loa CO2",
+    "NASA GISTEMP v4",
+    "IPCC AR6 WG1 SPM scenario table"
+  ]
+}

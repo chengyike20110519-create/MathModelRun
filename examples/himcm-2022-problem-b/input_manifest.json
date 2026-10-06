@@ -1,0 +1,35 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2024-02-01T00:00:00Z",
+  "files": [
+    {
+      "relpath": "problem_files/himcm-2022-problem-b.pdf",
+      "sha256": null,
+      "source_url": null,
+      "access_date": null,
+      "note": "official problem statement; download separately"
+    }
+  ],
+  "external_sources": [
+    {
+      "name": "NOAA GML Mauna Loa CO2",
+      "url": "https://gml.noaa.gov/ccgg/trends/",
+      "access_date": "2024-01-15",
+      "sha256": null,
+      "note": "monthly CO2 concentration, Mauna Loa observatory"
+    },
+    {
+      "name": "NASA GISTEMP v4",
+      "url": "https://data.giss.nasa.gov/gistemp/",
+      "access_date": "2024-01-15",
+      "sha256": null,
+      "note": "global surface temperature anomaly"
+    }
+  ],
+  "environment": {
+    "python": "3.11.x",
+    "latex": "TeX Live 2023",
+    "typst": null,
+    "solvers": []
+  }
+}

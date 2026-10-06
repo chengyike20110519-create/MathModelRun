@@ -1,0 +1,157 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2024-02-01T00:00:00Z",
+  "topic": "B",
+  "selection_score": 0.82,
+  "subproblems": [
+    {
+      "id": "Q1",
+      "role": "first",
+      "task_type": "statistics",
+      "baseline": "线性回归 + STL 分解",
+      "primary_model": "估计直线 + 季节项 + GARCH(1,1) 残差",
+      "fallback_model": "指数平滑 (Holt-Winters) + 简单残差 t 检验",
+      "rejected": [
+        {
+          "model": "LSTM",
+          "reason": "数据规模与可解释性都不需要深度模型"
+        },
+        {
+          "model": "Prophet",
+          "reason": "仅作 sanity check, 不作为基线"
+        }
+      ],
+      "selection_evidence": [
+        {
+          "kind": "manual",
+          "value": "STL 分解可解释性高, 与 NOAA 方法一致"
+        }
+      ],
+      "validation_plan": [
+        {
+          "kind": "command",
+          "value": "python code/poc_q1.py",
+          "path": "code/poc_q1.py"
+        },
+        {
+          "kind": "manual",
+          "value": "compare_against_noaa_published_table"
+        }
+      ],
+      "required_figures": [
+        "co2_trend.png",
+        "co2_decomposition.png"
+      ],
+      "paper_section": "5",
+      "acceptance_criteria": [
+        "拟合 R^2 >= 0.95",
+        "月度残差白噪声检验 p > 0.05"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "manual",
+          "value": "model_route_recorded_in_whiteboard"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "role": "main",
+      "task_type": "statistics",
+      "baseline": "皮尔逊相关 + 散点图",
+      "primary_model": "滚动窗口 OLS + Granger 因果检验",
+      "fallback_model": "Spearman 秩相关 + bootstrap 置信区间",
+      "rejected": [
+        {
+          "model": "VAR (大滞后)",
+          "reason": "样本长度不足以稳定 VAR 阶选择"
+        }
+      ],
+      "selection_evidence": [
+        {
+          "kind": "manual",
+          "value": "滚动回归可揭示滞后窗口漂移"
+        }
+      ],
+      "validation_plan": [
+        {
+          "kind": "command",
+          "value": "python code/poc_q2.py",
+          "path": "code/poc_q2.py"
+        },
+        {
+          "kind": "manual",
+          "value": "bootstrap_significance_report"
+        }
+      ],
+      "required_figures": [
+        "lag_corr.png",
+        "rolling_regression.png"
+      ],
+      "paper_section": "6",
+      "acceptance_criteria": [
+        "Granger p < 0.01",
+        "bootstrap 95% 区间宽度 <= 0.2"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "manual",
+          "value": "method_choice_agreed_in_team_meeting"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "role": "extend",
+      "task_type": "prediction",
+      "baseline": "线性趋势外推",
+      "primary_model": "情景缩放 (IPCC AR6) + 线性 ECS 估计",
+      "fallback_model": "ARIMA(1,1,1) 直接拟合 GISTEMP",
+      "rejected": [
+        {
+          "model": "GCM 物理模型",
+          "reason": "比赛周期内无法跑完 CMIP6"
+        },
+        {
+          "model": "复杂 EMIC",
+          "reason": "同上"
+        }
+      ],
+      "selection_evidence": [
+        {
+          "kind": "manual",
+          "value": "情景缩放与 IPCC AR6 一致, 可解释"
+        }
+      ],
+      "validation_plan": [
+        {
+          "kind": "command",
+          "value": "python code/poc_q3.py",
+          "path": "code/poc_q3.py"
+        },
+        {
+          "kind": "manual",
+          "value": "ar6_overlap_audit"
+        }
+      ],
+      "required_figures": [
+        "scenario_projection.png",
+        "sensitivity_table.png"
+      ],
+      "paper_section": "7",
+      "acceptance_criteria": [
+        "每情景 2050/2100 中心值与 AR6 重叠 80%",
+        "bootstrap 区间宽度 <= 0.4 摄氏度"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "manual",
+          "value": "scenario_table_signed_off"
+        }
+      ]
+    }
+  ]
+}

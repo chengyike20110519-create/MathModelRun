@@ -131,18 +131,32 @@ def validate_json_files():
         path = REPO_ROOT / rel
         try:
             text = path.read_text(encoding="utf-8")
-            try:
-                json.loads(text)
-            except json.JSONDecodeError:
-                try:
-                    import yaml
-                    yaml.safe_load(text)
-                except ImportError:
-                    pass
+        except OSError as exc:
+            ok = error(f"cannot read {rel}: {exc}")
+            continue
+        if _parse_structured(text, rel, ok):
             print(f"OK parse: {rel}")
-        except Exception as exc:
-            ok = error(f"cannot parse {rel}: {exc}")
     return ok
+
+
+def _parse_structured(text, rel, ok):
+    """Parse text as JSON; if that fails, require PyYAML and parse as YAML.
+    Returns True when the file is a valid JSON or YAML document;
+    returning False records an error via the shared `ok` flag."""
+    try:
+        json.loads(text)
+        return True
+    except json.JSONDecodeError:
+        pass
+    try:
+        import yaml
+    except ImportError:
+        return bool(error(f"cannot parse {rel}: not valid JSON and PyYAML is not installed"))
+    try:
+        yaml.safe_load(text)
+        return True
+    except yaml.YAMLError as exc:
+        return bool(error(f"cannot parse {rel}: {exc}"))
 
 
 def validate_smoke_tests():

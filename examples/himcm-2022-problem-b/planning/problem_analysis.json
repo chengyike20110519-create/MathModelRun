@@ -1,0 +1,161 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2024-02-01T00:00:00Z",
+  "subproblems": [
+    {
+      "id": "Q1",
+      "question": "过去 60 年全球大气 CO2 浓度的变化趋势与年增长率。",
+      "deliverable": "时间序列图、年度增长率、与 Mauna Loa 历史对照。",
+      "role": "first",
+      "task_type": "statistics",
+      "inputs": [
+        "NOAA Mauna Loa 月度 CO2 浓度",
+        "GISTEMP 全球温度异常"
+      ],
+      "outputs": [
+        "co2_trend.png",
+        "annual_growth.json"
+      ],
+      "hard_constraints": [
+        "必须区分趋势项与残差",
+        "必须报告 R^2 与 RMSE"
+      ],
+      "soft_objectives": [
+        "趋势可视化清晰",
+        "与全球温度曲线并列展示"
+      ],
+      "metrics": [
+        "R^2 >= 0.95",
+        "RMSE <= 1.0 ppm"
+      ],
+      "attachment_dependencies": [],
+      "facts": [
+        "CO2 浓度在 1959 年约为 315 ppm",
+        "2022 年约为 418 ppm"
+      ],
+      "assumptions": [
+        "观测缺失使用 NOAA 公布的插值"
+      ],
+      "ambiguities": [
+        "是否使用季节项调整"
+      ],
+      "out_of_scope": [
+        "预测 2100 年的精确浓度"
+      ],
+      "acceptance_criteria": [
+        "趋势图覆盖 1959-2022",
+        "年度增长率与 NOAA 报告对齐到 ±0.1 ppm"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "data",
+          "value": "noaa_mauna_loa_co2_monthly.csv",
+          "path": "problem_files/attachments/noaa_mauna_loa_co2_monthly.csv"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "question": "CO2 浓度与全球温度异常之间的相关性与滞后关系。",
+      "deliverable": "相关/滞后分析、滚动窗口回归、显著性与稳健性。",
+      "role": "main",
+      "task_type": "statistics",
+      "inputs": [
+        "Q1 CO2 趋势结果",
+        "GISTEMP 全球温度异常"
+      ],
+      "outputs": [
+        "lag_corr.png",
+        "rolling_regression.json"
+      ],
+      "hard_constraints": [
+        "必须报告滞后窗口",
+        "必须做稳健性检验"
+      ],
+      "soft_objectives": [
+        "解释 CO2 与温度非同步的原因"
+      ],
+      "metrics": [
+        "皮尔逊相关系数",
+        "Granger 因果检验 p 值"
+      ],
+      "attachment_dependencies": [],
+      "facts": [
+        "CO2 浓度上升早于温度上升",
+        "海洋热惯性导致滞后"
+      ],
+      "assumptions": [
+        "滞后假设 0-30 年"
+      ],
+      "ambiguities": [
+        "使用月度还是年均"
+      ],
+      "out_of_scope": [
+        "证明 CO2 是温度上升的唯一原因"
+      ],
+      "acceptance_criteria": [
+        "滞后分析覆盖 0-30 年",
+        "稳健性检验给出 bootstrap 置信区间"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "manual",
+          "value": "literature_review_done"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "question": "在 SSP1-2.6 / SSP2-4.5 / SSP5-8.5 情景下，本世纪末的温度预测区间。",
+      "deliverable": "三情景预测带状图、关键年份的温度预测。",
+      "role": "extend",
+      "task_type": "prediction",
+      "inputs": [
+        "Q1 / Q2 拟合",
+        "IPCC AR6 SSP 情景"
+      ],
+      "outputs": [
+        "scenario_projection.png"
+      ],
+      "hard_constraints": [
+        "必须提供 95% 置信带",
+        "必须做基线对照 (no-policy)"
+      ],
+      "soft_objectives": [
+        "可视化情景对比",
+        "解释敏感性"
+      ],
+      "metrics": [
+        "预测区间覆盖率",
+        "基线对比的 RMSE"
+      ],
+      "attachment_dependencies": [],
+      "facts": [
+        "AR6 SSP1-2.6 升温 ~1.8 摄氏度，SSP5-8.5 ~4.4 摄氏度"
+      ],
+      "assumptions": [
+        "使用线性 ECS 估计",
+        "不模拟碳循环反馈"
+      ],
+      "ambiguities": [
+        "情景概率权重"
+      ],
+      "out_of_scope": [
+        "区域级预测"
+      ],
+      "acceptance_criteria": [
+        "每情景给出 2050 / 2100 中心值与区间",
+        "与 IPCC AR6 区间重叠 80% 以上"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "manual",
+          "value": "scenario_table_drafted"
+        }
+      ]
+    }
+  ]
+}

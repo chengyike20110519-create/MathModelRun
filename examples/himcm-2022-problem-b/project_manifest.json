@@ -1,0 +1,35 @@
+{
+  "schema_version": "2.0",
+  "project_name": "himcm-2022-problem-b",
+  "contest": "HiMCM",
+  "language": "zh-CN",
+  "paper_format": "latex",
+  "problem_files": [],
+  "selected_topic": "B",
+  "subproblems": [
+    "Q1",
+    "Q2",
+    "Q3"
+  ],
+  "current_stage": "METHOD_POC",
+  "delivery_rules": {
+    "anonymous": true,
+    "page_limit": 25,
+    "template": "easymcm",
+    "submission_files": [
+      "paper/main.pdf"
+    ]
+  },
+  "gates": {
+    "input_snapshot": true,
+    "problem_decomposed": true,
+    "model_route_selected": true,
+    "data_plan_ready": true,
+    "method_validated": false,
+    "experiments_reproduced": false,
+    "results_frozen": false,
+    "paper_written": false,
+    "pdf_verified": false,
+    "audit_passed": false
+  }
+}
