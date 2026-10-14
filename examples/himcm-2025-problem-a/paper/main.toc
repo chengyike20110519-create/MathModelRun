@@ -1,0 +1,34 @@
+\contentsline {section}{\numberline {1}Introduction and Problem Restatement}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}The Decision Problem}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Workflow and Evidence Discipline}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Key Elements of the Problem (Requirement 1)}{3}{section.2}%
+\contentsline {section}{\numberline {3}Assumptions, Parameters, and Notation}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Why Assumptions Are Explicit}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Geometry of the Basic Scenario}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Notation}{6}{subsection.3.3}%
+\contentsline {section}{\numberline {4}The Sweep Routing Model}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Graph Encoding and Route Time}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Exact Solution for the Basic Scenario}{6}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Heuristic for Larger Scenarios}{6}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Basic Scenario: Two Firefighters, One Story (Requirement 2)}{7}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Strategy}{7}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}How Long the Sweep Takes}{7}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Applying the Model to Larger Buildings (Requirement 3)}{8}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Two Designed Scenarios}{8}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Optimal Staffing and Starting Positions}{9}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}What the Scaling Teaches}{9}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Realistic Constraints: Smoke, Communications, Occupancy (Requirement 4a)}{10}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Extended Mechanisms}{10}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Joint Monte Carlo Result}{10}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}One-Factor Curves}{10}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Technology: Sensors and Building Automation (Requirement 4b)}{11}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Quantifying the Mechanism}{11}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Measured Impact}{11}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Recommendations by Building Type}{12}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Conclusions, Limitations, and Future Work}{12}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Conclusions}{12}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Limitations}{13}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Future Work}{13}{subsection.9.3}%
+\contentsline {section}{Letter to the Local Emergency Planning Committee}{13}{section*.15}%
+\contentsline {section}{\numberline {A}Reproducibility Manifest}{15}{appendix.A}%
+\contentsline {section}{\numberline {B}Report on Use of AI Tools}{16}{appendix.B}%
