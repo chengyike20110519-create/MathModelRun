@@ -1,0 +1,27 @@
+{
+  "schema_version": "2.0",
+  "project_name": "himcm-2025-problem-a",
+  "contest": "HiMCM 2025 Problem A: Emergency Evacuation Sweeps",
+  "paper_format": "latex",
+  "stage": "FREEZE",
+  "status": "in_progress",
+  "next_action": "freeze_all_paper_numbers_into_frozen_numbers_json",
+  "gates": {
+    "input_snapshot": true,
+    "problem_decomposed": true,
+    "model_route_selected": true,
+    "data_plan_ready": true,
+    "method_validated": true,
+    "experiments_reproduced": true,
+    "results_frozen": false,
+    "paper_written": false,
+    "pdf_verified": false,
+    "audit_passed": false
+  },
+  "budget": {
+    "contest_minutes": null,
+    "elapsed_minutes": 0,
+    "delivery_buffer_minutes": 120
+  },
+  "updated_at": "2026-09-14T08:06:00+00:00"
+}

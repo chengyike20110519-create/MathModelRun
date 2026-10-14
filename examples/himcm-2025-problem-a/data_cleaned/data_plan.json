@@ -1,0 +1,62 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-14T15:50:00+08:00",
+  "data_scope": "本题无附件数据。全部输入为 (a) 题面结构信息（Figure 1 拓扑）与 (b) 文献/标准参数或显式假设。无外部数据文件导入。",
+  "fields": [
+    {"name": "graph.nodes", "type": "str id + type(room|hall|exit|stair)", "source": "scenario definitions in code/buildings.py", "units": null},
+    {"name": "graph.edges", "type": "(node_a, node_b, travel_time_s)", "source": "geometry assumptions below", "units": "s"},
+    {"name": "check_time_s", "type": "float per room", "source": "assumption A2 below", "units": "s"},
+    {"name": "walk_speed", "type": "float", "source": "P1 below", "units": "m/s"},
+    {"name": "priority", "type": "int per room", "source": "occupant type mapping (Q1 framework)", "units": null}
+  ],
+  "parameters": [
+    {"id": "P1", "name": "responder walk speed (clear air, no load)", "value": 1.2, "units": "m/s", "source": "SFPE/evacuation literature typical range 1.1-1.4 m/s; take 1.2 as central assumption", "confidence": "assumption", "sensitivity": "swept +-25%"},
+    {"id": "P2", "name": "firefighter loaded walk speed", "value": 1.0, "units": "m/s", "source": "assumption: SCBA gear slows to ~80% of P1", "confidence": "assumption", "sensitivity": "Q4a"},
+    {"id": "P3", "name": "small office room visual check time", "value": 20, "units": "s", "source": "assumption: unobstructed single-room visual sweep; room area 15-20 m^2", "confidence": "assumption", "sensitivity": "swept 10-40s"},
+    {"id": "P4", "name": "large room check time", "value": 45, "units": "s", "source": "assumption: warehouse/open-plan, ~2x small room", "confidence": "assumption", "sensitivity": "Q4a"},
+    {"id": "P5", "name": "door traverse time", "value": 2, "units": "s", "source": "assumption", "confidence": "assumption", "sensitivity": "none (first order)"},
+    {"id": "P6", "name": "smoke visibility->speed factor", "value": "v = v0 * max(0.3, vis/10m)", "units": "m/s", "source": "assumption from smoke-density/visibility-walk-speed qualitative literature; simplified linear floor 0.3", "confidence": "assumption", "sensitivity": "Q4a swept"},
+    {"id": "P7", "name": "communication delay (per room mark/report)", "value": 3, "units": "s", "source": "assumption; failure modeled as Bernoulli(p_fail) doubling report time", "confidence": "assumption", "sensitivity": "Q4a swept p_fail 0-0.5"},
+    {"id": "P8", "name": "room occupancy (Q3 scenarios)", "value": "per scenario", "units": "persons", "source": "scenario definitions; affects check time multiplier 1.5x if occupied (assist/verify occupants moving)", "confidence": "assumption", "sensitivity": "Q4a"}
+  ],
+  "geometry_assumptions": {
+    "note": "Figure 1 无尺寸标注，以下几何为显式假设并在论文中声明；相对比例忠于题图。",
+    "basic_scenario": {
+      "hallway_length_m": 30, "hallway_width_m": 2,
+      "rooms_per_side": 3, "room_size_m": [5, 4], "door_width_m": 1,
+      "exits": 2, "exit_positions": "both ends of hallway, opposite sides",
+      "room_area_m2": 20
+    },
+    "scenario_B": {
+      "name": "2-floor daycare + office (priority occupants)",
+      "floors": 2, "floor_1": "daycare: 4 rooms + lobby, high priority, occupants=children/staff",
+      "floor_2": "office: 6 rooms like basic layout",
+      "stairwells": 2, "stair_climb_time_s": 25,
+      "exits": 2
+    },
+    "scenario_C": {
+      "name": "3-floor mixed-use: warehouse + labs + offices (non-standard L-shaped top floor)",
+      "floors": 3,
+      "floor_1": "warehouse: 2 large open areas + loading bay",
+      "floor_2": "labs: 5 rooms, chemical hazard (priority, slow check)",
+      "floor_3": "L-shaped office, 5 rooms + 1 conference hall",
+      "stairwells": 2, "exits": 3
+    }
+  },
+  "cleaning_rules": [
+    "所有数值参数集中定义在代码参数区，禁止散落的魔法数字",
+    "每次运行把参数快照写入 results/runs/<run>/params.json",
+    "建筑几何与参数修改必须同时更新本文件"
+  ],
+  "leakage_checks": [
+    "不适用监督学习训练/测试划分；模拟器校验用枚举精确解交叉验证（Q2 fallback）",
+    "蒙特卡洛报告均值+-95% CI，禁止用单次实现代表分布结论"
+  ],
+  "acceptance_criteria": [
+    "参数表 P1-P8 每项有 value/units/source/confidence",
+    "几何假设覆盖 basic + 2 个应用场景",
+    "无未声明来源的魔法数字"
+  ],
+  "passes": false,
+  "evidence": []
+}

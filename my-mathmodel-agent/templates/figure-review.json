@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "figure_id": "",
+  "kind": "data",
+  "scope": "standalone",
+  "builder": "",
+  "files": [],
+  "fingerprint": "",
+  "mechanical_warnings": [],
+  "warning_resolutions": {},
+  "issues": [],
+  "reviews": {
+    "scientific": {
+      "status": "pending",
+      "reviewer": "",
+      "fingerprint": "",
+      "checks": {
+        "sources_values": {"status": "pending", "evidence": ""},
+        "units_estimators": {"status": "pending", "evidence": ""},
+        "encoding_fit": {"status": "pending", "evidence": ""},
+        "uncertainty_sampling": {"status": "pending", "evidence": ""},
+        "transforms_missingness": {"status": "pending", "evidence": ""}
+      }
+    },
+    "visual": {
+      "status": "pending",
+      "reviewer": "",
+      "fingerprint": "",
+      "checks": {
+        "final_size_grayscale": {"status": "pending", "evidence": ""},
+        "hierarchy_alignment": {"status": "pending", "evidence": ""},
+        "labels_overlap": {"status": "pending", "evidence": ""}
+      },
+      "scores": {"hierarchy": null, "readability": null, "comparison": null, "finish": null}
+    }
+  }
+}

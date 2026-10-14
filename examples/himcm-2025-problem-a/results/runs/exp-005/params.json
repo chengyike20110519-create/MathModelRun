@@ -1,0 +1,7 @@
+{
+  "scenario": "B",
+  "k": 5,
+  "n": 100,
+  "seed": 20251105,
+  "note": "one-factor isolation; occupancy off"
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-12T22:20:35+08:00",
+  "verdict": "pass",
+  "weighted_score": 3.48,
+  "dimensions": [
+    {"id":"problem_fidelity","score":3,"weight":0.12,"floor":3,"passed":true,"reason":"本地 CSV 快照、问题拆解和各子问题验收条件已登记；官方题面原件未导入，因而不把本案例称为官方提交件。","evidence":["input_manifest.json","planning/problem_analysis.json"]},
+    {"id":"data_provenance","score":4,"weight":0.12,"floor":3,"passed":true,"reason":"输入 CSV 的 SHA-256、读取范围和 run-002 输入指纹均已记录。","evidence":["input_manifest.json","results/run_manifest.json"]},
+    {"id":"method_reproducibility","score":4,"weight":0.18,"floor":3,"passed":true,"reason":"独立脚本从 CSV 重建模型比较、阈值、统计检验和五张图；run-002 的命令、环境、输出和指标均已登记。","evidence":["code/reproduce_himcm.py","methods/method_validation.json","results/runs/run-002/metrics.json"]},
+    {"id":"result_traceability","score":4,"weight":0.18,"floor":3,"passed":true,"reason":"论文中的核心定量主张已映射到 frozen_numbers.json，冻结文件指向 run-002 及其 SHA-256。","evidence":["frozen_numbers.json","paper/evidence_map.json"]},
+    {"id":"paper_and_figures","score":3,"weight":0.16,"floor":3,"passed":true,"reason":"工作论文和五张图已原位生成，且图表与冻结数字、模型限制保持一致。","evidence":["paper/working-draft.md","figures/visualization_plan.json"]},
+    {"id":"render_verification","score":3,"weight":0.14,"floor":3,"passed":true,"reason":"受控 ReportLab 生成的 PDF 共 24 页、页面尺寸为 Letter，正文为双栏，含文本层并嵌入五张图；24 页结构和文字层均已核验。像素级渲染受 fontconfig 权限限制，已记录。","evidence":["paper/main.pdf","paper/render_log.json"]},
+    {"id":"limitations","score":3,"weight":0.10,"floor":3,"passed":true,"reason":"NumPy fallback、探索性 Granger 统计和趋势外推非物理气候模型均在方法、正文和最终报告中明确限制。","evidence":["methods/method_validation.json","audit/final_report.md"]}
+  ],
+  "failed_criteria": [],
+  "return_stage": null,
+  "strategy": "accept_with_documented_limitations",
+  "unverified_claims": ["官方 HiMCM 题面原件未在本案例目录中保存，因此没有对题面逐字逐句进行独立比对。", "趋势预测和一阶滞后 Granger 统计是探索性结果，不构成物理气候因果机制或正式比赛结论。"]
+}

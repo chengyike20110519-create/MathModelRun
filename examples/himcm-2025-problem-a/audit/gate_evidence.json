@@ -1,0 +1,60 @@
+{
+  "schema_version": "2.0",
+  "gates": {
+    "input_snapshot": {
+      "passes": true,
+      "evidence": [
+        {"kind": "data", "value": "2025_HiMCM_Problem_A.pdf sha256 581b1735...69a2, 4 pages, readable", "path": "problem_files/2025_HiMCM_Problem_A.pdf"},
+        {"kind": "data", "value": "fig1_floorplan.png sha256 2fb72e0d...82a9, extracted from PDF page 2 at 200dpi", "path": "problem_files/fig1_floorplan.png"}
+      ]
+    },
+    "problem_decomposed": {
+      "passes": true,
+      "evidence": [
+        {"kind": "manual", "value": "6 task cards Q1-Q5 cover Requirements 1-5; each card has acceptance_criteria and passes:false default-FAIL", "path": "planning/problem_analysis.json"},
+        {"kind": "test", "value": "JSON parses; every card has id/question/deliverable/acceptance_criteria", "path": "planning/problem_analysis.json"}
+      ]
+    },
+    "model_route_selected": {
+      "passes": true,
+      "evidence": [
+        {"kind": "manual", "value": "6 subproblems each have baseline/primary/fallback/validation_plan; default-FAIL passes:false", "path": "methods/model_route.json"},
+        {"kind": "test", "value": "JSON parses; every card id matches planning/problem_analysis.json", "path": "methods/model_route.json"}
+      ]
+    },
+    "data_plan_ready": {
+      "passes": true,
+      "evidence": [
+        {"kind": "manual", "value": "parameter table P1-P8 with value/units/source/confidence; geometry assumptions for basic + scenario B + scenario C", "path": "data_cleaned/data_plan.json"},
+        {"kind": "manual", "value": "7 figures each with purpose/source/script in visualization_plan", "path": "figures/visualization_plan.json"}
+      ]
+    },
+  "method_validated": {
+      "passes": true,
+      "evidence": [
+        {"kind": "command", "value": "code/sweep.py exit 0; exact 96.8s; simulator replay consistent; heuristic gap 14.3%", "path": "results/runs/poc_validation.log"},
+        {"kind": "test", "value": "exact-plan replay equality assertion passed", "path": "code/sweep.py"}
+   ]
+  },
+  "experiments_reproduced": {
+   "passes": true,
+   "evidence": [
+    {
+     "kind": "test",
+     "value": "7/7 runs have params.json + metrics.json; all commands recorded in results/run_manifest.json; deterministic seed=20251105",
+     "path": "results/run_manifest.json"
+    },
+    {
+     "kind": "test",
+     "value": "Key numbers match frozen summary: exp-001 k1=171.4s k2=96.8s; exp-002-B k5=119.0s; exp-002-C k5=207.8s; exp-003 mean=201.1s (n=200); exp-004-B reduction 22.7%; exp-005 smoke=1.0 -> 291.6s",
+     "path": "results/runs"
+    },
+    {
+     "kind": "manual",
+     "value": "Independent re-execution gate deferred to S9 AUDIT (audit.py reruns all experiments and diffs against frozen numbers)",
+     "path": "audit/audit.py"
+    }
+   ]
+  }
+}
+}

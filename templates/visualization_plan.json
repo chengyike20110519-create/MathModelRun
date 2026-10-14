@@ -4,11 +4,21 @@
   "figures": [
     {
       "id": "fig-q1",
+      "kind": "data",
       "purpose": "",
+      "question": "",
+      "claim": "",
+      "encoding_candidates": [],
+      "selected_encoding": "",
+      "selection_reason": "",
+      "panel_roles": [],
       "source": "",
       "script": "",
       "output": "",
       "paper_section": "",
+      "spec_path": "",
+      "review_path": "",
+      "review_scope": "standalone",
       "acceptance_criteria": [],
       "passes": false,
       "evidence": []

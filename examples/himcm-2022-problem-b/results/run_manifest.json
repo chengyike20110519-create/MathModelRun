@@ -1,0 +1,26 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-12T21:23:49+08:00",
+  "runs": [{
+    "run_id":"historical-draft-import","subproblem":"Q1/Q2","stage":"derived",
+    "command":"not available; imported historical working-draft assets",
+    "input_files":["problem_files/himcm_data.csv","paper/working-draft.md"],
+    "input_sha256":["491b3bbe15e1162a19cc1e163f444030b27322b0586f7b10ab8443c52db1e58d","a7af6e2c1878e3372e89f04043189f24d7410f8f76675915d4c3f259c2674783"],
+    "parameters":{},"seed":null,"environment":{"python":"3.13.5","sklearn":"missing"},
+    "started_at":null,"finished_at":null,"status":"pending","metrics":{},
+    "outputs":["paper/working-draft.md","figures/fig1_co2_fits.png","figures/fig5_sensitivity.png"],
+    "warnings":["This is an asset import, not a reproducible experiment."],
+    "evidence":[{"kind":"manual","value":"Historical draft import is intentionally not eligible for result freezing","path":"methods/method_validation.json"}]
+  },{
+    "run_id":"run-002","subproblem":"Q1/Q2","stage":"primary",
+    "command":"python3 code/reproduce_himcm.py .",
+    "input_files":["problem_files/himcm_data.csv"],
+    "input_sha256":["491b3bbe15e1162a19cc1e163f444030b27322b0586f7b10ab8443c52db1e58d"],
+    "parameters":{"test_holdout_years":10,"target_ppm":685},"seed":null,
+    "environment":{"python":"3.13.5","numpy":"2.5.1"},
+    "started_at":"2026-09-12T21:20:00+08:00","finished_at":"2026-09-12T21:20:03+08:00","status":"pass",
+    "metrics":{"linear_test_rmse":10.89351378086637,"exponential_test_rmse":8.584285093395318,"logistic_test_rmse":8.912410692904375,"arima110_test_rmse":5.88374089889349,"rolling_max_increase_ppm":24.599999999999966,"temperature_threshold_years":{"1.25":2044.235654998196,"1.50":2059.3926380368102,"2.00":2089.7066041140383},"pearson_r":0.96116753889316,"granger_co2_to_temp_f":39.51417956962302,"granger_temp_to_co2_f":0.07254204651733892,"exponential_sensitivity_2100_ppm":{"minus_10_percent_rate":532.2407356248839,"baseline_rate":564.9004173572347,"plus_10_percent_rate":599.5641824666426}},
+    "outputs":["results/runs/run-002/metrics.json","figures/fig1_co2_fits.png","figures/fig2_tenyear.png","figures/fig3_scatter.png","figures/fig4_temp_threshold.png","figures/fig5_sensitivity.png"],"warnings":["ARIMA and Granger are transparent NumPy fallbacks; Granger p values use a local incomplete-beta implementation and remain exploratory.","Trend extrapolation is exploratory and is not a physical climate model."],
+    "evidence":[{"kind":"test","value":"Compilation and the --plot run completed successfully and rewrote metrics.json","path":"results/runs/run-002/metrics.json"},{"kind":"test","value":"Granger p values and temperature threshold standard errors plus 95% year intervals are finite","path":"results/runs/run-002/metrics.json"},{"kind":"figure","value":"Five required PNG figures were regenerated and visually checked; all are 1440x820 and non-empty","path":"figures/fig1_co2_fits.png"}]
+  }]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-14T08:05:00+00:00",
+  "driver": "code/experiments.py",
+  "command": "python3 code/experiments.py",
+  "environment": "Python 3 stdlib only; deterministic, seed=20251105",
+  "runs": [
+    {
+      "run_id": "exp-001",
+      "question": "Q2",
+      "purpose": "Basic scenario (Figure 1): responder scaling k=1..4",
+      "command": "python3 code/experiments.py (exp_001)",
+      "key_params": {"scenario": "basic (Figure 1)", "walk_speed_mps": 1.2, "check_time_s": 20.0, "method": "exact k<=2, heuristic k>=3"},
+      "outputs": ["results/runs/exp-001/params.json", "results/runs/exp-001/metrics.json"]
+    },
+    {
+      "run_id": "exp-002-B",
+      "question": "Q3",
+      "purpose": "Scenario B: responder scaling k=1..6, optimal k selection",
+      "command": "python3 code/experiments.py (exp_002)",
+      "key_params": {"scenario": "B", "method": "priority-desc insertion + swap local search"},
+      "outputs": ["results/runs/exp-002-B/params.json", "results/runs/exp-002-B/metrics.json"]
+    },
+    {
+      "run_id": "exp-002-C",
+      "question": "Q3",
+      "purpose": "Scenario C: responder scaling k=1..6, optimal k selection",
+      "command": "python3 code/experiments.py (exp_002)",
+      "key_params": {"scenario": "C", "method": "priority-desc insertion + swap local search"},
+      "outputs": ["results/runs/exp-002-C/params.json", "results/runs/exp-002-C/metrics.json"]
+    },
+    {
+      "run_id": "exp-003",
+      "question": "Q4a",
+      "purpose": "Monte Carlo constraints on scenario B at optimal k (smoke P6, comm p=0.2 P7, occupancy P8)",
+      "command": "python3 code/experiments.py (exp_003)",
+      "key_params": {"scenario": "B", "samples": 200, "seed": 20251105, "k": 5},
+      "outputs": ["results/runs/exp-003/params.json", "results/runs/exp-003/metrics.json", "results/runs/exp-003/raw_samples.json"]
+    },
+    {
+      "run_id": "exp-004-B",
+      "question": "Q4b",
+      "purpose": "Technology levels on scenario B: sensor coverage c in {0, 0.5, 1.0}, check_time*(1-0.6c)",
+      "command": "python3 code/experiments.py (exp_004)",
+      "key_params": {"scenario": "B", "k": 5},
+      "outputs": ["results/runs/exp-004-B/params.json", "results/runs/exp-004-B/metrics.json"]
+    },
+    {
+      "run_id": "exp-004-C",
+      "question": "Q4b",
+      "purpose": "Technology levels on scenario C: sensor coverage c in {0, 0.5, 1.0}",
+      "command": "python3 code/experiments.py (exp_004)",
+      "key_params": {"scenario": "C", "k": 5},
+      "outputs": ["results/runs/exp-004-C/params.json", "results/runs/exp-004-C/metrics.json"]
+    },
+    {
+      "run_id": "exp-005",
+      "question": "Q4a",
+      "purpose": "One-factor constraint curves on scenario B at optimal k: smoke level 0..1, comm failure prob 0..0.4",
+      "command": "python3 code/experiments.py (exp_005)",
+      "key_params": {"scenario": "B", "k": 5, "n": 100, "seed": 20251105},
+      "outputs": ["results/runs/exp-005/params.json", "results/runs/exp-005/metrics.json"]
+    }
+  ]
+}

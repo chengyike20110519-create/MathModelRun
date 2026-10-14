@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "title": "Workflow and Deliverables",
+  "paper_location": "paper/main.tex:46",
+  "steps": [
+    {"id": "S0", "name": "Preflight", "input": "problem_files/himcm_data.csv", "output": "input_manifest.json", "evidence": ["input_manifest.json", "audit/gate_evidence.json#input_snapshot"], "paper_location": "paper/main.tex:46"},
+    {"id": "S1", "name": "Analyze", "input": "input_manifest.json", "output": "planning/problem_analysis.json", "evidence": ["planning/problem_analysis.json", "audit/gate_evidence.json#problem_decomposed"], "paper_location": "paper/main.tex:46"},
+    {"id": "S2", "name": "Route", "input": "planning/problem_analysis.json", "output": "methods/model_route.json", "evidence": ["methods/model_route.json", "audit/gate_evidence.json#model_route_selected"], "paper_location": "paper/main.tex:46"},
+    {"id": "S3", "name": "Data plan", "input": "methods/model_route.json", "output": "data_cleaned/data_plan.json", "evidence": ["data_cleaned/data_plan.json", "audit/gate_evidence.json#data_plan_ready"], "paper_location": "paper/main.tex:46"},
+    {"id": "S4", "name": "Method PoC", "input": "data_cleaned/data_plan.json", "output": "methods/method_validation.json", "evidence": ["methods/method_validation.json", "audit/gate_evidence.json#method_validated"], "paper_location": "paper/main.tex:46"},
+    {"id": "S5", "name": "Experiment", "input": "methods/method_validation.json", "output": "results/run_manifest.json", "evidence": ["results/run_manifest.json", "audit/gate_evidence.json#experiments_reproduced"], "paper_location": "paper/main.tex:46"},
+    {"id": "S6", "name": "Freeze", "input": "results/run_manifest.json", "output": "frozen_numbers.json", "evidence": ["frozen_numbers.json", "audit/gate_evidence.json#results_frozen"], "paper_location": "paper/main.tex:46"},
+    {"id": "S7", "name": "Write", "input": "frozen_numbers.json", "output": "paper/main.tex", "evidence": ["paper/evidence_map.json", "audit/gate_evidence.json#paper_written"], "paper_location": "paper/main.tex:46"},
+    {"id": "S8", "name": "Render", "input": "paper/main.tex", "output": "paper/main.pdf", "evidence": ["paper/render_log.json", "audit/gate_evidence.json#pdf_verified"], "paper_location": "paper/main.tex:46"},
+    {"id": "S9", "name": "Independent audit", "input": "paper/main.pdf", "output": "audit/final_report.md", "evidence": ["audit/final_report.md", "audit/acceptance.json", "audit/gate_evidence.json#audit_passed"], "paper_location": "paper/main.tex:46"}
+  ],
+  "passes": true
+}

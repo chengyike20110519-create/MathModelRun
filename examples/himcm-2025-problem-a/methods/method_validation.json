@@ -1,0 +1,33 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-14T16:00:00+08:00",
+  "poc": {
+    "scope": "Q2 basic scenario: building graph from Figure 1, discrete-event route simulator, exact enumeration of 2-responder partitions as independent cross-check",
+    "command": "python3 code/sweep.py (bundled python 3.12.14, scipy 1.18.1 not required for PoC)",
+    "log": "results/runs/poc_validation.log",
+    "results": {
+      "baseline_single_greedy_s": 171.4,
+      "exact_optimum_2ff_s": 96.8,
+      "exact_assignment": "FF1 from exit 0: S1,N1,N2; FF2 from exit 1: S3,N3,S2",
+      "side_partition_heuristic_s": 110.7,
+      "heuristic_optimality_gap_pct": 14.3,
+      "simulator_replay_matches_exact": true,
+      "sensitivity_check_time_15s_s": 81.8,
+      "sensitivity_check_time_25s_s": 111.8
+    },
+    "decisions": [
+      "PIVOT: Q2 primary model changed from side-partition heuristic to exact enumeration, because the heuristic is 14.3% above optimum (110.7s vs 96.8s). Basic scenario (6 rooms, 2 responders) is small enough for exact enumeration.",
+      "Simulator (route times + sweep_partition) validated by exact-plan replay consistency (96.8s = 96.8s)."
+    ]
+  },
+  "acceptance_check": [
+    {"criterion": "PoC runs end-to-end", "result": "PASS", "evidence": "results/runs/poc_validation.log exit 0"},
+    {"criterion": "baseline comparison valid", "result": "PASS", "evidence": "single-greedy 171.4s vs exact 96.8s on identical graph/params"},
+    {"criterion": "simulator cross-validated", "result": "PASS", "evidence": "replay of exact orders reproduces exact makespan"}
+  ],
+  "passes": true,
+  "evidence": [
+    {"kind": "command", "value": "python3 code/sweep.py exit 0", "path": "results/runs/poc_validation.log"},
+    {"kind": "test", "value": "exact-plan replay equality assertion passed", "path": "code/sweep.py"}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "2.0",
+  "project_name": "himcm-2024-problem-b",
+  "contest": "HiMCM 2024 Problem B: The Environmental Impact of High-Powered Computing",
+  "paper_format": "latex",
+  "stage": "ANALYZE",
+  "status": "in_progress",
+  "next_action": "complete_problem_decomposition_and_model_routing",
+  "gates": {
+    "input_snapshot": true,
+    "problem_decomposed": true,
+    "model_route_selected": true,
+    "data_plan_ready": true,
+    "method_validated": false,
+    "experiments_reproduced": false,
+    "results_frozen": false,
+    "paper_written": false,
+    "pdf_verified": false,
+    "audit_passed": false
+  },
+  "budget": {
+    "contest_minutes": null,
+    "elapsed_minutes": 0,
+    "delivery_buffer_minutes": 120
+  },
+  "updated_at": "2026-09-18T08:09:57.269694+00:00"
+}

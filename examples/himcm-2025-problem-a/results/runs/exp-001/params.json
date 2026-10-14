@@ -1,0 +1,7 @@
+{
+  "scenario": "basic (Figure 1)",
+  "walk_speed": 1.2,
+  "check_time": 20.0,
+  "seed": 20251105,
+  "method": "exact k<=2, heuristic k>=3"
+}

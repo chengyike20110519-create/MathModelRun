@@ -1,0 +1,7 @@
+{
+  "scenario": "B",
+  "walk_speed": 1.2,
+  "seed": 20251105,
+  "stair_time_s": 25.0,
+  "method": "insertion + swap LS"
+}

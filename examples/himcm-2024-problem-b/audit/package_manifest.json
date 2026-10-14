@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "generated_at": null,
+  "status": "pending",
+  "files": [],
+  "excluded": [],
+  "checks": {
+    "no_secrets": false,
+    "no_personal_absolute_paths": false,
+    "no_obsolete_duplicates": false,
+    "source_rebuilds_pdf": false
+  }
+}

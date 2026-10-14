@@ -1,0 +1,48 @@
+{
+  "schema_version": "2.0",
+  "project_name": "himcm-2024-problem-b",
+  "contest": "HiMCM 2024 Problem B: The Environmental Impact of High-Powered Computing (探究高耗能计算的环境影响)",
+  "language": "en (paper), 中文 (notes)",
+  "paper_format": "latex",
+  "problem_files": [
+    "problem_files/2024_HiMCM_Problem_B.pdf",
+    "problem_files/问题B-中文版.pdf"
+  ],
+  "selected_topic": "B",
+  "subproblems": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6"
+  ],
+  "current_stage": "DATA_PLAN",
+  "delivery_rules": {
+    "anonymous": true,
+    "page_limit": 25,
+    "template": "templates/himcm-latex (mcmthesis/easymcm)",
+    "submission_files": [
+      "paper/main.pdf"
+    ],
+    "extras": [
+      "1-page summary",
+      "table of contents",
+      "1-2 page letter to UN Advisory Board",
+      "references",
+      "AI use report (excluded from page limit)"
+    ]
+  },
+  "gates": {
+    "input_snapshot": true,
+    "problem_decomposed": true,
+    "model_route_selected": true,
+    "data_plan_ready": true,
+    "method_validated": false,
+    "experiments_reproduced": false,
+    "results_frozen": false,
+    "paper_written": false,
+    "pdf_verified": false,
+    "audit_passed": false
+  }
+}

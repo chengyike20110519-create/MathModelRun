@@ -1,0 +1,16 @@
+{
+  "schema_version": "2.0",
+  "generated_at": null,
+  "gates": {
+    "input_snapshot": [],
+    "problem_decomposed": [],
+    "model_route_selected": [],
+    "data_plan_ready": [],
+    "method_validated": [],
+    "experiments_reproduced": [],
+    "results_frozen": [],
+    "paper_written": [],
+    "pdf_verified": [],
+    "audit_passed": []
+  }
+}

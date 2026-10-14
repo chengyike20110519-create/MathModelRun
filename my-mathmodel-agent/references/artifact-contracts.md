@@ -14,7 +14,8 @@ Every `evidence` item uses:
   "kind": "command",
   "value": "python3 code/poc_q1.py -> exit 0; MAE=0.42",
   "path": "results/poc_q1.log",
-  "at": "2026-09-10T12:00:00Z"
+  "at": "2026-09-10T12:00:00Z",
+  "level": "RUNTIME"
 }
 ```
 
@@ -31,6 +32,9 @@ Allowed `kind` values:
 
 `value` must be concrete. Do not write "looks correct", "passed", or "good
 fit" without the command, path, metric, or decision rule that supports it.
+`level` must be `STRUCTURAL`, `RUNTIME`, or `VISUAL`. Existing evidence without
+`level` is treated as `STRUCTURAL` during migration and cannot open a runtime
+or visual gate.
 
 ## `state.json`
 
@@ -214,6 +218,15 @@ recorded in `leakage_checks`.
 
 ## `figures/visualization_plan.json`
 
+For newly created/revised substantial figures, also record `kind` (data/workflow),
+question, claim, candidate/selected encodings, panel roles, `spec_path`,
+`review_path`, and `review_scope`. Use the shared figure review template under
+`../templates/figure-review.json` relative to this reference. Its per-figure
+gate is described by `data-figure-agent.md` or `ai-workflow-gate.md`.
+Update this figure's `passes` only after the requested scope's fresh review gate
+passes; standalone approval does not establish final rendered-paper approval.
+These checks do not replace the ten existing project state gates.
+
 ```json
 {
   "schema_version": "2.0",
@@ -363,6 +376,33 @@ When the `paper_written` gate is `true`, `audit_workspace.py` checks that
 that any `frozen_numbers.json#<name>` reference resolves to a frozen value
 that actually exists.
 
+## `paper/workflow.json`
+
+```json
+{
+  "schema_version": "1.0",
+  "title": "Workflow and Evidence",
+  "paper_location": "sec:workflow",
+  "steps": [
+    {
+      "id": "S0",
+      "name": "Preflight",
+      "input": "problem files",
+      "output": "input_manifest.json",
+      "evidence": ["input_manifest.json", "audit/gate_evidence.json#input_snapshot"],
+      "paper_location": "sec:workflow"
+    }
+  ],
+  "passes": false
+}
+```
+
+`steps` must be ordered and contain at least five meaningful stages. Every step
+needs `id`, `name`, `input`, `output`, a non-empty `evidence` list, and a
+`paper_location`. When `paper_written` is true, the paper source must contain
+`Workflow` or `工作流` (or an equivalent labeled workflow figure), and the JSON
+must cover the complete path through independent audit.
+
 ## `paper/render_log.json`
 
 ```json
@@ -377,6 +417,7 @@ that actually exists.
     {
       "page": 1,
       "checked": false,
+      "inspection": "pending",
       "issues": [],
       "evidence": []
     }
@@ -389,6 +430,10 @@ that actually exists.
 Every page needs a `checked` value. Overflow, blank pages, missing figures,
 broken references, encoding failures, and submission-template violations are
 hard errors.
+`inspection` must state how the page was checked, such as `raster`, `browser`,
+or `pdf-text-plus-manual`. A parsed text layer alone is not visual evidence.
+If a fallback renderer was used, record `renderer_mode: "fallback"` and the
+reason so a preview cannot be mistaken for a submission-ready PDF.
 
 ## `audit/gate_evidence.json`
 
@@ -418,6 +463,31 @@ Each entry must be a valid evidence object (see Shared evidence object above):
 string, and if `path` is present the file must exist in the workspace.
 `audit_workspace.py` rejects entries with an invalid `kind`, a blank
 `value`, or a `path` that does not exist.
+
+For `method_validated`, `experiments_reproduced`, `pdf_verified`, and
+`audit_passed`, at least one matching `RUNTIME` or `VISUAL` entry is required.
+For `audit_passed`, the evidence must include an independent reviewer action.
+
+## `audit/package_manifest.json`
+
+```json
+{
+  "schema_version": "1.0",
+  "generated_at": null,
+  "status": "pending",
+  "files": [{"path": "paper/main.pdf", "sha256": "", "role": "submission"}],
+  "excluded": [{"path": "__pycache__", "reason": "cache"}],
+  "checks": {
+    "no_secrets": false,
+    "no_personal_absolute_paths": false,
+    "no_obsolete_duplicates": false,
+    "source_rebuilds_pdf": false
+  }
+}
+```
+
+`status` stays `pending` until every check is true. Replace this file in place
+whenever the package changes.
 
 ## `planning/decision_log.jsonl`
 

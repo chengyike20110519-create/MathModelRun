@@ -30,9 +30,11 @@ TEMPLATE_FILES = {
     "method_validation.json": "methods/method_validation.json",
     "run_manifest.json": "results/run_manifest.json",
     "evidence_map.json": "paper/evidence_map.json",
+    "workflow.json": "paper/workflow.json",
     "render_log.json": "paper/render_log.json",
     "gate_evidence.json": "audit/gate_evidence.json",
     "acceptance.json": "audit/acceptance.json",
+    "package_manifest.json": "audit/package_manifest.json",
     "frozen_numbers.json": "frozen_numbers.json",
 }
 

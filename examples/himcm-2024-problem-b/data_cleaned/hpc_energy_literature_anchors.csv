@@ -1,0 +1,13 @@
+quantity,year,value,unit,lo,hi,source,url,accessed,notes
+global_datacenter_energy,2010,150,TWh,130,170,"Masanet et al. (2020) Science, revised estimates",https://www.science.org/doi/10.1126/science.aba3758,2026-09-18,midpoint of revised range; efficiency-adjusted
+global_datacenter_energy,2015,175,TWh,160,190,"Masanet et al. (2020) Science, revised estimates",https://www.science.org/doi/10.1126/science.aba3758,2026-09-18,interpolated midpoint between 2010 and 2018 anchors
+global_datacenter_energy,2018,205,TWh,191,223,"Masanet et al. (2020) Science",https://www.science.org/doi/10.1126/science.aba3758,2026-09-18,about 1% of global electricity
+global_datacenter_energy,2024,415,TWh,380,450,"IEA Energy & AI report (2025)",https://www.iea.org/reports/energy-and-ai,2026-09-18,about 1.5% of global electricity; AI included; crypto excluded
+global_datacenter_energy_2030_projection,2030,945,TWh,,,"IEA Energy & AI report (2025) baseline",https://www.iea.org/reports/energy-and-ai,2026-09-18,roughly doubles by 2030; about 3% of global electricity
+global_datacenter_energy_2030_projection,2030,1100,TWh,,,"Goldman Sachs Research (2024): +160% power demand by 2030",https://www.goldmansachs.com/insights/articles/AI-poised-to-drive-160-increase-in-power-demand,2026-09-18,high-growth anchor
+us_datacenter_energy,2023,176,TWh,160,200,"LBNL 2024 United States Data Center Energy Usage Report",https://eta.lbl.gov/publications/2024-united-states-data-center,2026-09-18,about 4.4% of US electricity; projected 325-580 TWh by 2028
+us_datacenter_energy_2028_projection,2028,450,TWh,325,580,"LBNL 2024 report",https://eta.lbl.gov/publications/2024-united-states-data-center,2026-09-18,6.7%-12% of US electricity by 2028
+crypto_mining_energy,2022,120,TWh,100,140,"IEA data centres & crypto note",https://www.iea.org/energy-system/buildings/data-centres-and-data-transmission-networks,2026-09-18,about 0.4% of global electricity; treated as optional add-on outside DC figure
+global_avg_pue,2024,1.56,,1.2,1.7,"Uptime Institute Global Survey 2024",https://www.uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2024,2026-09-18,annual average PUE of surveyed facilities
+wue_industry,2024,1.8,L_per_kWh,0.2,5.2,"Google 2024 Environmental Report WUE 1.8; Meta ~0.2-0.3; industry upper ~5 for evaporative cooling",https://abc.xyz/assets/43/44/675b83d7455885c4615d848d52a4/googles-2024-environmental-report.pdf,2026-09-18,wide spread across cooling technologies and climates
+ai_accelerator_shipments_cumulative_2024,4000000,units,3000000,5000000,"TechInsights estimate of NVIDIA data-center GPU shipments 2023 ~3.76M",https://www.techinsights.com/,2026-09-18,used as installed-base proxy for AI systems

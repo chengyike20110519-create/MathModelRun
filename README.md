@@ -16,7 +16,7 @@ An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathe
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python 3.9+"></a>
   <img src="https://img.shields.io/badge/version-0.3.0-blue.svg" alt="Version 0.3.0">
-  <img src="https://img.shields.io/badge/tests-20%20passing-brightgreen.svg" alt="Tests: 20 passing">
+  <img src="https://img.shields.io/badge/tests-21%20passing-brightgreen.svg" alt="Tests: 21 passing">
   <a href="my-mathmodel-agent/SKILL.md"><img src="https://img.shields.io/badge/Codex%20Skill-ready-green.svg" alt="Codex Skill"></a>
   <a href="skills/paper-iteration-pack/SKILL.md"><img src="https://img.shields.io/badge/Paper%20Iteration-ready-f97316.svg" alt="Paper Iteration Skill"></a>
 </p>
@@ -44,7 +44,7 @@ An evidence-driven execution system for CUMCM, MCM/ICM, HiMCM, and similar mathe
   <img src="docs/assets/mathmodel-workflow.svg" alt="十阶段数学建模工作流与证据门禁" width="960">
 </p>
 
-把题面推进成有证据的论文：十阶段、十门禁、默认失败、独立复核、结果冻结、逐页渲染、最终审计。
+先把题面推进成可验证的判断，再整理成有证据的论文：十阶段、十门禁、默认失败、独立复核、结果冻结、逐页渲染、最终审计。
 
 每一条边都是一个**门禁**：只有当机器可检查的证据落盘，门禁才会从 `false` 翻成 `true`，阶段才允许前进。声明的阶段不允许领先于第一个未通过的门禁——机械审计会直接判 FAIL。
 
@@ -64,6 +64,10 @@ npx -y skills@latest add chengyike20110519-create/MathModelRun \
 
 ## 它解决什么
 
+### 数模专用工作台
+
+`index.html` 现在也是一个可直接使用的本地项目工作台：可以切换项目、添加每日任务、上传模型图和实验截图、记录图片打卡、逐段修改论文，并把这些内容保存在当前浏览器的本地存储中。十阶段地图作为工作流和证据检查区保留在下方，论文生成不再占据唯一入口。
+
 数学建模比赛不是"先选一个高级模型，再把论文写满"的过程。真正容易失控的是：
 
 - 题意没有拆清，模型答错了问题；
@@ -73,7 +77,7 @@ npx -y skills@latest add chengyike20110519-create/MathModelRun \
 - 图和表很好看，但无法证明结论；
 - 最终 PDF 编译成功，却没人逐页检查。
 
-MathModel Run 把比赛拆成一条可恢复的证据链：**输入 → 拆题 → 选路 → 数据 → PoC → 实验 → 冻结 → 写作 → 渲染 → 审计**。每个阶段都有机器产物，任何门禁默认未通过，只有独立复核后才能翻门。
+MathModel Run 把比赛拆成一条可恢复的决策链：**输入 → 找瓶颈 → 拆题 → 比较路线 → 数据 → PoC → 实验 → 批判 → 冻结 → 局部写作 → 渲染 → 审计**。每个阶段都有机器产物，任何门禁默认未通过，只有独立复核后才能翻门。除非用户明确要求全文，否则系统优先交付一个可执行的小工作包，而不是直接生成整篇论文。
 
 它适合需要可复现、可交接、可审计的 **CUMCM、MCM/ICM、HiMCM** 及类似数学建模竞赛。它不替你“猜一个高级模型”，而是帮助团队持续回答三个问题：**现在处于哪一步？下一步需要什么证据？论文里的结论能否追溯？**
 
@@ -88,6 +92,7 @@ MathModel Run 把比赛拆成一条可恢复的证据链：**输入 → 拆题 �
 | 证据对象 | command、test、data、figure、log、manual 六类，kind/value/path 机器校验 |
 | 结果冻结 | 论文数字只能来自 `frozen_numbers.json`，source_run 必须登记在 run_manifest |
 | 决策日志 | KEEP / CUT / DEFER / PIVOT / ACCEPT_RISK 只追加、不改历史 |
+| 决策优先 | 每轮先识别瓶颈、比较路线、验证结论，再决定是否写论文 |
 | 独立评分 | 10 个维度 0-5 分，硬底线不达标不能通过 |
 | 原位更新 | 更新文件时替换原路径，不保留隐藏旧版本 |
 
@@ -118,10 +123,12 @@ python3 my-mathmodel-agent/scripts/init_project.py 2026-cumcm-a
 ├── results/run_manifest.json       # 可复现运行记录
 ├── paper/
 │   ├── evidence_map.json           # claim → 证据映射
+│   ├── workflow.json               # 论文中的 workflow 步骤与证据
 │   └── render_log.json             # PDF 编译和逐页检查
 ├── audit/
 │   ├── gate_evidence.json          # 每个门禁的证据
-│   └── acceptance.json             # 独立审查结果
+│   ├── acceptance.json             # 独立审查结果
+│   └── package_manifest.json        # 交付文件、哈希和排除项
 ├── input_manifest.json             # 输入路径、哈希和来源
 ├── frozen_numbers.json             # 论文数字冻结文件
 ├── state.json                      # 当前阶段与十门禁
@@ -184,7 +191,7 @@ python3 my-mathmodel-agent/scripts/freeze_numbers.py   results/verified_results.
 python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a
 ```
 
-`INCOMPLETE` 表示还没走完；`FAIL` 表示已声称通过但证据或契约有问题；`MECHANICAL_PASS` 只说明结构、门禁和溯源通过，最终 `READY` 仍要求独立审查者写出 `audit/final_report.md`。
+`INCOMPLETE` 表示还没走完；`FAIL` 表示已声称通过但证据或契约有问题；`MECHANICAL_PASS` 只说明结构、门禁和溯源通过，最终 `READY` 仍要求独立审查者复现运行和视觉证据，并完成 `audit/final_report.md` 与 `audit/package_manifest.json`。
 
 ## 审计规则
 
@@ -192,17 +199,19 @@ python3 my-mathmodel-agent/scripts/audit_workspace.py 2026-cumcm-a
 
 | 检查 | 规则 |
 |---|---|
-| 结构 | 9 个目录、15 个契约文件必须存在 |
+| 结构 | 9 个目录、16 个契约文件必须存在 |
 | 阶段诚实 | `stage` 不得领先于第一个 `false` 门禁；全部门禁通过必须是 `READY` |
 | 门禁证据 | `true` 门禁在 `gate_evidence.json` 必须有非空证据数组 |
-| 证据形状 | `kind` 必须是六种之一；`value` 非空；引用的 `path` 必须存在 |
+| 证据形状 | `kind` 必须是六种之一；`value` 非空；引用的 `path` 必须存在；`level` 为 `STRUCTURAL`/`RUNTIME`/`VISUAL` |
+| 运行证据 | `method_validated`、`experiments_reproduced`、`pdf_verified`、`audit_passed` 至少有 `RUNTIME` 或 `VISUAL` 证据 |
 | 冻结溯源 | schema 2.0、冻结时间、源哈希、每值七字段齐全 |
 | 冻结 ↔ 运行 | `source_run` 必须在 `run_manifest.json` 登记；`source_file` 必须存在 |
 | 论文 ↔ 冻结 | `evidence_map.claims` 非空；每个 claim 有证据；`frozen_numbers.json#name` 必须可解析 |
+| 论文 workflow | `paper/workflow.json` 至少 5 个有序步骤；论文源文件含 `Workflow`/`工作流`；覆盖独立审计 |
 | 选路 | `model_route.subproblems` 每项有 `acceptance_criteria` |
-| 渲染 | `pdf_verified` 要求每页 `checked: true` |
+| 渲染 | `pdf_verified` 要求每页 `checked: true` 且有真实视觉检查；fallback 只能标为降级预览 |
 | 决策日志 | 每行合法 JSON；分类限 KEEP/CUT/DEFER/PIVOT/ACCEPT_RISK；带时间戳和主题 |
-| READY | 十门禁全 `true` + `final_report.md` + `acceptance.verdict=pass` |
+| READY | 十门禁全 `true` + `final_report.md` + `acceptance.verdict=pass` + package manifest 四项检查全通过 |
 
 ## 十阶段
 

@@ -1,0 +1,16 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-12T22:20:35+08:00",
+  "gates": {
+    "input_snapshot": [{"kind":"data","value":"Input CSV snapshot with recorded SHA-256","path":"input_manifest.json"},{"kind":"data","value":"Readable local data attachment","path":"problem_files/himcm_data.csv"}],
+    "problem_decomposed": [{"kind":"manual","value":"Eight observable subproblem cards with deliverables and acceptance criteria","path":"planning/problem_analysis.json"}],
+    "model_route_selected": [{"kind":"manual","value":"Baseline, primary, fallback, rejected route and acceptance criteria recorded for Q1-Q3","path":"methods/model_route.json"}],
+    "data_plan_ready": [{"kind":"manual","value":"Field units, cleaning rules, leakage checks, temporal split and external-source status recorded","path":"data_cleaned/data_plan.json"},{"kind":"figure","value":"Existing historical visualization assets indexed for later regeneration","path":"figures/visualization_plan.json"}],
+    "method_validated": [{"kind":"test","value":"Q1 PoC completed with time-ordered holdout and baseline comparison","path":"results/runs/run-002/metrics.json"},{"kind":"test","value":"The reproducibility script passes Python compilation","path":"code/reproduce_himcm.py"}],
+    "experiments_reproduced": [{"kind":"test","value":"Q1 linear, exponential, Logistic and ARIMA(1,1,0) fallback metrics plus Q2 trend, Pearson, lagged F statistics and exponential sensitivity are recorded","path":"results/runs/run-002/metrics.json"},{"kind":"test","value":"Granger p values and threshold standard errors with 95% year intervals are finite","path":"results/runs/run-002/metrics.json"},{"kind":"figure","value":"Five required PNG figures were regenerated and visually checked","path":"figures/fig1_co2_fits.png"}],
+    "results_frozen": [{"kind":"test","value":"冻结数字全部来自 run-002 metrics.json，且源文件 SHA-256 已记录","path":"frozen_numbers.json"},{"kind":"test","value":"冻结值的 source_run 已在 results/run_manifest.json 登记","path":"results/run_manifest.json"}],
+    "paper_written": [{"kind":"data","value":"working-draft.md 已原位更新为仅引用冻结数字的证据映射文稿","path":"paper/working-draft.md"},{"kind":"log","value":"六项核心定量主张均已映射到 frozen_numbers.json 或生成图表","path":"paper/evidence_map.json"}],
+    "pdf_verified": [{"kind":"log","value":"Controlled Letter ReportLab fallback produced a 24-page PDF matching the supplied template's two-column body layout; all 24 pages have non-empty text layers and structural markers were checked","path":"paper/render_log.json"},{"kind":"data","value":"Verified PDF artifact with SHA-256 91c18e225b5d0dd9d0fce577847316409d9345d9492a12f2b0d8280d265b38f7","path":"paper/main.pdf"}],
+    "audit_passed": [{"kind":"log","value":"Independent final report records the frozen run, paper evidence map, PDF rendering checks, limitations, and acceptance decision","path":"audit/final_report.md"},{"kind":"log","value":"Mechanical workspace audit passed after all state and evidence contracts were checked","path":"audit/mechanical_report.md"}]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "scenario": "B",
+  "samples": 200,
+  "seed": 20251105,
+  "smoke": "P6 speed factor",
+  "comm_p": 0.2,
+  "occupancy": "P8 x1.5",
+  "k": 5
+}

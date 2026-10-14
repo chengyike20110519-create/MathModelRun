@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#182230">
-  <title>MathModel Run | 数模作战地图</title>
+  <title>MathModel Run | 数模决策工作台</title>
   <style>
     :root {
       color-scheme: light;
@@ -162,6 +162,7 @@
     }
 
     .brand-panel,
+    .workbench,
     .stage-rail,
     .map-panel,
     .detail-panel,
@@ -183,6 +184,413 @@
       align-items: end;
       padding: 34px;
     }
+
+    .decision-panel {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(260px, 1.1fr) repeat(3, minmax(180px, 1fr));
+      gap: 12px;
+      padding: 18px;
+      background: #182230;
+      color: #ffffff;
+      border: 1px solid #0d1520;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .decision-lead,
+    .decision-card {
+      min-height: 132px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .06);
+    }
+
+    .decision-lead {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .decision-lead h2,
+    .decision-card h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .decision-lead p,
+    .decision-card p {
+      margin: 8px 0 0;
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .decision-tag {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      min-height: 28px;
+      padding: 0 9px;
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .decision-card strong {
+      display: block;
+      margin-top: 16px;
+      color: #ffffff;
+      font-size: 13px;
+    }
+
+    .workbench {
+      grid-column: 1 / -1;
+      padding: 24px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .workbench-head,
+    .card-topline,
+    .paper-actions,
+    .task-form {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .workbench-head {
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .workbench-head h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .workbench-note {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .project-picker,
+    .paper-select-label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .project-picker select,
+    .paper-select,
+    .task-form input {
+      min-height: 38px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .workbench-grid,
+    .desk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .work-card {
+      min-height: 188px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .focus-card {
+      background: #eef4ff;
+      border-color: #b8cdfb;
+    }
+
+    .card-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .card-topline strong,
+    .save-state {
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .work-card h3 {
+      margin: 24px 0 8px;
+      font-size: 19px;
+    }
+
+    .work-card p {
+      min-height: 40px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .inline-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      padding: 0;
+      border: 0;
+      color: var(--blue);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .progress-track {
+      height: 8px;
+      margin: 18px 0 14px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #dfe7f0;
+    }
+
+    .progress-track span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+      transition: width .18s ease;
+    }
+
+    .mini-list,
+    .task-list,
+    .revision-log {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .mini-list li,
+    .task-row,
+    .revision-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .check-box {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+      border: 1px solid #9aa8b7;
+      border-radius: 4px;
+      background: #ffffff;
+    }
+
+    .evidence-preview {
+      display: flex;
+      align-items: center;
+      min-height: 82px;
+      margin-top: 18px;
+    }
+
+    .evidence-preview img {
+      width: 76px;
+      height: 64px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .empty-state {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .desk-grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, .9fr);
+      align-items: start;
+    }
+
+    .checkin-panel {
+      grid-column: 1 / 2;
+    }
+
+    .paper-panel {
+      grid-column: 2 / 3;
+    }
+
+    .task-panel {
+      grid-column: 1 / -1;
+    }
+
+    .upload-button,
+    .dark-button,
+    .light-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .upload-button,
+    .dark-button {
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #ffffff;
+    }
+
+    .light-button {
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    .drop-zone {
+      display: grid;
+      place-items: center;
+      gap: 6px;
+      min-height: 148px;
+      margin-bottom: 14px;
+      padding: 20px;
+      border: 1px dashed #aebdca;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+    }
+
+    .drop-zone:hover,
+    .drop-zone:focus {
+      border-color: var(--blue);
+      background: #f3f7ff;
+      outline: none;
+    }
+
+    .drop-zone strong { color: var(--ink); font-size: 14px; }
+    .drop-zone span { font-size: 12px; }
+    .drop-icon { color: var(--blue); font-size: 26px; line-height: 1; }
+
+    .checkin-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .checkin-item {
+      position: relative;
+      overflow: hidden;
+      min-height: 116px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .checkin-item img {
+      display: block;
+      width: 100%;
+      height: 116px;
+      object-fit: cover;
+    }
+
+    .checkin-meta {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 7px;
+      background: rgba(24, 34, 48, .82);
+      color: #ffffff;
+      font-size: 10px;
+    }
+
+    .remove-image {
+      border: 0;
+      color: #ffffff;
+      background: transparent;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .paper-select-label { margin-bottom: 6px; }
+    .paper-select { width: 100%; margin-bottom: 10px; }
+
+    .paper-editor {
+      display: block;
+      width: 100%;
+      min-height: 220px;
+      padding: 12px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #ffffff;
+      font: inherit;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .paper-actions { justify-content: flex-start; margin-top: 12px; }
+    .revision-log { display: grid; gap: 7px; margin-top: 16px; }
+    .revision-row { align-items: flex-start; padding-top: 8px; border-top: 1px solid var(--line); }
+    .revision-row time { flex: 0 0 auto; color: var(--muted); font-size: 11px; }
+    .revision-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .task-form { justify-content: flex-start; margin-bottom: 14px; }
+    .task-form input { flex: 1; min-width: 0; }
+    .task-list { display: grid; gap: 8px; }
+    .task-row { justify-content: flex-start; min-height: 38px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 8px; background: #f8fafc; }
+    .task-row input { flex: 0 0 auto; }
+    .task-row label { flex: 1; color: var(--ink); cursor: pointer; }
+    .task-row.done label { color: var(--muted); text-decoration: line-through; }
+    .delete-task { border: 0; color: var(--muted); background: transparent; cursor: pointer; }
 
     .eyebrow {
       margin: 0 0 8px;
@@ -415,13 +823,18 @@
     }
 
     .root-title {
-      font-size: 24px;
+      font-size: 21px;
       font-weight: 850;
       fill: var(--ink);
     }
 
     .root-sub {
       font-size: 13px;
+      fill: var(--muted);
+    }
+
+    .root-note {
+      font-size: 11px;
       fill: var(--muted);
     }
 
@@ -752,6 +1165,14 @@
         padding: 24px;
       }
 
+      .decision-panel {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .decision-lead {
+        grid-column: 1 / -1;
+      }
+
       .score-row {
         min-width: 0;
       }
@@ -784,6 +1205,41 @@
       .command-grid,
       .doc-grid {
         grid-template-columns: 1fr;
+      }
+
+      .decision-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .decision-lead {
+        grid-column: auto;
+      }
+
+      .workbench-head,
+      .paper-actions,
+      .task-form {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .project-picker,
+      .project-picker select {
+        width: 100%;
+      }
+
+      .workbench-grid,
+      .desk-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .checkin-panel,
+      .paper-panel,
+      .task-panel {
+        grid-column: auto;
+      }
+
+      .checkin-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .band-head {
@@ -820,17 +1276,18 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#top" aria-label="MathModel Run 首页">
+    <a class="brand" href="#top" aria-label="MathModel Run 决策工作台">
       <span class="brand-mark">Σ</span>
       <span>MathModel Run</span>
     </a>
     <nav class="top-actions" aria-label="页面导航">
-      <span class="pill">默认失败 · 十门禁</span>
-      <a class="top-link" href="#evidence">证据链</a>
-      <a class="top-link" href="#commands">命令</a>
-      <a class="tool-button primary" href="docs/WORKFLOW.md">
+      <span class="pill">项目 · 打卡 · 论文 · 证据</span>
+      <a class="top-link" href="#checkin">打卡</a>
+      <a class="top-link" href="#paper">论文</a>
+      <a class="top-link" href="#workflow">工作流</a>
+      <a class="tool-button primary" href="#checkin">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        打开工作流
+        开始打卡
       </a>
     </nav>
   </header>
@@ -838,18 +1295,83 @@
   <main id="top" class="shell">
     <section class="brand-panel" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">证据驱动的数学建模竞赛入口</p>
-        <h1 id="page-title">把题面推进成有证据的论文</h1>
-        <p class="lede">S0 固定输入，S1 拆题，S2 选路，S3 定数据，S4 做最小验证，S5 跑完整实验，S6 冻结数字，S7 写作，S8 渲染，S9 独立审计。每一步都默认未通过，证据复现后才翻门。</p>
+        <p class="eyebrow">证据驱动的数学建模决策工作台</p>
+        <h1 id="page-title">先解决一个建模判断</h1>
+        <p class="lede">系统先告诉你项目卡在哪里、下一步需要做什么、当前结论哪里不可靠。论文写作只是最后的整理出口，不再是默认起点。</p>
       </div>
       <div class="score-row" aria-label="核心指标">
-        <div class="score"><strong>10</strong><span>阶段</span></div>
-        <div class="score"><strong>10</strong><span>门禁</span></div>
-        <div class="score"><strong>0</strong><span>硬错误要求</span></div>
+        <div class="score"><strong>1</strong><span>当前决策</span></div>
+        <div class="score"><strong>3</strong><span>候选路线</span></div>
+        <div class="score"><strong>0</strong><span>未审计结论</span></div>
       </div>
     </section>
 
-    <section class="workspace" aria-label="数模作战地图">
+    <section class="workbench" aria-label="数模项目工作台">
+      <div class="workbench-head">
+        <div>
+          <p class="eyebrow">PROJECT DESK</p>
+          <h2>今天推进什么</h2>
+          <p class="workbench-note">把生成的图、实验结果和论文修改集中放在同一个项目里。</p>
+        </div>
+        <label class="project-picker">
+          <span>当前项目</span>
+          <select id="project-select" aria-label="选择当前项目">
+            <option value="2026-cumcm-a">2026-cumcm-a</option>
+            <option value="himcm-2025-a">HiMCM 2025 Problem A</option>
+            <option value="himcm-2022-b">HiMCM 2022 Problem B</option>
+          </select>
+        </label>
+      </div>
+      <div class="workbench-grid">
+        <article class="work-card focus-card">
+          <div class="card-topline"><span class="card-label">下一步</span><span class="status-dot open"></span></div>
+          <h3 id="focus-title">补齐输入预检</h3>
+          <p id="focus-text">确认题面、附件和模板都已登记，再进入题意拆解。</p>
+          <button class="inline-action" type="button" data-scroll="#workflow">查看工作流 <span>→</span></button>
+        </article>
+        <article class="work-card">
+          <div class="card-topline"><span class="card-label">今日进度</span><strong id="progress-label">0 / 4</strong></div>
+          <div class="progress-track"><span id="progress-bar"></span></div>
+          <ul class="mini-list" id="task-preview">
+            <li><span class="check-box"></span><span>完成一个可验证判断</span></li>
+            <li><span class="check-box"></span><span>保存一张关键图</span></li>
+            <li><span class="check-box"></span><span>记录一个论文修改点</span></li>
+          </ul>
+        </article>
+        <article class="work-card">
+          <div class="card-topline"><span class="card-label">最近证据</span><span id="evidence-count">0 项</span></div>
+          <div class="evidence-preview" id="evidence-preview"><span class="empty-state">还没有打卡图片</span></div>
+          <button class="inline-action" type="button" data-scroll="#checkin">添加证据 <span>→</span></button>
+        </article>
+      </div>
+    </section>
+
+    <section class="decision-panel" aria-label="下一步工作包">
+      <div class="decision-lead">
+        <div>
+          <h2>当前工作包</h2>
+          <p>把本轮任务限制在一个可判断、可验证、可回退的小目标内。</p>
+        </div>
+        <span class="decision-tag">先做判断，不生成整篇论文</span>
+      </div>
+      <article class="decision-card">
+        <h3>1 · 找瓶颈</h3>
+        <p>定位第一个未通过门禁，并说明它为什么阻塞后续。</p>
+        <strong>输出：一条明确阻塞</strong>
+      </article>
+      <article class="decision-card">
+        <h3>2 · 做比较</h3>
+        <p>列出 baseline、primary 和 fallback，写清选择与拒绝理由。</p>
+        <strong>输出：模型决策卡</strong>
+      </article>
+      <article class="decision-card">
+        <h3>3 · 验证结论</h3>
+        <p>运行最小实验，主动检查误差、边界、敏感性和数据泄漏。</p>
+        <strong>输出：批判报告</strong>
+      </article>
+    </section>
+
+    <section class="workspace" id="workflow" aria-label="数模作战地图">
       <aside class="stage-rail" aria-label="阶段列表">
         <p class="rail-title">阶段</p>
         <div class="stage-list" id="stage-list">
@@ -909,8 +1431,8 @@
       <section class="map-panel" aria-label="交互式思维导图">
         <div class="map-head">
           <div>
-            <h2 class="map-title">数模作战地图</h2>
-            <p class="map-hint">选择任意阶段查看产物、出口标准和回退点</p>
+            <h2 class="map-title">决策与证据地图</h2>
+            <p class="map-hint">选择阶段查看当前判断、验证要求和失败回退点</p>
           </div>
           <div class="map-status"><span>READY</span><span>证据硬错误 = 0</span></div>
         </div>
@@ -992,10 +1514,10 @@
 
           <g aria-label="中心目标">
             <rect x="405" y="270" width="190" height="160" rx="10" fill="#ffffff" stroke="#182230" stroke-width="3"/>
-            <text class="root-title" x="500" y="330" text-anchor="middle">可辩护论文</text>
-            <text class="root-sub" x="500" y="360" text-anchor="middle">READY</text>
+            <text class="root-title" x="500" y="330" text-anchor="middle">下一步判断</text>
+            <text class="root-sub" x="500" y="360" text-anchor="middle">DECIDE → TEST → FREEZE</text>
             <line x1="445" y1="384" x2="555" y2="384" stroke="#182230" stroke-width="2"/>
-            <text class="node-gate" x="500" y="407" text-anchor="middle">数字可追溯 · 结论可复现</text>
+            <text class="root-note" x="500" y="407" text-anchor="middle">论文是后置出口</text>
           </g>
         </svg>
       </section>
@@ -1025,16 +1547,76 @@
 
       <section class="proof-panel" aria-labelledby="proof-title">
         <div>
-          <h2 class="proof-title" id="proof-title">五步入场</h2>
-          <p class="proof-subtitle">任何一步失败就停在这里，不把后续标成通过。</p>
+          <h2 class="proof-title" id="proof-title">协作闭环</h2>
+          <p class="proof-subtitle">每轮只推进一个判断，失败就回到最早失效的地方。</p>
         </div>
         <div class="proof-steps">
-          <div class="proof-step"><strong>01 输入可读</strong><span>题面、附件、哈希和访问日期齐全。</span></div>
-          <div class="proof-step"><strong>02 路线成立</strong><span>每问都有 baseline、primary、fallback。</span></div>
-          <div class="proof-step"><strong>03 PoC 可跑</strong><span>最小样例复现关键计算和对照。</span></div>
-          <div class="proof-step"><strong>04 结果可冻</strong><span>正式日志、参数、指标和来源完整。</span></div>
-          <div class="proof-step"><strong>05 论文可复</strong><span>冻结数字重建图表，PDF 逐页检查。</span></div>
+          <div class="proof-step"><strong>01 找到瓶颈</strong><span>只处理第一个未通过门禁。</span></div>
+          <div class="proof-step"><strong>02 比较路线</strong><span>先看适用条件，再决定模型。</span></div>
+          <div class="proof-step"><strong>03 做最小实验</strong><span>先验证关键计算和对照。</span></div>
+          <div class="proof-step"><strong>04 写批判报告</strong><span>主动记录模型不可靠的地方。</span></div>
+          <div class="proof-step"><strong>05 局部写作</strong><span>确认结论后再整理对应段落。</span></div>
         </div>
+      </section>
+    </section>
+
+    <section class="desk-grid" aria-label="项目编辑区">
+      <section class="checkin-panel band" id="checkin" aria-labelledby="checkin-title">
+        <div class="band-head">
+          <div>
+            <h2 id="checkin-title">图片打卡</h2>
+            <p class="band-note">把模型图、实验截图、草稿照片和讨论结果存进当前项目。</p>
+          </div>
+          <label class="upload-button" for="image-input">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 20h14"/></svg>
+            上传图片
+          </label>
+          <input id="image-input" type="file" accept="image/*" multiple hidden>
+        </div>
+        <div class="drop-zone" id="drop-zone" tabindex="0">
+          <div class="drop-icon">＋</div>
+          <strong>拖入图片，或点击上传</strong>
+          <span>图片会绑定到当前项目，并保存在本机浏览器中。</span>
+        </div>
+        <div class="checkin-grid" id="checkin-grid"></div>
+      </section>
+
+      <section class="paper-panel band" id="paper" aria-labelledby="paper-title">
+        <div class="band-head">
+          <div>
+            <h2 id="paper-title">论文修改台</h2>
+            <p class="band-note">先改一个段落，保存后再决定是否整合进正文。</p>
+          </div>
+          <span class="save-state" id="save-state">未保存</span>
+        </div>
+        <label class="paper-select-label" for="paper-section">正在修改</label>
+        <select id="paper-section" class="paper-select">
+          <option value="problem">问题重述</option>
+          <option value="assumptions">模型假设</option>
+          <option value="method">模型方法</option>
+          <option value="results">结果分析</option>
+          <option value="conclusion">结论与局限</option>
+        </select>
+        <textarea id="paper-editor" class="paper-editor" placeholder="把这次想修改的段落写在这里……"></textarea>
+        <div class="paper-actions">
+          <button class="tool-button dark-button" id="save-paper" type="button">保存修改</button>
+          <button class="tool-button light-button" id="clear-paper" type="button">清空当前段落</button>
+        </div>
+        <div class="revision-log" id="revision-log"><span class="empty-state">还没有修改记录</span></div>
+      </section>
+
+      <section class="task-panel band" id="tasks" aria-labelledby="tasks-title">
+        <div class="band-head">
+          <div>
+            <h2 id="tasks-title">今日任务</h2>
+            <p class="band-note">用小任务推进项目，不把所有事情混成“生成论文”。</p>
+          </div>
+        </div>
+        <form class="task-form" id="task-form">
+          <input id="task-input" type="text" placeholder="添加一个可完成的任务" autocomplete="off">
+          <button class="tool-button dark-button" type="submit">添加</button>
+        </form>
+        <ul class="task-list" id="task-list"></ul>
       </section>
     </section>
 
@@ -1240,6 +1822,206 @@
         }
       });
     });
+
+    const projectSelect = document.getElementById("project-select");
+    const imageInput = document.getElementById("image-input");
+    const dropZone = document.getElementById("drop-zone");
+    const checkinGrid = document.getElementById("checkin-grid");
+    const evidencePreview = document.getElementById("evidence-preview");
+    const evidenceCount = document.getElementById("evidence-count");
+    const paperSection = document.getElementById("paper-section");
+    const paperEditor = document.getElementById("paper-editor");
+    const savePaper = document.getElementById("save-paper");
+    const clearPaper = document.getElementById("clear-paper");
+    const saveState = document.getElementById("save-state");
+    const revisionLog = document.getElementById("revision-log");
+    const taskForm = document.getElementById("task-form");
+    const taskInput = document.getElementById("task-input");
+    const taskList = document.getElementById("task-list");
+    const progressLabel = document.getElementById("progress-label");
+    const progressBar = document.getElementById("progress-bar");
+
+    const storageKey = "mathmodel-run-workbench";
+    const defaultTasks = [
+      { id: "focus", text: "完成一个可验证判断", done: false },
+      { id: "figure", text: "保存一张关键图", done: false },
+      { id: "revision", text: "记录一个论文修改点", done: false }
+    ];
+    const state = loadState();
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+        return { projects: saved.projects || {}, current: saved.current || "2026-cumcm-a" };
+      } catch {
+        return { projects: {}, current: "2026-cumcm-a" };
+      }
+    }
+
+    function currentProject() {
+      const id = state.current;
+      if (!state.projects[id]) {
+        state.projects[id] = { tasks: structuredClone(defaultTasks), images: [], papers: {}, revisions: [] };
+      }
+      const project = state.projects[id];
+      project.tasks ||= structuredClone(defaultTasks);
+      project.images ||= [];
+      project.papers ||= {};
+      project.revisions ||= [];
+      return project;
+    }
+
+    function persist() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function renderWorkbench() {
+      const project = currentProject();
+      projectSelect.value = state.current;
+      renderTasks(project);
+      renderImages(project);
+      loadPaperSection(project);
+      updateProgress(project);
+      persist();
+    }
+
+    function renderTasks(project) {
+      taskList.innerHTML = project.tasks.length ? project.tasks.map(task => `
+        <li class="task-row${task.done ? " done" : ""}">
+          <input type="checkbox" data-task-id="${task.id}" ${task.done ? "checked" : ""} aria-label="完成任务">
+          <label>${escapeHtml(task.text)}</label>
+          <button class="delete-task" type="button" data-delete-task="${task.id}" aria-label="删除任务">×</button>
+        </li>
+      `).join("") : `<li class="empty-state">还没有任务，先添加一个小目标。</li>`;
+
+      taskList.querySelectorAll("[data-task-id]").forEach(input => {
+        input.addEventListener("change", () => {
+          const task = project.tasks.find(item => item.id === input.dataset.taskId);
+          if (task) task.done = input.checked;
+          persist();
+          renderTasks(project);
+          updateProgress(project);
+        });
+      });
+
+      taskList.querySelectorAll("[data-delete-task]").forEach(button => {
+        button.addEventListener("click", () => {
+          project.tasks = project.tasks.filter(item => item.id !== button.dataset.deleteTask);
+          persist();
+          renderWorkbench();
+        });
+      });
+    }
+
+    function updateProgress(project) {
+      const completed = project.tasks.filter(task => task.done).length;
+      const total = project.tasks.length;
+      progressLabel.textContent = `${completed} / ${total}`;
+      progressBar.style.width = total ? `${Math.round((completed / total) * 100)}%` : "0%";
+    }
+
+    function renderImages(project) {
+      evidenceCount.textContent = `${project.images.length} 项`;
+      evidencePreview.innerHTML = project.images.length
+        ? `<img src="${project.images[project.images.length - 1].data}" alt="最近打卡图片">`
+        : `<span class="empty-state">还没有打卡图片</span>`;
+      checkinGrid.innerHTML = project.images.length ? project.images.map(image => `
+        <article class="checkin-item">
+          <img src="${image.data}" alt="${escapeHtml(image.name)}">
+          <div class="checkin-meta"><span>${escapeHtml(image.name)}</span><button class="remove-image" type="button" data-remove-image="${image.id}">删除</button></div>
+        </article>
+      `).join("") : "";
+      checkinGrid.querySelectorAll("[data-remove-image]").forEach(button => {
+        button.addEventListener("click", () => {
+          project.images = project.images.filter(image => image.id !== button.dataset.removeImage);
+          persist();
+          renderImages(project);
+        });
+      });
+    }
+
+    function loadPaperSection(project) {
+      const text = project.papers[paperSection.value] || "";
+      paperEditor.value = text;
+      saveState.textContent = text ? "已保存" : "未保存";
+      revisionLog.innerHTML = project.revisions.length
+        ? project.revisions.slice(0, 5).map(item => `<div class="revision-row"><time>${item.time}</time><span>${escapeHtml(item.section)}：${escapeHtml(item.preview)}</span></div>`).join("")
+        : `<span class="empty-state">还没有修改记录</span>`;
+    }
+
+    function addImages(fileList) {
+      const project = currentProject();
+      Array.from(fileList).filter(file => file.type.startsWith("image/")).forEach(file => {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          project.images.unshift({ id: `${Date.now()}-${Math.random().toString(16).slice(2)}`, name: file.name, data: reader.result });
+          persist();
+          renderImages(project);
+        });
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
+    }
+
+    projectSelect.addEventListener("change", () => {
+      state.current = projectSelect.value;
+      renderWorkbench();
+    });
+
+    paperSection.addEventListener("change", () => loadPaperSection(currentProject()));
+
+    savePaper.addEventListener("click", () => {
+      const project = currentProject();
+      const value = paperEditor.value.trim();
+      project.papers[paperSection.value] = value;
+      project.revisions.unshift({ section: paperSection.options[paperSection.selectedIndex].text, preview: value.slice(0, 48) || "清空段落", time: new Date().toLocaleString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) });
+      project.revisions = project.revisions.slice(0, 12);
+      persist();
+      loadPaperSection(project);
+      saveState.textContent = "刚刚保存";
+      showToast("论文修改已保存");
+    });
+
+    clearPaper.addEventListener("click", () => {
+      paperEditor.value = "";
+      saveState.textContent = "未保存";
+    });
+
+    taskForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const text = taskInput.value.trim();
+      if (!text) return;
+      const project = currentProject();
+      project.tasks.push({ id: `${Date.now()}`, text, done: false });
+      taskInput.value = "";
+      persist();
+      renderWorkbench();
+      showToast("任务已添加");
+    });
+
+    imageInput.addEventListener("change", () => addImages(imageInput.files));
+    dropZone.addEventListener("click", () => imageInput.click());
+    dropZone.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") imageInput.click();
+    });
+    ["dragenter", "dragover"].forEach(eventName => dropZone.addEventListener(eventName, event => {
+      event.preventDefault();
+      dropZone.classList.add("active");
+    }));
+    ["dragleave", "drop"].forEach(eventName => dropZone.addEventListener(eventName, event => {
+      event.preventDefault();
+      dropZone.classList.remove("active");
+    }));
+    dropZone.addEventListener("drop", event => addImages(event.dataTransfer.files));
+
+    document.querySelectorAll("[data-scroll]").forEach(button => button.addEventListener("click", () => {
+      document.querySelector(button.dataset.scroll)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
+
+    renderWorkbench();
   </script>
 </body>
 </html>

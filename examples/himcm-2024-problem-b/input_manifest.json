@@ -1,0 +1,48 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-18T08:09:57.269694+00:00",
+  "inputs": [
+    {
+      "path": "problem_files/2024_HiMCM_Problem_B.pdf",
+      "kind": "official_problem_statement",
+      "language": "en",
+      "sha256": "6514f0b703cadd2fdf9d33700b1de57a7823971038a0517b7c708a0c789896e7",
+      "accessed_at": "2026-09-18",
+      "source": "HiMCM 2024 official problem (via user-provided file)"
+    },
+    {
+      "path": "problem_files/问题B-中文版.pdf",
+      "kind": "problem_statement_translation_zh",
+      "language": "zh",
+      "sha256": "aad259d4fed2ee88efb93669d1a4969feb856d9a28e3d5d5b5a5449797e08279",
+      "accessed_at": "2026-09-18",
+      "source": "Chinese translation of Problem B (user-provided file)"
+    },
+    {
+      "path": "data_raw/ember_yearly_full_release_long_format.csv",
+      "kind": "dataset_electricity_generation_mix",
+      "sha256": "259e1095ee8ffeaf0aff37ad557916ae1823a2da13312da50ba4cec6b4574c3b",
+      "accessed_at": "2026-09-18",
+      "source": "Ember Yearly Electricity Data (full release), https://ember-climate.org/data-catalogue/yearly-electricity-data/",
+      "notes": "~47 MB raw release; cleaned subset extracted to data_cleaned/"
+    },
+    {
+      "path": "data_raw/15502.pdf",
+      "kind": "reference_excellent_paper",
+      "sha256": "281fe892cfc8c8adec1c7257147c8ae9b1f904e0bd4b0bd903e48d0f31dc3d5b",
+      "accessed_at": "2026-09-18"
+    },
+    {
+      "path": "data_raw/16226.pdf",
+      "kind": "reference_excellent_paper",
+      "sha256": "31e31332ec5310c13e1f102de6f8aa562360ee2c659279c87355cefe487137c4",
+      "accessed_at": "2026-09-18"
+    },
+    {
+      "path": "data_raw/15022.pdf",
+      "kind": "reference_excellent_paper",
+      "sha256": "94427ce78232c4ef0c699541a4b780ebe569b870761f1024bb3fb48010425059",
+      "accessed_at": "2026-09-18"
+    }
+  ]
+}

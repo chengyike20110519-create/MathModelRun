@@ -1,0 +1,13 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-12T13:00:00+08:00",
+  "fields": [
+    {"name":"type","type":"string","unit":"category","source":"problem_files/himcm_data.csv","range":["CO2","TEMP"],"missing_code":null,"notes":"序列类型"},
+    {"name":"year","type":"integer","unit":"year","source":"problem_files/himcm_data.csv","range":[1958,2021],"missing_code":null,"notes":"按年观测年份"},
+    {"name":"value","type":"float","unit":"ppm for CO2; degC anomaly for TEMP","source":"problem_files/himcm_data.csv","range":null,"missing_code":null,"notes":"依 type 解释单位"}
+  ],
+  "cleaning_rules": ["按 type 分组并按 year 升序排列", "将 year/value 解析为数值", "不插值、不删除观测；发现缺失即失败", "CO2 与 TEMP 做共享年份内连接后再做关联分析"],
+  "leakage_checks": ["Q1 的回测只能使用预测年份之前的数据", "Q2 的阈值预测不把未来温度值用于拟合", "历史 working draft 数字不能进入冻结结果"],
+  "split_plan": {"train":"按时间顺序使用早期观测拟合","validation":"滚动起点回测窗口","test":"保留末端年份做最终外推检查"},
+  "external_sources": []
+}

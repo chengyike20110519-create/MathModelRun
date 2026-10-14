@@ -1,0 +1,65 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-12T21:35:00+08:00",
+  "topic": "Problem B: CO2 and Global Warming",
+  "selection_score": 0,
+  "subproblems": [
+    {
+      "id": "Q1",
+      "role": "main",
+      "task_type": "prediction",
+      "baseline": "rolling-window arithmetic comparison and linear OLS",
+      "primary_model": "compare linear, log-linear exponential, bounded Logistic, and ARIMA(1,1,0)",
+      "fallback_model": "linear OLS with explicit prediction interval",
+      "rejected": [{"model":"black-box deep sequence model","reason":"样本只有约六十余年，解释性和可复现性不足，当前不纳入"}],
+      "selection_evidence": [{"kind":"data","value":"63 annual CO2 observations in local snapshot","path":"problem_files/himcm_data.csv"}],
+      "validation_plan": ["统一训练窗口比较 RMSE/R2", "检查残差与外推敏感性", "确认 ARIMA 依赖可运行"],
+      "required_figures": ["figures/fig1_co2_fits.png", "figures/fig2_tenyear.png", "figures/fig5_sensitivity.png"],
+      "paper_section": "Model 1 and Results",
+      "acceptance_criteria": ["每个模型均有可复现参数、指标和预测", "线性模型作为透明 baseline", "685 ppm 求解与外推限制明确记录"],
+      "passes": true,
+      "evidence": [
+        {"kind":"test","value":"统一末端十年回测记录线性、指数、Logistic 与 ARIMA(1,1,0) 的参数和指标","path":"results/runs/run-002/metrics.json"},
+        {"kind":"figure","value":"CO2 拟合、滚动十年增量和增长率敏感性图已生成并检查","path":"figures/fig1_co2_fits.png"},
+        {"kind":"figure","value":"滚动十年增量图已生成并检查","path":"figures/fig2_tenyear.png"},
+        {"kind":"figure","value":"增长率敏感性图已生成并检查","path":"figures/fig5_sensitivity.png"}
+      ]
+    },
+    {
+      "id": "Q2",
+      "role": "main",
+      "task_type": "statistics",
+      "baseline": "temperature linear trend with residual interval",
+      "primary_model": "temperature trend plus aligned Pearson association and lagged Granger tests",
+      "fallback_model": "trend regression and correlation only, without causal wording",
+      "rejected": [{"model":"unqualified causal mechanism model","reason":"本地案例数据不足以识别完整气候因果机制"}],
+      "selection_evidence": [{"kind":"data","value":"CO2 and temperature series are aligned in local snapshot","path":"problem_files/himcm_data.csv"}],
+      "validation_plan": ["核对共享年份", "比较不同滞后阶数", "将相关与 Granger 结果分开解释"],
+      "required_figures": ["figures/fig3_scatter.png", "figures/fig4_temp_threshold.png"],
+      "paper_section": "Model 2 and Reliability",
+      "acceptance_criteria": ["阈值年份含计算规则和误差窗口", "统计检验报告滞后阶数与 p 值", "明确统计预测方向性不等于物理因果"],
+      "passes": true,
+      "evidence": [
+        {"kind":"test","value":"温度趋势、三个阈值年份、Pearson 相关和一阶滞后 F 检验均由同一 CSV 脚本重算","path":"results/runs/run-002/metrics.json"},
+        {"kind":"figure","value":"CO2-温度散点图已生成并检查","path":"figures/fig3_scatter.png"},
+        {"kind":"figure","value":"温度阈值图已生成并检查","path":"figures/fig4_temp_threshold.png"}
+      ]
+    },
+    {
+      "id": "Q3",
+      "role": "final",
+      "task_type": "evaluation",
+      "baseline": "evidence-backed plain-language summary",
+      "primary_model": "one-page non-technical article generated from verified claims",
+      "fallback_model": "hold publication until results are frozen",
+      "rejected": [{"model":"unverified narrative extrapolation","reason":"会把历史草稿数字误当成最终结果"}],
+      "selection_evidence": [{"kind":"data","value":"Working draft is available but explicitly unverified","path":"paper/working-draft.md"}],
+      "validation_plan": ["冻结数字后建立 claim-evidence map", "逐页渲染并检查版式"],
+      "required_figures": ["figures/fig1_co2_fits.png", "figures/fig4_temp_threshold.png"],
+      "paper_section": "Non-technical article",
+      "acceptance_criteria": ["所有数字来自 frozen_numbers.json", "草稿与最终稿状态可区分", "限制和不确定性可定位"],
+      "passes": false,
+      "evidence": []
+    }
+  ]
+}

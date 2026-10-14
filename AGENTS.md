@@ -2,16 +2,14 @@
 
 This repository contains Codex / Claude Code compatible skills for mathematical modeling contests and paper iteration. MathModel Run provides a stateful, evidence-backed path from problem files to an audited paper; Paper Iteration Pack turns review feedback into verified figure, layout, and prose revisions.
 
-## File update policy
+## File versioning policy
 
-When the user asks to update, revise, or rewrite a file:
-
-1. Update the original file in place, or replace it with the new version at the same path.
-2. Remove obsolete content from that file; do not append a competing “new version” below the old one.
-3. Remove obsolete duplicate files created by earlier revisions when they represent the same document.
-4. Before finishing, verify that opening the requested path shows only the current version.
-5. Do not preserve old versions unless the user explicitly asks for version history, backups, or archival copies.
-6. Never overwrite unrelated user changes without first reading and incorporating them.
+When the user asks to update, revise, or rewrite a file, update the existing
+active file in place so its original link shows the corrected content. Read
+and incorporate current user changes first. Create numbered alternatives only
+when the user explicitly requests versions; use `Final` only after acceptance.
+For installed skills, update the discoverable entrypoint and its supporting
+resources together. Historical snapshots must not act as discoverable skills.
 
 This policy applies to documentation, prompts, workflows, templates, scripts, reports, pages, and configuration files.
 
@@ -82,6 +80,7 @@ MathModel Run/
 6. Every frozen number needs `name`, `value`, `unit`, `source_file`, `source_run`, `subproblem`, and `notes`.
 7. Every true state gate needs matching evidence in `audit/gate_evidence.json`.
 8. `READY` requires ten true gates, `audit/acceptance.json` verdict `pass`, and `audit/final_report.md` with zero hard errors.
-9. Every requested file update must replace the old version at its original path.
+9. Every requested file update must update the existing active path unless
+   the user explicitly requests a separate version.
 
 For the full stage machine and gate contracts, see `my-mathmodel-agent/references/workflow-contract.md`.

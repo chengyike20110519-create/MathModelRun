@@ -1,0 +1,11 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-12T21:35:00+08:00",
+  "figures": [
+    {"id":"fig-q1-fit","purpose":"比较 CO2 观测、四类拟合和长期外推。","source":"problem_files/himcm_data.csv","script":"code/reproduce_himcm.py --plot","output":"figures/fig1_co2_fits.png","paper_section":"Model 1 results","acceptance_criteria":["坐标轴含单位","观测、baseline、primary 可区分","预测区间和训练边界清楚"],"passes":true,"evidence":[{"kind":"figure","value":"1440x820 PNG 非空并完成视觉检查","path":"figures/fig1_co2_fits.png"}]},
+    {"id":"fig-q1-rolling","purpose":"检验 2004 年前十年增量是否最大。","source":"problem_files/himcm_data.csv","script":"code/reproduce_himcm.py --plot","output":"figures/fig2_tenyear.png","paper_section":"Q1a","acceptance_criteria":["所有十年窗口可见或可追溯","2004 窗口被明确标记"],"passes":true,"evidence":[{"kind":"figure","value":"滚动窗口图已生成，最大窗口和参考窗口可追溯","path":"figures/fig2_tenyear.png"}]},
+    {"id":"fig-q2-scatter","purpose":"展示共享年份内 CO2 与温度异常的统计关系。","source":"problem_files/himcm_data.csv","script":"code/reproduce_himcm.py --plot","output":"figures/fig3_scatter.png","paper_section":"Q2b","acceptance_criteria":["明确共享年份","相关性不被图注写成因果证明"],"passes":true,"evidence":[{"kind":"figure","value":"共享年份散点图已生成并完成像素检查","path":"figures/fig3_scatter.png"}]},
+    {"id":"fig-q2-threshold","purpose":"展示温度趋势与三个阈值年份。","source":"problem_files/himcm_data.csv","script":"code/reproduce_himcm.py --plot","output":"figures/fig4_temp_threshold.png","paper_section":"Q2a","acceptance_criteria":["阈值线有单位","预测年份与误差窗口可读"],"passes":true,"evidence":[{"kind":"figure","value":"三个阈值及其 95% 年份区间已绘制并完成视觉检查","path":"figures/fig4_temp_threshold.png"}]},
+    {"id":"fig-q2-sensitivity","purpose":"检验 CO2 增长率扰动对 2100 预测的影响。","source":"problem_files/himcm_data.csv","script":"code/reproduce_himcm.py --plot","output":"figures/fig5_sensitivity.png","paper_section":"Q2c reliability","acceptance_criteria":["标明参数扰动范围","区分情景范围与置信区间"],"passes":true,"evidence":[{"kind":"figure","value":"-10%、基准、+10% 增长率情景图已生成并完成像素检查","path":"figures/fig5_sensitivity.png"}]}
+  ]
+}

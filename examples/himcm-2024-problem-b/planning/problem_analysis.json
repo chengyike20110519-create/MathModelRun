@@ -1,0 +1,334 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-18T08:11:06.139008+00:00",
+  "subproblems": [
+    {
+      "id": "Q1",
+      "question": "Quantify the scope of annual global HPC energy consumption under both full-capacity and average-utilization operation.",
+      "deliverable": "Global annual HPC (data-centre) electricity demand in 2024 with defensible lower/central/upper bounds for full-load and average-utilization cases.",
+      "role": "first",
+      "task_type": "statistics",
+      "inputs": [
+        "installed base of general servers",
+        "installed AI accelerator base",
+        "nameplate powers",
+        "fleet capacity factor (energy-basis utilization)",
+        "PUE",
+        "literature anchors (IEA 2024 = 415 TWh; Masanet 2018 = 205 TWh)"
+      ],
+      "outputs": [
+        "E_full_2024 (TWh)",
+        "E_avg_2024 (TWh)",
+        "bounds",
+        "validation vs IEA 415 TWh"
+      ],
+      "hard_constraints": [
+        "must cover full-capacity AND average-utilization",
+        "global, annual, 2024 baseline",
+        "bounds must bracket published IEA value"
+      ],
+      "soft_objectives": [
+        "bottom-up parameter transparency",
+        "component decomposition (servers / AI / storage-network / cooling)"
+      ],
+      "metrics": [
+        "E_full_2024 TWh",
+        "E_avg_2024 TWh",
+        "coverage_of_IE A 415 TWh anchor"
+      ],
+      "facts": [
+        "IEA: data centres consumed ~415 TWh in 2024 (~1.5% of global electricity)",
+        "Uptime Institute 2024: global average PUE 1.56",
+        "Masanet 2020: 2018 DC energy ~205 TWh",
+        "servers draw substantial idle power, so energy-basis utilization is higher than compute utilization"
+      ],
+      "assumptions": [
+        "HPC scope = data-centre IT load (servers+AI+storage+network), PUE covers cooling+power overhead",
+        "crypto mining treated as optional add-on outside the IEA DC figure"
+      ],
+      "ambiguities": [
+        "HPC definition breadth (supercomputers only vs all data centres) -> adopt data-centre definition, state it",
+        "fleet capacity factor poorly measured -> propagate uncertainty"
+      ],
+      "out_of_scope": [
+        "device-level power modeling",
+        "national bottom-up inventories"
+      ],
+      "acceptance_criteria": [
+        "E_avg_2024 range brackets IEA 415 TWh",
+        "component decomposition sums to total",
+        "parameter table with sources"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "data",
+          "path": "data_cleaned/hpc_energy_literature_anchors.csv",
+          "note": "literature anchors with ranges and URLs"
+        },
+        {
+          "kind": "data",
+          "path": "data_raw/ember_yearly_full_release_long_format.csv",
+          "note": "global electricity 30,912.5 TWh in 2024 (denominator sanity)"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "question": "Build a comprehensive model of total carbon emissions from HPC energy consumption, considering how energy is produced and the energy mix.",
+      "deliverable": "Carbon model C = E * CI(mix) with fuel-level emission factors derived from real generation data (Ember), regional disaggregation, Monte-Carlo uncertainty.",
+      "role": "main",
+      "task_type": "statistics",
+      "inputs": [
+        "E_avg_2024 from Q1",
+        "regional electricity mix 2024 (Ember)",
+        "fuel-level emission factors (Ember-derived, gCO2/kWh)",
+        "regional DC distribution (US/China/EU/Rest)"
+      ],
+      "outputs": [
+        "C_2024 (MtCO2)",
+        "regional CI table",
+        "MC distribution of C_2024"
+      ],
+      "hard_constraints": [
+        "must include energy mix explicitly",
+        "emission factors traceable to data"
+      ],
+      "soft_objectives": [
+        "regional disaggregation preferred over single global grid",
+        "uncertainty quantification"
+      ],
+      "metrics": [
+        "C_2024 central/range Mt",
+        "CI_grid gCO2/kWh"
+      ],
+      "facts": [
+        "Ember 2024 world CI = 471 gCO2/kWh; coal 34.1%, gas 22.3% of world generation",
+        "US/EU/China/India CI differ by ~2x"
+      ],
+      "assumptions": [
+        "average (not marginal) grid intensity for annual accounting",
+        "DC distribution across regions from market-share estimates"
+      ],
+      "ambiguities": [
+        "24/7 matching vs annual matching"
+      ],
+      "out_of_scope": [
+        "embodied carbon of hardware (handled qualitatively in Q5 link)"
+      ],
+      "acceptance_criteria": [
+        "C_2024 within defensible range (~150-260 Mt given 415 TWh x 350-600 g/kWh)",
+        "fuel factors reproducible from data_cleaned CSV"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "data",
+          "path": "data_cleaned/electricity_generation_by_fuel_twh.csv",
+          "note": "fuel-level generation 2015-2025"
+        },
+        {
+          "kind": "data",
+          "path": "data_cleaned/co2_intensity_gco2_per_kwh.csv",
+          "note": "world CI 2024 = 471.5"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "question": "Explore how the model changes as HPC grows, other sectors' energy demand rises, and energy resources/structure change; give realistic 2030 bounds.",
+      "deliverable": "Scenario projections 2025-2030 of HPC energy and emissions under conservative/baseline/high growth x grid decarbonization; 2030 bounds.",
+      "role": "main",
+      "task_type": "prediction",
+      "inputs": [
+        "E 2024 = 415 TWh anchor",
+        "IEA 2030 baseline 945 TWh",
+        "Goldman +160% anchor (high)",
+        "grid CI decay rates"
+      ],
+      "outputs": [
+        "E_2030 per scenario (TWh)",
+        "C_2030 per scenario (Mt)",
+        "fan chart data",
+        "explicit 2030 bounds"
+      ],
+      "hard_constraints": [
+        "anchored to at least two independent published projections",
+        "bounds must follow from scenarios, not a single point"
+      ],
+      "soft_objectives": [
+        "interactions between demand growth and grid decarbonization quantified"
+      ],
+      "metrics": [
+        "E_2030 range TWh",
+        "C_2030 range Mt"
+      ],
+      "facts": [
+        "IEA: 945 TWh by 2030 baseline (~3% of global electricity)",
+        "Goldman Sachs: +160% data-centre power demand by 2030"
+      ],
+      "assumptions": [
+        "constant-shape logistic/annual growth approximation between anchors",
+        "grid CI decay independent of DC demand in scenarios"
+      ],
+      "ambiguities": [
+        "AI demand volatility (joule/growth elasticity)"
+      ],
+      "out_of_scope": [
+        "hourly dispatch modeling"
+      ],
+      "acceptance_criteria": [
+        "2030 bounds bracket IEA 945 TWh baseline energy",
+        "each scenario traceable to anchor"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "data",
+          "path": "data_cleaned/hpc_energy_literature_anchors.csv",
+          "note": "IEA/Goldman/LBNL anchors"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "question": "Simulate the impact of increasing the renewable share; compute corresponding carbon reductions; study 100% renewable potential and challenges.",
+      "deliverable": "Emissions vs clean-energy-share curve (2024 and 2030), marginal abatement per +10pp clean share, 100% renewable feasibility discussion.",
+      "role": "extend",
+      "task_type": "simulation",
+      "inputs": [
+        "world/region mix from Q2",
+        "fuel EFs",
+        "clean share sweep 0-100%"
+      ],
+      "outputs": [
+        "CI(s) curve",
+        "reduction % vs baseline",
+        "residual emissions at 100% clean"
+      ],
+      "hard_constraints": [
+        "share sweep must be coherent (mix renormalization)",
+        "reduction computed vs frozen 2024 baseline"
+      ],
+      "soft_objectives": [
+        "identify which fossil fuel is displaced first (coal vs gas)"
+      ],
+      "metrics": [
+        "CI(100% clean) g/kWh",
+        "% reduction at 60%/80%/100% clean"
+      ],
+      "facts": [
+        "world clean share 2024 ~40.9% (Ember: nuclear+renewables)"
+      ],
+      "assumptions": [
+        "proportional displacement of fossil share unless stated",
+        "lifecycle residual of clean fleet from Ember fuel-level data"
+      ],
+      "ambiguities": [
+        "storage/intermittency not endogenously modeled -> discussed qualitatively + firm-capacity constraint"
+      ],
+      "out_of_scope": [
+        "unit-commitment modeling"
+      ],
+      "acceptance_criteria": [
+        "curve monotonic; 100% clean residual <10% of baseline"
+      ],
+      "passes": true,
+      "evidence": []
+    },
+    {
+      "id": "Q5",
+      "question": "Improve the model (or build a new one) for ONE key area beyond carbon; explain the choice and its link to energy consumption.",
+      "deliverable": "Water-usage extension: W(t) = E_IT(t) x WUE; scarcity weighting; 2024-2030 projections; energy-water nexus discussion.",
+      "role": "extend",
+      "task_type": "prediction",
+      "inputs": [
+        "E_IT from Q1/Q3",
+        "WUE distribution (Google 1.8 L/kWh; Meta ~0.2; industry upper ~5)",
+        "water-stress share of DC siting"
+      ],
+      "outputs": [
+        "W_2024 (billion m3)",
+        "W_2030 per scenario",
+        "sensitivity to WUE"
+      ],
+      "hard_constraints": [
+        "water model must consume energy model output (explicit coupling)",
+        "WUE sourced from literature"
+      ],
+      "soft_objectives": [
+        "scarcity-weighted water metric (WUE_stress)"
+      ],
+      "metrics": [
+        "W_2024, W_2030 km3"
+      ],
+      "facts": [
+        "cooling dominates DC water use; WUE spread across cooling technologies is >10x"
+      ],
+      "assumptions": [
+        "WUE constant within scenario; technology shift as sensitivity"
+      ],
+      "ambiguities": [
+        "withdrawal vs consumption accounting -> use consumption"
+      ],
+      "out_of_scope": [
+        "watershed-level modeling"
+      ],
+      "acceptance_criteria": [
+        "W_2024 within 0.3-0.8 km3 (plausible global range) for baseline WUE"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "data",
+          "path": "data_cleaned/hpc_energy_literature_anchors.csv",
+          "note": "WUE anchors"
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "question": "Actionable recommendations; incorporate one recommendation into the model; 1-2 page letter to the UN Advisory Board.",
+      "deliverable": "Recommendation set; one recommendation implemented as a model lever (carbon-aware scheduling lever reducing effective CI); letter to UN.",
+      "role": "final",
+      "task_type": "evaluation",
+      "inputs": [
+        "C(t) model from Q2/Q3",
+        "CI diurnal flexibility estimate",
+        "policy levers"
+      ],
+      "outputs": [
+        "lever quantification (delta Mt)",
+        "letter (1-2 pages)"
+      ],
+      "hard_constraints": [
+        "recommendations must be actionable and technical+policy oriented",
+        "model incorporation must be quantitative"
+      ],
+      "soft_objectives": [
+        "lever shows measurable reduction under 2030 scenarios"
+      ],
+      "metrics": [
+        "delta C_2030 with/without lever"
+      ],
+      "facts": [
+        "AI training workloads are deferrable/shiftable; CI varies diurnally by up to ~2x in solar-heavy grids"
+      ],
+      "assumptions": [
+        "shiftable fraction of HPC load 30-60%",
+        "average CI reduction from temporal shifting ~10-20% of grid CI"
+      ],
+      "ambiguities": [
+        "grid-level rebound"
+      ],
+      "out_of_scope": [
+        "market modeling of power prices"
+      ],
+      "acceptance_criteria": [
+        "lever reduces C_2030 by a quantified, defensible margin; letter references frozen numbers"
+      ],
+      "passes": true,
+      "evidence": []
+    }
+  ]
+}

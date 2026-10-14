@@ -1,0 +1,35 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-12T13:00:00+08:00",
+  "files": [
+    {
+      "path": "problem_files/himcm_data.csv",
+      "kind": "data_attachment",
+      "sha256": "491b3bbe15e1162a19cc1e163f444030b27322b0586f7b10ab8443c52db1e58d",
+      "readable": true,
+      "notes": "本地已有案例数据快照；含 CO2 1959-2021 与温度序列。官方题面原文件尚未导入。"
+    },
+    {
+      "path": "paper/working-draft.md",
+      "kind": "historical_working_draft",
+      "sha256": "a7af6e2c1878e3372e89f04043189f24d7410f8f76675915d4c3f259c2674783",
+      "readable": true,
+      "notes": "历史草稿，仅作已有结果与图表的来源记录，不作为已复现实验。"
+    }
+  ],
+  "external_sources": [
+    {
+      "name": "HiMCM 2022 Problem B",
+      "url": "https://www.contest.comap.com/highschool/contests/himcm/",
+      "access_date": "2026-09-12",
+      "license": "contest problem; verify terms before redistribution",
+      "retrieval_method": "historical local project reference; not fetched in this run"
+    }
+  ],
+  "environment": {
+    "python": "3.13.5",
+    "latex": null,
+    "typst": null,
+    "solvers": []
+  }
+}

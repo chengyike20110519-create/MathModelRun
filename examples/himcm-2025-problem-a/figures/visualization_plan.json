@@ -1,0 +1,73 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-14T15:52:00+08:00",
+  "figures": [
+    {
+      "id": "fig1",
+      "path": "figures/fig1_basic_scenario.png",
+      "purpose": "Q2: 基础场景建筑图 + 2 responder 清扫路径（不同颜色标注各自负责区域）",
+      "source_data": "code/buildings.py basic_scenario + results/runs/<run>/paths.json",
+      "script": "code/make_figures.py --fig 1",
+      "destination": "paper figure + 检查路径无遗漏房间"
+    },
+    {
+      "id": "fig2",
+      "path": "figures/fig2_sweep_timeline.png",
+      "purpose": "Q2: Gantt 时间线展示 2 responder 的行走/检查/汇报时间构成与 makespan",
+      "source_data": "results/runs/<run>/timeline.json",
+      "script": "code/make_figures.py --fig 2",
+      "destination": "paper Model 1 results"
+    },
+    {
+      "id": "fig3",
+      "path": "figures/fig3_scenarios.png",
+      "purpose": "Q3: 三个场景的建筑示意图子图（楼层数、户型、人员标注）",
+      "source_data": "code/buildings.py all scenarios",
+      "script": "code/make_figures.py --fig 3",
+      "destination": "paper Model 2 setup"
+    },
+    {
+      "id": "fig4",
+      "path": "figures/fig4_responder_scaling.png",
+      "purpose": "Q3: 每场景 makespan vs responder 人数曲线 + 最优拐点标注",
+      "source_data": "results/runs/scaling_*/metrics.json",
+      "script": "code/make_figures.py --fig 4",
+      "destination": "paper Model 2 results"
+    },
+    {
+      "id": "fig5",
+      "path": "figures/fig5_smoke_impact.png",
+      "purpose": "Q4a: 烟雾能见度 / 通信失败率 对 makespan 的影响曲线",
+      "source_data": "results/runs/mc_*/metrics.json",
+      "script": "code/make_figures.py --fig 5",
+      "destination": "paper Model 3"
+    },
+    {
+      "id": "fig6",
+      "path": "figures/fig6_mc_distribution.png",
+      "purpose": "Q4a: 蒙特卡洛 makespan 分布直方图 + 95% CI",
+      "source_data": "results/runs/mc_*/raw_samples.npy",
+      "script": "code/make_figures.py --fig 6",
+      "destination": "paper Model 3"
+    },
+    {
+      "id": "fig7",
+      "path": "figures/fig7_technology.png",
+      "purpose": "Q4b: 有无传感器/楼宇自动化下各场景 makespan 对比柱状图",
+      "source_data": "results/runs/tech_*/metrics.json",
+      "script": "code/make_figures.py --fig 7",
+      "destination": "paper Technology section"
+    }
+  ],
+  "style_rules": [
+    "中英文字体统一，图内文字 >= 8pt",
+    "每张图右下角标注参数快照 id（run id）",
+    "导出 PNG 300 dpi + SVG 双格式"
+  ],
+  "acceptance_criteria": [
+    "每张图有 purpose/source/script 且脚本可重跑",
+    "图内数字与对应 results/runs 指标一致"
+  ],
+  "passes": false,
+  "evidence": []
+}

@@ -24,6 +24,7 @@ REQUIRED_FILES = [
     "my-mathmodel-agent/references/workflow-contract.md",
     "my-mathmodel-agent/references/artifact-contracts.md",
     "my-mathmodel-agent/references/evaluation-rubric.md",
+    "my-mathmodel-agent/references/exemplar-benchmark.md",
     "my-mathmodel-agent/scripts/init_project.py",
     "my-mathmodel-agent/scripts/status.py",
     "my-mathmodel-agent/scripts/doctor.py",
@@ -50,9 +51,11 @@ REQUIRED_FILES = [
     "templates/method_validation.json",
     "templates/run_manifest.json",
     "templates/evidence_map.json",
+    "templates/workflow.json",
     "templates/render_log.json",
     "templates/gate_evidence.json",
     "templates/acceptance.json",
+    "templates/package_manifest.json",
     "templates/frozen_numbers.json",
     "templates/PROGRESS.md",
     "templates/decision_log.jsonl",
@@ -86,9 +89,11 @@ SCAFFOLD_FILES = [
     "figures/visualization_plan.json",
     "results/run_manifest.json",
     "paper/evidence_map.json",
+    "paper/workflow.json",
     "paper/render_log.json",
     "audit/gate_evidence.json",
     "audit/acceptance.json",
+    "audit/package_manifest.json",
 ]
 
 
@@ -344,6 +349,19 @@ def test_audit_rejects_evidence_map_empty_claims():
         assert "claims 为空" in result.stdout
 
 
+def test_audit_rejects_paper_without_workflow():
+    with tempfile.TemporaryDirectory() as tmp:
+        project = scaffold_project(tmp)
+        state_path = project / "state.json"
+        state = json.loads(state_path.read_text())
+        state["gates"]["paper_written"] = True
+        state["stage"] = "RENDER"
+        state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+        result = run_script("my-mathmodel-agent/scripts/audit_workspace.py", project)
+        assert result.returncode != 0
+        assert "workflow.json" in result.stdout
+
+
 def test_audit_rejects_evidence_map_dangling_frozen_ref():
     with tempfile.TemporaryDirectory() as tmp:
         project = scaffold_project(tmp)
@@ -456,7 +474,6 @@ def test_freeze_writes_auditable_payload():
 if __name__ == "__main__":
     test_repo_structure()
     test_codex_agent_yaml()
-    test_paper_iteration_skill_contract()
     test_all_template_json_files_parse()
     test_init_project_scaffolds_default_fail_contract()
     test_status_reports_first_false_gate()
@@ -469,6 +486,7 @@ if __name__ == "__main__":
     test_audit_rejects_gate_evidence_with_missing_path()
     test_audit_rejects_frozen_run_not_in_manifest()
     test_audit_rejects_evidence_map_empty_claims()
+    test_audit_rejects_paper_without_workflow()
     test_audit_rejects_evidence_map_dangling_frozen_ref()
     test_audit_rejects_bad_decision_log_classification()
     test_doctor_help()

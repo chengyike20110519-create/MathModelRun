@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0",
+  "generated_at": null,
+  "verdict": "fail",
+  "weighted_score": 0,
+  "dimensions": [
+    {
+      "id": "problem_fidelity",
+      "score": 0,
+      "weight": 0.12,
+      "floor": 3,
+      "passed": false,
+      "reason": "",
+      "evidence": []
+    }
+  ],
+  "failed_criteria": [],
+  "return_stage": "S0",
+  "strategy": "refine",
+  "unverified_claims": []
+}

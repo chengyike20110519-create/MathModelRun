@@ -1,0 +1,208 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-18T08:12:24.683754+00:00",
+  "topic": "B",
+  "selection_score": 5,
+  "subproblems": [
+    {
+      "id": "Q1",
+      "role": "first",
+      "task_type": "statistics",
+      "baseline": "Single top-down scaling from IEA 415 TWh with a fixed utilization factor.",
+      "primary_model": "Bottom-up stock model: E_full = (N_servers*P_server + N_AI*P_AI*host_factor)*storage_network_factor*8760*PUE; E_avg = E_full * capacity_factor; Monte-Carlo over parameter ranges; validated against IEA/Masanet anchors.",
+      "fallback_model": "Pure top-down anchor scaling with growth rates if bottom-up components are not defensible.",
+      "rejected": [
+        {
+          "model": "Training a neural net on sparse energy history",
+          "reason": "9 annual anchor points cannot support a statistical learner; physically meaningless extrapolation."
+        },
+        {
+          "model": "FLOPs-based demand model",
+          "reason": "global FLOPs demand data unavailable at required granularity; would add unverifiable assumptions."
+        }
+      ],
+      "selection_evidence": [
+        "anchors CSV",
+        "Ember global generation 2024"
+      ],
+      "validation_plan": [
+        "Check E_avg_2024 range brackets IEA 415 TWh",
+        "Component sum consistency",
+        "Sensitivity (tornado) on parameters"
+      ],
+      "required_figures": [
+        "fig2_task1_energy_bounds",
+        "fig3_historical_growth_anchors"
+      ],
+      "paper_section": "4 Task I Solution",
+      "acceptance_criteria": [
+        "brackets IEA anchor",
+        "parameters sourced"
+      ],
+      "passes": true,
+      "evidence": [
+        {
+          "kind": "data",
+          "path": "data_cleaned/hpc_energy_literature_anchors.csv",
+          "note": "anchors"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "role": "main",
+      "task_type": "statistics",
+      "baseline": "Global-average grid CI (single number) x E_avg.",
+      "primary_model": "Regional disaggregation: C = sum_r E_r * CI_r, CI_r from Ember fuel mix and fuel-level EFs; E_r from regional DC distribution; Monte-Carlo.",
+      "fallback_model": "World CI x E_avg if regional distribution data collapses.",
+      "rejected": [
+        {
+          "model": "Marginal-emission regression",
+          "reason": "marginal emission datasets not public at global coverage; would sacrifice reproducibility."
+        }
+      ],
+      "selection_evidence": [
+        "Ember cleaned CSVs"
+      ],
+      "validation_plan": [
+        "CI_grid(world,2024) reproduces Ember 471.5 g/kWh within 1%",
+        "MC median C_2024 in plausible band"
+      ],
+      "required_figures": [
+        "fig4_carbon_model_mc"
+      ],
+      "paper_section": "5 Task II Solution",
+      "acceptance_criteria": [
+        "reproduces Ember CI",
+        "regional table"
+      ],
+      "passes": true,
+      "evidence": []
+    },
+    {
+      "id": "Q3",
+      "role": "main",
+      "task_type": "prediction",
+      "baseline": "Single IEA extrapolation (945 TWh, one path).",
+      "primary_model": "Three growth scenarios (conservative 8% CAGR / IEA-anchored baseline / Goldman-anchored high) x three grid-decay scenarios (0.5/2/4% per year); emissions coupled via C=E*CI; report 2030 bounds as scenario envelope + MC spread.",
+      "fallback_model": "ARIMA on anchor series (only if scenario envelope rejected).",
+      "rejected": [
+        {
+          "model": "Grey prediction GM(1,1)",
+          "reason": "parameter-fragile on 4-5 anchor points; less transparent than anchored scenarios."
+        }
+      ],
+      "selection_evidence": [
+        "anchors CSV"
+      ],
+      "validation_plan": [
+        "2030 energy envelope contains IEA 945 TWh",
+        "C_2030 spread reported with quantiles"
+      ],
+      "required_figures": [
+        "fig5_task3_projection"
+      ],
+      "paper_section": "6 Task III Solution",
+      "acceptance_criteria": [
+        "bounds from scenarios",
+        "two independent anchors used"
+      ],
+      "passes": true,
+      "evidence": []
+    },
+    {
+      "id": "Q4",
+      "role": "extend",
+      "task_type": "simulation",
+      "baseline": "Linear interpolation of CI between current mix and 100% clean.",
+      "primary_model": "Mix renormalization sweep: replace fossil share s with clean share renormalized from Ember world mix; CI(s)=sum share_f(s)*EF_f; reduction vs frozen 2024 baseline; coal-first displacement variant.",
+      "fallback_model": "Single-fuel displacement (coal then gas) bound.",
+      "rejected": [
+        {
+          "model": "Production-cost unit-commitment",
+          "reason": "no plant-level fleet data at global scale; reproducibility loss without added insight."
+        }
+      ],
+      "selection_evidence": [
+        "Ember mix CSV"
+      ],
+      "validation_plan": [
+        "CI(0) reproduces 471.5",
+        "monotonic decrease",
+        "residual at 100% clean matches lifecycle EFs"
+      ],
+      "required_figures": [
+        "fig6_task4_renewables"
+      ],
+      "paper_section": "7 Task IV Solution",
+      "acceptance_criteria": [
+        "monotonic",
+        "residual<10% baseline"
+      ],
+      "passes": true,
+      "evidence": []
+    },
+    {
+      "id": "Q5",
+      "role": "extend",
+      "task_type": "prediction",
+      "baseline": "No water extension.",
+      "primary_model": "W(t)=E_IT(t)*WUE; WUE triangular(0.2,1.8,5.2) from literature; scarcity weighting via stressed-region share; scenario table 2024-2030.",
+      "fallback_model": "WUE fixed at Google-level 1.8 constant.",
+      "rejected": [
+        {
+          "model": "E-waste mass-flow model",
+          "reason": "willingness: e-waste data (flows, lifetimes) far noisier than WUE; water chosen for tight energy coupling and data quality - consistent with excellent-paper precedent (team 16226)."
+        }
+      ],
+      "selection_evidence": [
+        "WUE anchors"
+      ],
+      "validation_plan": [
+        "W_2024 in 0.3-0.8 km3 for baseline",
+        "water growth tracks energy growth"
+      ],
+      "required_figures": [
+        "fig7_task4b_water"
+      ],
+      "paper_section": "7 Task IV (extension)",
+      "acceptance_criteria": [
+        "coupled to energy model",
+        "sourced WUE"
+      ],
+      "passes": true,
+      "evidence": []
+    },
+    {
+      "id": "Q6",
+      "role": "final",
+      "task_type": "evaluation",
+      "baseline": "Recommendations without quantification.",
+      "primary_model": "Carbon-aware scheduling lever: C_eff = E*(1-f_shift*delta_CI)*CI_grid with f_shift~U(0.3,0.6), delta_CI~U(0.10,0.20); quantified delta-Mt for 2030 scenarios; plus 24/7 CFE lever mapped to Q4 curve; letter to UN.",
+      "fallback_model": "Qualitative recommendation list only (if lever parameters not defensible).",
+      "rejected": [
+        {
+          "model": "Heat-reuse revenue optimization",
+          "reason": "quantitative reuse potential varies by siting; treated qualitatively."
+        }
+      ],
+      "selection_evidence": [
+        "literature on flexible AI workloads and diurnal CI"
+      ],
+      "validation_plan": [
+        "lever reduces C_2030 measurably",
+        "letter uses only frozen numbers"
+      ],
+      "required_figures": [
+        "fig8_task5_policy"
+      ],
+      "paper_section": "8 Task V Solution",
+      "acceptance_criteria": [
+        "quantified lever",
+        "letter present"
+      ],
+      "passes": true,
+      "evidence": []
+    }
+  ]
+}

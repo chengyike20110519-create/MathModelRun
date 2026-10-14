@@ -1,0 +1,6 @@
+{
+  "scenario": "B",
+  "tech": "check_time*(1-0.6c)",
+  "k": 5,
+  "seed": 20251105
+}

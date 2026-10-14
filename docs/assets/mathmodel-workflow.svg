@@ -1,88 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 380" role="img" aria-labelledby="title desc">
-  <title id="title">MathModel Run 十阶段工作流</title>
-  <desc id="desc">S0 到 S9 十张阶段卡分四组，十道门禁菱形卡在底部流水线上，门禁默认未通过</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 520" role="img" aria-labelledby="title desc">
+  <title id="title">MathModel Run 证据驱动论文工作流</title>
+  <desc id="desc">十个阶段从题面输入流向论文交付，每一步通过证据门禁，最终由独立审计确认。</desc>
   <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#18304f" flood-opacity=".10"/></filter>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#075985"/><stop offset="1" stop-color="#0e7490"/></linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d1fae5"/><stop offset="1" stop-color="#99f6e4"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#4b86a6"/></marker>
     <style>
-      .ink { fill:#17203a; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .muted { fill:#5f6b80; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .phase-num { fill:#7ea2ff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .phase-title { fill:#ffffff; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .chip-text { fill:#ffffff; font-family:'SF Mono',Menlo,Consolas,monospace; }
-      .card-label { fill:#17203a; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
-      .gate-label { fill:#5f6b80; font-family:'SF Mono',Menlo,Consolas,monospace; }
+      text { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; }
+      .title { fill:#073b5c; font-size:25px; font-weight:750; }
+      .sub { fill:#52758c; font-size:13px; }
+      .band { fill:#fff; stroke:#c9e0ea; stroke-width:1.5; }
+      .band-title { fill:#075985; font-size:14px; font-weight:750; }
+      .band-note { fill:#6a8798; font-size:11px; }
+      .stage { fill:#fff; stroke:#c9e0ea; stroke-width:1.5; }
+      .stage-id { fill:#fff; font-family:'SF Mono',Menlo,Consolas,monospace; font-size:13px; font-weight:700; }
+      .stage-name { fill:#123b58; font-size:14px; font-weight:750; }
+      .stage-desc { fill:#668296; font-size:10px; }
+      .gate { fill:#fff4cc; stroke:#f59e0b; stroke-width:1.5; }
+      .gate-text { fill:#c26b00; font-family:'SF Mono',Menlo,Consolas,monospace; font-size:10px; font-weight:750; }
+      .rail-label { fill:#5d7488; font-size:12px; font-weight:650; }
+      .ready { fill:url(#navy); }
+      .ready-title { fill:#fff; font-size:17px; font-weight:750; }
+      .ready-text { fill:#d7f7f1; font-size:11px; }
+      .ready-check { fill:#a9e5d4; font-size:13px; font-weight:700; }
     </style>
-    <marker id="chev" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#b8c4d8"/>
-    </marker>
   </defs>
 
-  <rect width="1600" height="380" fill="#fbfcfe"/>
+  <rect width="1600" height="520" fill="#f5fbfd"/>
+  <rect x="42" y="22" width="1516" height="476" rx="20" fill="#eaf7fa" stroke="#c9e5ec"/>
+  <text x="84" y="61" class="title">Evidence-driven paper workflow</text>
+  <text x="84" y="84" class="sub">把题面推进成一篇可复现、可追溯、可交付的论文</text>
+  <g transform="translate(1334 40)"><rect width="172" height="32" rx="16" fill="#c7f9e9"/><circle cx="22" cy="16" r="6" fill="#00a878"/><text x="38" y="21" fill="#087f5b" font-size="12" font-weight="750">DEFAULT-FAIL</text></g>
 
-  <!-- phase bands -->
-  <g>
-    <rect x="48"   y="28" width="284.8" height="36" rx="8" fill="#17203a"/>
-    <rect x="352.8" y="28" width="437.2" height="36" rx="8" fill="#17203a"/>
-    <rect x="810"  y="28" width="284.8" height="36" rx="8" fill="#17203a"/>
-    <rect x="1114.8" y="28" width="437.2" height="36" rx="8" fill="#17203a"/>
-    <text x="190.4" y="51" text-anchor="middle" font-size="14" class="phase-title"><tspan class="phase-num" font-weight="700">01 · </tspan><tspan font-weight="600">输入与题意</tspan></text>
-    <text x="571.4" y="51" text-anchor="middle" font-size="14" class="phase-title"><tspan class="phase-num" font-weight="700">02 · </tspan><tspan font-weight="600">建模与验证</tspan></text>
-    <text x="952.4" y="51" text-anchor="middle" font-size="14" class="phase-title"><tspan class="phase-num" font-weight="700">03 · </tspan><tspan font-weight="600">实验与证据</tspan></text>
-    <text x="1333.4" y="51" text-anchor="middle" font-size="14" class="phase-title"><tspan class="phase-num" font-weight="700">04 · </tspan><tspan font-weight="600">写作与交付</tspan></text>
+  <g filter="url(#shadow)">
+    <rect x="84" y="108" width="1410" height="150" rx="14" class="band"/>
+    <rect x="84" y="274" width="1410" height="150" rx="14" class="band"/>
   </g>
+  <text x="112" y="135" class="band-title">01 · Understand</text><text x="112" y="153" class="band-note">先固定问题，再决定怎么解</text>
+  <text x="112" y="301" class="band-title">02 · Prove &amp; deliver</text><text x="112" y="319" class="band-note">每一个结论都留下可复核证据</text>
 
-  <!-- connectors -->
-  <g stroke="#b8c4d8" stroke-width="2">
-    <line x1="183.4" y1="128" x2="196.4" y2="128" marker-end="url(#chev)"/>
-    <line x1="335.8" y1="128" x2="348.8" y2="128" marker-end="url(#chev)"/>
-    <line x1="488.2" y1="128" x2="501.2" y2="128" marker-end="url(#chev)"/>
-    <line x1="640.6" y1="128" x2="653.6" y2="128" marker-end="url(#chev)"/>
-    <line x1="793"   y1="128" x2="806"   y2="128" marker-end="url(#chev)"/>
-    <line x1="945.4" y1="128" x2="958.4" y2="128" marker-end="url(#chev)"/>
-    <line x1="1097.8" y1="128" x2="1110.8" y2="128" marker-end="url(#chev)"/>
-    <line x1="1250.2" y1="128" x2="1263.2" y2="128" marker-end="url(#chev)"/>
-    <line x1="1402.6" y1="128" x2="1415.6" y2="128" marker-end="url(#chev)"/>
-  </g>
+  <!-- top row -->
+  <g transform="translate(250 130)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#06b6d4"/><circle cx="28" cy="32" r="17" fill="#06b6d4"/><text x="28" y="37" text-anchor="middle" class="stage-id">S0</text><text x="58" y="37" class="stage-name">输入预检</text><text x="22" y="65" class="stage-desc">题面 · 附件 · 环境</text><text x="22" y="83" class="stage-desc">固定快照与来源</text></g>
+  <g transform="translate(480 130)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#06b6d4"/><circle cx="28" cy="32" r="17" fill="#06b6d4"/><text x="28" y="37" text-anchor="middle" class="stage-id">S1</text><text x="58" y="37" class="stage-name">题意拆解</text><text x="22" y="65" class="stage-desc">子问题 · 约束 · 指标</text><text x="22" y="83" class="stage-desc">把问题变成验收标准</text></g>
+  <g transform="translate(710 130)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#06b6d4"/><circle cx="28" cy="32" r="17" fill="#06b6d4"/><text x="28" y="37" text-anchor="middle" class="stage-id">S2</text><text x="58" y="37" class="stage-name">模型选路</text><text x="22" y="65" class="stage-desc">baseline · primary</text><text x="22" y="83" class="stage-desc">fallback 与验证边界</text></g>
+  <g transform="translate(940 130)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#06b6d4"/><circle cx="28" cy="32" r="17" fill="#06b6d4"/><text x="28" y="37" text-anchor="middle" class="stage-id">S3</text><text x="58" y="37" class="stage-name">数据图表</text><text x="22" y="65" class="stage-desc">字段 · 单位 · 清洗</text><text x="22" y="83" class="stage-desc">泄漏检查与可视化计划</text></g>
+  <g transform="translate(1170 130)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#06b6d4"/><circle cx="28" cy="32" r="17" fill="#06b6d4"/><text x="28" y="37" text-anchor="middle" class="stage-id">S4</text><text x="58" y="37" class="stage-name">方法 PoC</text><text x="22" y="65" class="stage-desc">最小可运行证明</text><text x="22" y="83" class="stage-desc">先验证，再扩大实验</text></g>
+  <g stroke="#4b86a6" stroke-width="2" marker-end="url(#arrow)"><line x1="440" y1="180" x2="474" y2="180"/><line x1="670" y1="180" x2="704" y2="180"/><line x1="900" y1="180" x2="934" y2="180"/><line x1="1130" y1="180" x2="1164" y2="180"/></g>
 
-  <!-- stage cards -->
-  <g>
-    <g transform="translate(48,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S0</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">输入预检</text></g>
-    <g transform="translate(200.4,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S1</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">题意拆解</text></g>
-    <g transform="translate(352.8,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S2</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">模型选路</text></g>
-    <g transform="translate(505.2,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S3</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">数据图表</text></g>
-    <g transform="translate(657.6,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S4</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">方法 PoC</text></g>
-    <g transform="translate(810,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S5</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">正式实验</text></g>
-    <g transform="translate(962.4,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S6</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">结果冻结</text></g>
-    <g transform="translate(1114.8,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S7</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">证据写作</text></g>
-    <g transform="translate(1267.2,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S8</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">渲染检查</text></g>
-    <g transform="translate(1419.6,80)"><rect width="132.4" height="96" rx="10" fill="#ffffff" stroke="#e2e8f2" stroke-width="1.5"/><rect x="42.2" y="14" width="48" height="26" rx="7" fill="#17203a"/><text x="66.2" y="31.5" text-anchor="middle" font-size="13" font-weight="700" class="chip-text">S9</text><text x="66.2" y="74" text-anchor="middle" font-size="15" font-weight="650" class="card-label">独立审计</text></g>
-  </g>
+  <!-- bottom row -->
+  <g transform="translate(250 318)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#10b981"/><circle cx="28" cy="32" r="17" fill="#10b981"/><text x="28" y="39" text-anchor="middle" class="stage-id">S5</text><text x="58" y="37" class="stage-name">正式实验</text><text x="22" y="65" class="stage-desc">固定参数 · 种子 · 环境</text><text x="22" y="83" class="stage-desc">输出指标与图表</text></g>
+  <g transform="translate(480 318)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#10b981"/><circle cx="28" cy="32" r="17" fill="#10b981"/><text x="28" y="39" text-anchor="middle" class="stage-id">S6</text><text x="58" y="37" class="stage-name">结果冻结</text><text x="22" y="65" class="stage-desc">数字 · 来源 · 哈希</text><text x="22" y="83" class="stage-desc">论文只读冻结结果</text></g>
+  <g transform="translate(710 318)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#10b981"/><circle cx="28" cy="32" r="17" fill="#10b981"/><text x="28" y="39" text-anchor="middle" class="stage-id">S7</text><text x="58" y="37" class="stage-name">证据写作</text><text x="22" y="65" class="stage-desc">Workflow · claim map</text><text x="22" y="83" class="stage-desc">结论回链到证据</text></g>
+  <g transform="translate(940 318)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#10b981"/><circle cx="28" cy="32" r="17" fill="#10b981"/><text x="28" y="39" text-anchor="middle" class="stage-id">S8</text><text x="58" y="37" class="stage-name">渲染检查</text><text x="22" y="65" class="stage-desc">编译 · 逐页视觉检查</text><text x="22" y="83" class="stage-desc">模板与匿名性核验</text></g>
+  <g transform="translate(1170 318)"><rect width="190" height="100" rx="10" class="stage"/><rect width="190" height="7" rx="4" fill="#10b981"/><circle cx="28" cy="32" r="17" fill="#10b981"/><text x="28" y="39" text-anchor="middle" class="stage-id">S9</text><text x="58" y="37" class="stage-name">独立审计</text><text x="22" y="65" class="stage-desc">复现运行 · 反查 claim</text><text x="22" y="83" class="stage-desc">审计后才可交付</text></g>
+  <g stroke="#4b86a6" stroke-width="2" marker-end="url(#arrow)"><line x1="440" y1="368" x2="474" y2="368"/><line x1="670" y1="368" x2="704" y2="368"/><line x1="900" y1="368" x2="934" y2="368"/><line x1="1130" y1="368" x2="1164" y2="368"/></g>
+  <path d="M1360 180 C1415 180 1415 330 1360 368" fill="none" stroke="#7b93aa" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <!-- gate spine -->
-  <line x1="48" y1="268" x2="1576" y2="268" stroke="#1f5ce8" stroke-width="3" stroke-linecap="round"/>
-  <g fill="#fffbeb" stroke="#b45309" stroke-width="1.5">
-    <path d="M190.6,256 L201.6,268 L190.6,280 L179.6,268 z"/>
-    <path d="M342,256 L353,268 L342,280 L331,268 z"/>
-    <path d="M493.4,256 L504.4,268 L493.4,280 L482.4,268 z"/>
-    <path d="M644.8,256 L655.8,268 L644.8,280 L633.8,268 z"/>
-    <path d="M796.2,256 L807.2,268 L796.2,280 L785.2,268 z"/>
-    <path d="M947.6,256 L958.6,268 L947.6,280 L936.6,268 z"/>
-    <path d="M1099,256 L1110,268 L1099,280 L1088,268 z"/>
-    <path d="M1250.4,256 L1261.4,268 L1250.4,280 L1239.4,268 z"/>
-    <path d="M1401.8,256 L1412.8,268 L1401.8,280 L1390.8,268 z"/>
-    <path d="M1552,256 L1563,268 L1552,280 L1541,268 z"/>
-  </g>
-  <g font-size="11.5" text-anchor="middle" class="gate-label">
-    <text x="190.6" y="302">G1</text>
-    <text x="342" y="302">G2</text>
-    <text x="493.4" y="302">G3</text>
-    <text x="644.8" y="302">G4</text>
-    <text x="796.2" y="302">G5</text>
-    <text x="947.6" y="302">G6</text>
-    <text x="1099" y="302">G7</text>
-    <text x="1250.4" y="302">G8</text>
-    <text x="1401.8" y="302">G9</text>
-    <text x="1552" y="302">G10</text>
-  </g>
-
-  <text x="800" y="348" text-anchor="middle" font-size="13.5" class="muted">十道门禁默认未通过 · 机器可检查的证据落盘后才翻门 · 阶段声明不得领先于第一个未通过的门禁</text>
+  <!-- gate rail -->
+  <line x1="250" y1="450" x2="1360" y2="450" stroke="#c98922" stroke-width="3"/>
+  <text x="112" y="455" class="rail-label">EVIDENCE GATES</text>
+  <g class="gate-text" text-anchor="middle"><path class="gate" d="M300 438 312 450 300 462 288 450Z"/><text x="300" y="480">G1</text><path class="gate" d="M530 438 542 450 530 462 518 450Z"/><text x="530" y="480">G2</text><path class="gate" d="M760 438 772 450 760 462 748 450Z"/><text x="760" y="480">G3</text><path class="gate" d="M990 438 1002 450 990 462 978 450Z"/><text x="990" y="480">G4</text><path class="gate" d="M1220 438 1232 450 1220 462 1208 450Z"/><text x="1220" y="480">G5</text></g>
+  <g transform="translate(1365 414)"><rect width="115" height="60" rx="10" class="ready"/><text x="57" y="27" text-anchor="middle" class="ready-title">READY</text><text x="57" y="47" text-anchor="middle" class="ready-text">10 gates + audit</text></g>
+  <text x="800" y="500" text-anchor="middle" class="sub">门禁默认未通过 · 证据落盘后才翻门 · 上游变化会使下游证据失效</text>
 </svg>

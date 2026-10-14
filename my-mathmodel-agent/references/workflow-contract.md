@@ -9,9 +9,10 @@
 3. **默认失败**：任何子问题、模型路线、运行记录和门禁默认是 `false` / `pending`。
 4. **证据由审查者复现**：生成者可以提交证据，但不能单方面把门禁翻成通过。
 5. **数字只从冻结文件进入论文**：正文、图表、摘要和结论都遵守。
-6. **失败要回退到最早失效阶段**：不能只改论文措辞掩盖模型、代码或数据问题。
-7. **决策有记录**：保留、删除、推迟、换路都要进入 append-only 决策日志。
-8. **文件原位更新**：用户要求更新文件时，在原路径替换当前版本；除非明确要求，不创建 `v1`、`v2`、`backup` 或并列旧稿。
+6. **论文必须展示 workflow**：正文或图中明确说明从输入、建模、验证、实验、冻结到审计的流程，并与 `paper/workflow.json` 一致。
+7. **失败要回退到最早失效阶段**：不能只改论文措辞掩盖模型、代码或数据问题。
+8. **决策有记录**：保留、删除、推迟、换路都要进入 append-only 决策日志。
+9. **文件原位更新**：用户要求更新文件时，在原路径替换当前版本；除非明确要求，不创建 `v1`、`v2`、`backup` 或并列旧稿。
 
 ## 1. 状态与门禁
 
@@ -92,6 +93,10 @@ PREFLIGHT -> ANALYZE -> ROUTE -> DATA_PLAN -> METHOD_POC
 5. **独立复核**：切换到 Reviewer 角色或新鲜上下文，从文件而不是对话复现。
 6. **落盘**：更新阶段产物、`state.json`、`PROGRESS.md`、`audit/gate_evidence.json`。
 7. **交接**：写出当前阶段、证据、风险和下一个精确入口。
+
+证据必须注明 `level`：`STRUCTURAL`、`RUNTIME` 或 `VISUAL`。其中
+`STRUCTURAL` 只能证明文件和契约存在；涉及数值、求解、图表或 PDF 的门禁必须
+至少有相应的 `RUNTIME` 或 `VISUAL` 证据。不得用截图、旧日志或聊天摘要替代新鲜复现。
 
 ## 3. 最少演示路径
 
@@ -352,6 +357,8 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 - stdout/stderr、警告和耗时；
 - 指标、表格和输出文件；
 - 失败、回退或排除原因。
+- 输入快照、代码版本、环境指纹和每个关键输出的 SHA-256；改变其中任一项后，
+  不得沿用旧 run 作为新结果。
 
 **产物**
 
@@ -368,6 +375,7 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 - 图由脚本生成，不手工改数字；
 - 优化问题报告可行性、约束余量和求解状态；
 - 预测问题没有时间泄漏或测试集调参。
+- 至少一次 fresh rerun 与登记结果一致；仅有静态检查或旧日志不能打开本门禁。
 
 **失败模式**
 
@@ -443,6 +451,10 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 7. 敏感性、稳健性和模型比较
 8. 结论、限制和推广
 
+其中必须单独出现 `Workflow` / `工作流` 小节或等价流程图，至少覆盖题面快照、
+拆题、路线选择、数据计划、PoC、正式实验、结果冻结、论文写作、渲染和独立审计。
+每一步都要能在 `paper/workflow.json` 找到输入、输出和证据。
+
 **写作文本规则**
 
 - LaTeX 与 Typst 二选一，禁止混写；
@@ -457,6 +469,7 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 
 - `paper/main.tex` 或 `paper/main.typ`
 - `paper/evidence_map.json`
+- `paper/workflow.json`
 - `paper/claim_index.json`
 - `state.json` 的 `paper_written`
 
@@ -466,6 +479,7 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 - 题目每一问都有清楚回答；
 - 没有未冻结的最终数字；
 - 模型创新与 baseline 的差异可量化解释。
+- 论文包含可识别的 workflow/工作流章节或图，且与 `paper/workflow.json` 的顺序和证据一致。
 
 **失败模式**
 
@@ -486,6 +500,8 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 - 检查图表编号、目录、页码、参考文献和附录；
 - 检查文件名、字体和模板是否符合比赛规则；
 - 如比赛要求匿名，检查作者、路径、元数据是否泄漏。
+- 记录编译链是正式链还是 fallback 链，并核对它是否满足比赛提交规则。
+- 生成 `audit/package_manifest.json` 的候选清单，排除缓存、临时日志、个人绝对路径、密钥和旧版本文件。
 
 **产物**
 
@@ -500,6 +516,8 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 - 没有硬编译错误、缺图、裁切、乱码或无法阅读的表格；
 - 图表编号、正文引用、单位和结论一致；
 - 官方模板和提交格式合规。
+- 关键页面有真实渲染图或等价视觉证据；结构化 PDF 文本检查不能单独替代视觉检查。
+- fallback 渲染只能标为“降级预览”，除非规则允许且审查报告明确确认可提交。
 
 **失败模式**
 
@@ -527,12 +545,14 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 - 检查数据泄漏、过拟合、不合理单位、不可行解和边界情况；
 - 检查图表视觉结果与正文数字一致；
 - 检查 PDF 逐页表现；
+- 检查 package manifest 的文件范围、哈希、匿名性和旧稿排除；
 - 输出硬错误与软风险，并给出回退阶段。
 
 **产物**
 
 - `audit/final_report.md`
 - `audit/acceptance.json`
+- `audit/package_manifest.json`
 - `state.json` 的 `audit_passed`
 
 **通过标准**
@@ -542,12 +562,22 @@ baseline -> primary -> ablation/control -> sensitivity -> robustness -> figures
 - 每个关键结论有来源；
 - 软风险被明确记录，不假装不存在；
 - 审查者没有修改被审查的代码或论文来让结果通过。
+- 审查者至少复现一条关键运行链和一条关键视觉链；只做机械扫描时，verdict 必须为 `FAIL` 或明确标为未完成。
 
 **失败模式**
 
 - 审查者就是生成者且无法独立复现：至少换一次上下文或执行真实命令。
 - 把格式错误当轻微问题忽略：凡影响阅读或提交合规的都算硬错误。
 - 数字对不上：返回 S6，不从 PDF 里手改。
+
+### 按题型选择质量提升标准（S2–S5）
+
+参照 [exemplar-benchmark.md](exemplar-benchmark.md)，对每个子问题选择适用标准。
+预测重点看时间回测与泄漏；优化看可行性、约束与求解界；评价看权重与排名稳定性；
+仿真看边界、重复运行与收敛；机理估计看单位、参数依据与校准。
+物理驱动拟合、分地区、多模型预测和外部预测锚点只在适用且数据支持时采用。
+缺少外部锚点应说明限制，不能因此把无关题型判失败。
+这些目标不改变 PASS 门禁，不保证获奖；审查记录适用性、证据和未解决限制。
 
 ## 5. 决策日志
 

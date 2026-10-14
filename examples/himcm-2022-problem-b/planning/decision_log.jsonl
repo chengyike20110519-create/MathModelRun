@@ -1,0 +1,4 @@
+{"at":"2026-09-12T13:00:00+08:00","subject":"Q1-model-route","classification":"KEEP","rationale":"保留线性、指数、Logistic、ARIMA 比较路线；透明 baseline 和可解释性优先。","author":"codex","relates_to":"methods/model_route.json"}
+{"at":"2026-09-12T13:00:01+08:00","subject":"black-box-models","classification":"CUT","rationale":"样本量有限且当前目标是可审计复现，暂不引入黑盒深度模型。","author":"codex","relates_to":"methods/model_route.json"}
+{"at":"2026-09-12T13:00:02+08:00","subject":"official-problem-source","classification":"DEFER","rationale":"先使用已有本地数据快照建立案例骨架，官方题面与完整来源元数据下一轮重新导入。","author":"codex","relates_to":"input_manifest.json"}
+{"at":"2026-09-12T13:00:03+08:00","subject":"historical-draft-results","classification":"ACCEPT_RISK","rationale":"保留历史 working draft 和图表作为展示素材，但不推进 method_validated、results_frozen 或 paper_written。","author":"codex","relates_to":"methods/method_validation.json"}

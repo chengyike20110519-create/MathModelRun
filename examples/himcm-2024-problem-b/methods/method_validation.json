@@ -1,0 +1,26 @@
+{
+  "schema_version": "2.0",
+  "generated_at": null,
+  "subproblem": "Q1",
+  "symbols": [],
+  "assumptions": [],
+  "objective": "",
+  "constraints": [],
+  "algorithm": "",
+  "poc": {
+    "command": "",
+    "input": "",
+    "output": "",
+    "duration_seconds": null
+  },
+  "baseline_comparison": {
+    "baseline": "",
+    "primary": "",
+    "metric": "",
+    "baseline_value": null,
+    "primary_value": null
+  },
+  "status": "pending",
+  "passes": false,
+  "evidence": []
+}

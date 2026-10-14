@@ -1,0 +1,15 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-12T21:23:49+08:00",
+  "subproblem": "Q1/Q2",
+  "symbols": ["C(t): CO2 concentration in ppm", "T(t): temperature anomaly in degC", "t: calendar year"],
+  "assumptions": ["annual observations are aligned by year", "trend extrapolation is an exploratory baseline, not a climate mechanism"],
+  "objective": "在独立可运行脚本中复现历史草稿的模型比较、阈值预测和统计检验，并留下可审计输出。",
+  "constraints": ["当前环境 Python 3.13.5 缺少 sklearn/statsmodels/scipy；ARIMA 使用 NumPy 差分回归 fallback，Granger p 值使用本地不完全 Beta 实现并标记为 exploratory", "当前 Q2 的趋势外推是探索性基线，不把相关或 Granger 统计量解释为物理因果"],
+  "algorithm": "code/reproduce_himcm.py：读取 CSV，按时间切分，拟合线性 baseline、指数模型、透明 Logistic 网格模型和 NumPy ARIMA(1,1,0) fallback，计算训练/末端回测指标、十年增量、温度阈值、Pearson 关联、滞后 OLS F 统计量及指数增长率敏感性。",
+  "poc": {"command":"python3 -m py_compile code/reproduce_himcm.py && python3 code/reproduce_himcm.py . --plot","input":"problem_files/himcm_data.csv","output":"results/runs/run-002/metrics.json; figures/fig1_co2_fits.png through figures/fig5_sensitivity.png","duration_seconds":3.2},
+  "baseline_comparison": {"baseline":"linear OLS","primary":"ARIMA(1,1,0) NumPy fallback","metric":"test RMSE (ppm)","baseline_value":10.89351378086637,"primary_value":5.88374089889349},
+  "status": "pass",
+  "passes": true,
+  "evidence": [{"kind":"test","value":"Q1 PoC reproduced from CSV with time-ordered holdout; exponential test RMSE is lower than linear baseline","path":"results/runs/run-002/metrics.json"},{"kind":"test","value":"Q1 transparent Logistic grid fit and NumPy ARIMA(1,1,0) fallback completed; holdout metrics are recorded for comparison","path":"results/runs/run-002/metrics.json"},{"kind":"test","value":"Q2 temperature trend, threshold years, Pearson correlation and exploratory lagged F statistics reproduced from the aligned CSV series","path":"results/runs/run-002/metrics.json"},{"kind":"test","value":"Granger p values and threshold standard errors with 95% year intervals are finite and recorded","path":"results/runs/run-002/metrics.json"},{"kind":"test","value":"Exponential growth-rate sensitivity at minus 10 percent, baseline and plus 10 percent is recorded","path":"results/runs/run-002/metrics.json"},{"kind":"figure","value":"Five required figures were regenerated and visually checked","path":"figures/fig1_co2_fits.png"}]
+}

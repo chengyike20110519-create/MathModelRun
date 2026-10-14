@@ -120,6 +120,18 @@ when the weighted average is high.
   missing steps?
 - Is the final PDF the one generated from the submitted source?
 
+## Additional quality targets (use during DELIVER)
+
+Select task-specific criteria from [exemplar-benchmark.md](exemplar-benchmark.md).
+Do not require physical fitting for a ranking or optimization task, multiple
+forecast models for a non-prediction task, or a letter absent from the prompt.
+A simple well-validated model may score 5. No score predicts an actual award.
+
+If reporting an `award_calibre` block in `audit/acceptance.json`, retain its
+existing boolean fields for compatibility, and add `applicability` and evidence
+notes. A non-applicable field is not a failure and earns no credit. Explain any
+unavailable external cross-check. Do not change the hard PASS floors.
+
 ## Verdict rules
 
 `PASS` requires all of the following:

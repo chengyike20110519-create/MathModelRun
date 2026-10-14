@@ -1,0 +1,29 @@
+{
+  "schema_version": "2.0",
+  "project_name": "himcm-2025-problem-a",
+  "contest": "CUMCM/MCM/HiMCM/其他",
+  "language": "zh-CN",
+  "paper_format": "latex",
+  "problem_files": [],
+  "selected_topic": null,
+  "subproblems": [],
+  "current_stage": "PREFLIGHT",
+  "delivery_rules": {
+    "anonymous": null,
+    "page_limit": null,
+    "template": null,
+    "submission_files": []
+  },
+  "gates": {
+    "input_snapshot": false,
+    "problem_decomposed": false,
+    "model_route_selected": false,
+    "data_plan_ready": false,
+    "method_validated": false,
+    "experiments_reproduced": false,
+    "results_frozen": false,
+    "paper_written": false,
+    "pdf_verified": false,
+    "audit_passed": false
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-14T15:35:00+08:00",
+  "files": [
+    {
+      "path": "problem_files/2025_HiMCM_Problem_A.pdf",
+      "kind": "official_problem_statement",
+      "sha256": "581b17356abdbcb976cbd843e92d8b7735c2240ebfb571b99553b68b58da69a2",
+      "readable": true,
+      "notes": "官方题面 4 页；Requirement 1-5 + Glossary + Reference。Requirement 2 附带 Figure 1 户型图。"
+    },
+    {
+      "path": "problem_files/fig1_floorplan.png",
+      "kind": "problem_figure_extracted",
+      "sha256": "2fb72e0d5ef86640d08589c36282f1f5c22ec4f64ab1a39ffa0df19d6a3582a9",
+      "readable": true,
+      "notes": "由官方 PDF 第 2 页 Figure 1 裁剪导出（200 dpi）：一层办公楼，中央走廊，走廊两侧各 3 间相似房间，走廊两端各 1 个出口（相对侧）。"
+    }
+  ],
+  "external_sources": [
+    {
+      "name": "HiMCM 2025 problems page",
+      "url": "https://www.contest.comap.com/highschool/contests/himcm/2025problems.html",
+      "access_date": "2026-09-14",
+      "license": "contest problem; verify terms before redistribution",
+      "retrieval_method": "fetched via curl in this run"
+    }
+  ],
+  "environment": {
+    "python": "3.12.14 (codex bundled runtime)",
+    "latex": "latexmk available",
+    "typst": null,
+    "solvers": []
+  }
+}

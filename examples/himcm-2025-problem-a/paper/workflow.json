@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "title": "Workflow and Evidence Discipline",
+  "paper_location": "paper/main.tex:44",
+  "steps": [
+    {"id": "S0", "name": "Preflight", "input": "problem_files/2025_HiMCM_Problem_A.pdf", "output": "input_manifest.json", "evidence": ["input_manifest.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S1", "name": "Analyze", "input": "input_manifest.json", "output": "planning/problem_analysis.json", "evidence": ["planning/problem_analysis.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S2", "name": "Route", "input": "planning/problem_analysis.json", "output": "methods/model_route.json", "evidence": ["methods/model_route.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S3", "name": "Data plan", "input": "methods/model_route.json", "output": "data_cleaned/data_plan.json", "evidence": ["data_cleaned/data_plan.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S4", "name": "Method PoC", "input": "data_cleaned/data_plan.json", "output": "methods/method_validation.json", "evidence": ["methods/method_validation.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S5", "name": "Experiment", "input": "methods/method_validation.json", "output": "results/run_manifest.json", "evidence": ["results/run_manifest.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S6", "name": "Freeze", "input": "results/run_manifest.json", "output": "frozen_numbers.json", "evidence": ["frozen_numbers.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S7", "name": "Write", "input": "frozen_numbers.json", "output": "paper/main.tex", "evidence": ["paper/evidence_map.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S8", "name": "Render", "input": "paper/main.tex", "output": "paper/main.pdf", "evidence": ["paper/render_log.json"], "paper_location": "paper/main.tex:44"},
+    {"id": "S9", "name": "Independent audit", "input": "paper/main.pdf", "output": "audit/final_report.md", "evidence": ["audit/final_report.md", "audit/acceptance.json"], "paper_location": "paper/main.tex:44"}
+  ],
+  "passes": true
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-18T08:12:24.683754+00:00",
+  "fields": [
+    {
+      "file": "data_cleaned/electricity_generation_by_fuel_twh.csv",
+      "fields": [
+        "area",
+        "fuel",
+        "year",
+        "generation_twh",
+        "source"
+      ],
+      "unit": "TWh",
+      "coverage": "World/US/China/EU27/India/Japan 2015-2025"
+    },
+    {
+      "file": "data_cleaned/co2_intensity_gco2_per_kwh.csv",
+      "fields": [
+        "area",
+        "year",
+        "co2_intensity_gco2_per_kwh",
+        "source"
+      ],
+      "unit": "gCO2/kWh",
+      "coverage": "World/China/India/Japan 2023-2025 (US/EU CI derived from fuel-level data in code)"
+    },
+    {
+      "file": "data_cleaned/electricity_demand_twh.csv",
+      "fields": [
+        "area",
+        "year",
+        "demand_twh",
+        "source"
+      ],
+      "unit": "TWh"
+    },
+    {
+      "file": "data_cleaned/hpc_energy_literature_anchors.csv",
+      "fields": [
+        "quantity",
+        "year",
+        "value",
+        "unit",
+        "lo",
+        "hi",
+        "source",
+        "url",
+        "accessed",
+        "notes"
+      ],
+      "unit": "mixed",
+      "coverage": "published anchors 2010-2030"
+    }
+  ],
+  "cleaning_rules": [
+    "filter to study areas and 2015-2024 (2025 kept for reference)",
+    "numeric coercion with explicit drops logged",
+    "no interpolation: anchors kept as midpoint+range"
+  ],
+  "leakage_checks": [
+    "no forecast variable enters 2024 baseline fit",
+    "scenario anchors (2030) never used to estimate 2024 values",
+    "crypto add-on kept outside E_avg baseline"
+  ],
+  "split_plan": null,
+  "external_sources": [
+    {
+      "name": "Ember Yearly Electricity Data (full release)",
+      "url": "https://ember-climate.org/data-catalogue/yearly-electricity-data/",
+      "accessed": "2026-09-18",
+      "hash_path": "data_raw/ember_yearly_full_release_long_format.csv"
+    },
+    {
+      "name": "IEA Energy & AI (2025)",
+      "url": "https://www.iea.org/reports/energy-and-ai",
+      "accessed": "2026-09-18"
+    },
+    {
+      "name": "Goldman Sachs Research (2024) AI power demand",
+      "url": "https://www.goldmansachs.com/insights/articles/AI-poised-to-drive-160-increase-in-power-demand",
+      "accessed": "2026-09-18"
+    },
+    {
+      "name": "LBNL 2024 US Data Center Energy Usage Report",
+      "url": "https://eta.lbl.gov/publications/2024-united-states-data-center",
+      "accessed": "2026-09-18"
+    },
+    {
+      "name": "Masanet et al. 2020 Science",
+      "url": "https://www.science.org/doi/10.1126/science.aba3758",
+      "accessed": "2026-09-18"
+    },
+    {
+      "name": "Uptime Institute Global Survey 2024",
+      "url": "https://www.uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2024",
+      "accessed": "2026-09-18"
+    },
+    {
+      "name": "Google 2024 Environmental Report",
+      "url": "https://abc.xyz/assets/43/44/675b83d7455885c4615d848d52a4/googles-2024-environmental-report.pdf",
+      "accessed": "2026-09-18"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "2.0",
+  "frozen_at": "2026-09-12T21:42:00+08:00",
+  "source_file": "results/runs/run-002/metrics.json",
+  "source_sha256": "6bd37cf03a560021813977145bf702a40fa6350f4b34236b8455d589c6ff2fb5",
+  "values": [
+    {"name":"linear_test_rmse","value":10.89351378086637,"unit":"ppm RMSE","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q1b","notes":"末端十年时间顺序回测；透明线性 baseline。"},
+    {"name":"exponential_test_rmse","value":8.584285093395318,"unit":"ppm RMSE","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q1b","notes":"末端十年时间顺序回测；探索性外推。"},
+    {"name":"logistic_test_rmse","value":8.912410692904375,"unit":"ppm RMSE","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q1b","notes":"末端十年时间顺序回测；透明网格拟合。"},
+    {"name":"arima110_test_rmse","value":5.88374089889349,"unit":"ppm RMSE","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q1b","notes":"NumPy ARIMA(1,1,0) fallback。"},
+    {"name":"rolling_max_increase","value":24.599999999999966,"unit":"ppm over 10 years","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q1a","notes":"最大窗口为 2011-2021。"},
+    {"name":"reference_2004_increase","value":18.74000000000001,"unit":"ppm over 10 years","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q1a","notes":"1994-2004 参考窗口。"},
+    {"name":"exponential_forecast_2100","value":564.9004173572347,"unit":"ppm","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q1c","notes":"趋势外推，不是物理气候模型。"},
+    {"name":"temperature_threshold_1.25","value":2044.235654998196,"unit":"year","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q2a","notes":"95% 区间 2039.1986-2049.2727。"},
+    {"name":"temperature_threshold_1.50","value":2059.3926380368102,"unit":"year","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q2a","notes":"95% 区间 2053.0892-2065.6961。"},
+    {"name":"temperature_threshold_2.00","value":2089.7066041140383,"unit":"year","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q2a","notes":"95% 区间 2080.8220-2098.5912。"},
+    {"name":"pearson_co2_temperature","value":0.96116753889316,"unit":"Pearson r","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q2b","notes":"统计关联，不是物理因果证明。"},
+    {"name":"granger_co2_to_temperature_p","value":4.3142205456948784e-08,"unit":"p-value","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q2b","notes":"一阶滞后探索性统计；本地不完全 Beta 实现。"},
+    {"name":"granger_temperature_to_co2_p","value":0.7886106045576978,"unit":"p-value","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q2b","notes":"一阶滞后探索性统计，不作物理因果解释。"},
+    {"name":"exponential_sensitivity_2100_range","value":"532.2407356248839-599.5641824666426","unit":"ppm under rate +/-10% scenarios","source_file":"results/runs/run-002/metrics.json","source_run":"run-002","subproblem":"Q2c","notes":"情景范围，不是置信区间。"}
+  ]
+}

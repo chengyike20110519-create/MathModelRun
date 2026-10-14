@@ -1,0 +1,10 @@
+{
+  "deterministic_no_constraints_s": 119.0,
+  "mc_mean_s": 201.1,
+  "mc_sd_s": 43.7,
+  "mc_ci95_s": 6.1,
+  "mc_p95_s": 285.9,
+  "degradation_pct": 69.1,
+  "n": 200,
+  "seed": 20251105
+}

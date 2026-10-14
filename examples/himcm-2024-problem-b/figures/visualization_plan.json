@@ -1,0 +1,54 @@
+{
+  "schema_version": "2.0",
+  "generated_at": "2026-09-18T08:12:24.683754+00:00",
+  "figures": [
+    {
+      "id": "fig0_workflow",
+      "purpose": "workflow/evidence chain diagram",
+      "script": "code/make_figures.py",
+      "destination": "figures/fig0_workflow.png"
+    },
+    {
+      "id": "fig1_scope",
+      "purpose": "Task I: component decomposition + bounds vs IEA anchor",
+      "script": "code/make_figures.py",
+      "destination": "figures/fig1_scope.png"
+    },
+    {
+      "id": "fig2_growth",
+      "purpose": "historical anchors and 2030 scenario fan (energy)",
+      "script": "code/make_figures.py",
+      "destination": "figures/fig2_growth.png"
+    },
+    {
+      "id": "fig3_carbon",
+      "purpose": "Task II: MC distribution of C_2024 + regional CI bars",
+      "script": "code/make_figures.py",
+      "destination": "figures/fig3_carbon.png"
+    },
+    {
+      "id": "fig4_projection",
+      "purpose": "Task III: energy & emissions 2024-2030 scenario bands",
+      "script": "code/make_figures.py",
+      "destination": "figures/fig4_projection.png"
+    },
+    {
+      "id": "fig5_renewables",
+      "purpose": "Task IVa: CI vs clean share + reduction curve",
+      "script": "code/make_figures.py",
+      "destination": "figures/fig5_renewables.png"
+    },
+    {
+      "id": "fig6_water",
+      "purpose": "Task IVb: water use projection + WUE sensitivity",
+      "script": "code/make_figures.py",
+      "destination": "figures/fig6_water.png"
+    },
+    {
+      "id": "fig7_policy",
+      "purpose": "Task V: emissions with/without policy lever + sensitivity tornado",
+      "script": "code/make_figures.py",
+      "destination": "figures/fig7_policy.png"
+    }
+  ]
+}

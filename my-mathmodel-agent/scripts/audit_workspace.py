@@ -30,9 +30,11 @@ REQUIRED_FILES = (
     "results/run_manifest.json",
     "frozen_numbers.json",
     "paper/evidence_map.json",
+    "paper/workflow.json",
     "paper/render_log.json",
     "audit/gate_evidence.json",
     "audit/acceptance.json",
+    "audit/package_manifest.json",
 )
 
 GATES = (
@@ -74,6 +76,8 @@ FIELDS = (
 )
 
 EVIDENCE_KINDS = {"command", "test", "data", "figure", "log", "manual"}
+EVIDENCE_LEVELS = {"STRUCTURAL", "RUNTIME", "VISUAL"}
+RUNTIME_GATES = {"method_validated", "experiments_reproduced", "pdf_verified", "audit_passed"}
 
 DECISION_CLASSES = {"KEEP", "CUT", "DEFER", "PIVOT", "ACCEPT_RISK"}
 
@@ -102,6 +106,9 @@ def _validate_evidence_item(entry, label, issues, root):
             issues.append(f"{label} path 无效")
         elif not (root / path).exists():
             issues.append(f"{label} 引用的 path 不存在：{path}")
+    level = entry.get("level", "STRUCTURAL")
+    if level not in EVIDENCE_LEVELS:
+        issues.append(f"{label} level 无效：{level!r}，允许 {sorted(EVIDENCE_LEVELS)}")
 
 
 def audit_gate_contract(root: Path, issues: list[str]) -> None:
@@ -136,6 +143,10 @@ def audit_gate_contract(root: Path, issues: list[str]) -> None:
             _validate_evidence_item(entry, label, issues, root)
         if gates.get(gate) and not entries:
             issues.append(f"门禁 {gate} 已为 true，但 audit/gate_evidence.json 没有证据")
+        if gates.get(gate) and gate in RUNTIME_GATES:
+            levels = {entry.get("level", "STRUCTURAL") for entry in entries if isinstance(entry, dict)}
+            if not levels.intersection({"RUNTIME", "VISUAL"}):
+                issues.append(f"门禁 {gate} 已为 true，但缺少 RUNTIME 或 VISUAL 证据")
 
     stage = state.get("stage")
     if stage not in STAGE_GATE and stage != "READY":
@@ -250,6 +261,33 @@ def audit_acceptance_contracts(root: Path, issues: list[str]) -> None:
 
     if isinstance(gates, dict) and gates.get("paper_written"):
         evidence_map = read_json(root / "paper" / "evidence_map.json", issues, "paper/evidence_map.json")
+        workflow = read_json(root / "paper" / "workflow.json", issues, "paper/workflow.json")
+        if isinstance(workflow, dict):
+            steps = workflow.get("steps")
+            if not isinstance(steps, list) or len(steps) < 5:
+                issues.append("paper_written 为 true，但 paper/workflow.json 至少需要 5 个步骤")
+            else:
+                required_fields = {"id", "name", "input", "output", "evidence", "paper_location"}
+                ids = []
+                for index, step in enumerate(steps):
+                    if not isinstance(step, dict):
+                        issues.append(f"paper/workflow.json steps[{index}] 不是对象")
+                        continue
+                    ids.append(step.get("id"))
+                    missing = sorted(required_fields - set(step))
+                    if missing:
+                        issues.append(f"paper/workflow.json steps[{index}] 缺少字段：{', '.join(missing)}")
+                    if not isinstance(step.get("evidence"), list) or not step.get("evidence"):
+                        issues.append(f"paper/workflow.json steps[{index}] evidence 不能为空")
+                if len(set(ids)) != len(ids):
+                    issues.append("paper/workflow.json steps.id 必须唯一")
+                joined = " ".join(str(step.get("name", "")).lower() for step in steps if isinstance(step, dict))
+                if not any(token in joined for token in ("audit", "审计", "review", "复核")):
+                    issues.append("paper/workflow.json 必须覆盖独立审计或复核步骤")
+            source_candidates = list((root / "paper").glob("main.*"))
+            source_text = "\n".join(path.read_text(encoding="utf-8", errors="ignore") for path in source_candidates)
+            if not any(token in source_text.lower() for token in ("workflow", "工作流")):
+                issues.append("paper_written 为 true，但论文源文件缺少 Workflow/工作流章节或图注")
         frozen = read_json(root / "frozen_numbers.json", issues, "frozen_numbers.json")
         frozen_names = set()
         if isinstance(frozen, dict) and isinstance(frozen.get("values"), list):
@@ -314,6 +352,15 @@ def main() -> int:
         acceptance = read_json(root / "audit" / "acceptance.json", issues, "audit/acceptance.json")
         if isinstance(acceptance, dict) and acceptance.get("verdict") != "pass":
             issues.append("READY 要求 audit/acceptance.json verdict=pass")
+        package = read_json(root / "audit" / "package_manifest.json", issues, "audit/package_manifest.json")
+        if isinstance(package, dict):
+            if package.get("status") != "ready":
+                issues.append("READY 要求 audit/package_manifest.json status=ready")
+            checks = package.get("checks")
+            if not isinstance(checks, dict) or not all(checks.get(key) is True for key in (
+                "no_secrets", "no_personal_absolute_paths", "no_obsolete_duplicates", "source_rebuilds_pdf"
+            )):
+                issues.append("READY 要求 package_manifest 的四项 checks 全为 true")
 
     gates = state.get("gates") if isinstance(state, dict) else {}
     ready = all(isinstance(gates, dict) and gates.get(gate) for gate in GATES)
