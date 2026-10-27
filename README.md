@@ -98,7 +98,14 @@ MathModel Run 把比赛拆成一条可恢复的决策链：**输入 → 找瓶�
 
 ## 快速开始
 
-从一个新的比赛项目开始，通常按下面五步推进：
+首次使用时，先下载仓库并进入仓库根目录。需要预先安装 Git 和 Python 3.9 或更高版本：
+
+```bash
+git clone https://github.com/chengyike20110519-create/MathModelRun.git
+cd MathModelRun
+```
+
+以下命令均在仓库根目录运行；如果已经下载了仓库，直接进入该目录即可。从一个新的比赛项目开始，通常按下面五步推进：
 
 ### 1. 创建项目骨架
 
